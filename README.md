@@ -31,11 +31,13 @@ Setup
 ### Installing magnum
 
     magnum is not currently in Puppet Forge, but is anticipated to be added soon.  Once that happens, you'll be able to install magnum with:
-    puppet module install openstack/magnum
 
+    ```shell
+    puppet module install openstack/magnum
+    ```
 ### Beginning with magnum
 
-To utilize the magnum module's functionality you will need to declare multiple resources.  The following is a modified excerpt from the [openstack module](https://github.com/stackfoge/puppet-openstack).  This is not an exhaustive list of all the components needed, we recommend you consult and understand the [openstack module](https://github.com/stackforge/puppet-openstack) and the [core openstack](http://docs.openstack.org) documentation.
+To utilize the magnum module's functionality you will need to declare multiple resources. This is not an exhaustive list of all the components needed, we recommend you consult and understand the [core openstack](http://docs.openstack.org) documentation.
 
 Implementation
 --------------
