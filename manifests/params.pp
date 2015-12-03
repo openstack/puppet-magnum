@@ -10,7 +10,7 @@ class magnum::params {
     }
     'Debian': {
       # package names
-      $common_package_name  = 'openstack-magnum-common'
+      $common_package_name  = 'magnum-common'
       $sqlite_package_name  = 'python-pysqlite2'
     }
     default: {
