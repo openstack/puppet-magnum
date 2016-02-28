@@ -65,7 +65,7 @@ class magnum::db (
       require 'postgresql::lib::python'
     }
     /^sqlite:\/\//: {
-      $backend_package = $::magnum::params::sqlite_package_name
+      $backend_package = $::magnum::params::sqlite_package
     }
     default: {
       fail('Unsupported backend configured')

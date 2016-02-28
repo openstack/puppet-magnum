@@ -46,6 +46,7 @@ describe 'basic magnum' do
           class { '::magnum::api':
             admin_password => 'a_big_secret',
           }
+          class { '::magnum::conductor': }
         }
       }
       EOS

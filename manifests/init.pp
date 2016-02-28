@@ -81,7 +81,7 @@ class magnum(
 
   package { 'magnum-common':
     ensure => $package_ensure,
-    name   => $::magnum::params::common_package_name,
+    name   => $::magnum::params::common_package,
     tag    => ['openstack', 'magnum-package'],
   }
 
