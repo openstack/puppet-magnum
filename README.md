@@ -1,5 +1,5 @@
 magnum
-=======
+======
 
 #### Table of Contents
 
@@ -14,7 +14,7 @@ magnum
 Overview
 --------
 
-The magnum module is a part of [OpenStack](https://github.com/openstack), an effort by the OpenStack infrastructure team to provide continuous integration testing and code review for OpenStack and OpenStack community projects not part of the core software.  The module its self is used to flexibly configure and manage the container service for OpenStack.
+The magnum module is a part of [OpenStack](https://github.com/openstack), an effort by the OpenStack infrastructure team to provide continuous integration testing and code review for OpenStack and OpenStack community projects not part of the core software.  The module itself is used to flexibly configure and manage the container service for OpenStack.
 
 Module Description
 ------------------
@@ -30,11 +30,12 @@ Setup
 
 ### Installing magnum
 
-    magnum is not currently in Puppet Forge, but is anticipated to be added soon.  Once that happens, you'll be able to install magnum with:
+magnum is not currently in Puppet Forge, but is anticipated to be added soon.  Once that happens, you'll be able to install magnum with:
 
-    ```shell
-    puppet module install openstack/magnum
-    ```
+```shell
+puppet module install openstack/magnum
+```
+
 ### Beginning with magnum
 
 To utilize the magnum module's functionality you will need to declare multiple resources. This is not an exhaustive list of all the components needed, we recommend you consult and understand the [core openstack](http://docs.openstack.org) documentation.
@@ -47,9 +48,9 @@ Implementation
 magnum is a combination of Puppet manifest and ruby code to delivery configuration and extra functionality through types and providers.
 
 Limitations
-------------
+-----------
 
-* All the magnum types use the CLI tools and so need to be ran on the magnum node.
+* All the magnum types use the CLI tools and so need to be run on the magnum node.
 
 Beaker-Rspec
 ------------
