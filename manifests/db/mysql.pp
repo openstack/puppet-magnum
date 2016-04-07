@@ -1,7 +1,7 @@
 # The magnum::db::mysql class implements mysql backend for magnum
 #
 # This class can be used to create tables, users and grant
-# privelege for a mysql magnum database.
+# privileges for a mysql magnum database.
 #
 # == parameters
 #
