@@ -100,7 +100,7 @@ class magnum::api(
     name      => $::magnum::params::api_service,
     enable    => $enabled,
     hasstatus => true,
-    tag       => 'magnum-service',
+    tag       => ['magnum-service', 'magnum-db-sync-service'],
   }
 
   if $auth_version {
