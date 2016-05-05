@@ -44,12 +44,12 @@ describe 'magnum' do
 
     context 'with overridden parameters' do
       let :params do
-        { :package_ensure => 'latest',
+        { :package_ensure      => 'latest',
           :notification_driver => 'messagingv1',
-          :rabbit_host => '53.210.103.65',
-          :rabbit_port => '1234',
-          :rabbit_userid => 'me',
-          :rabbit_password => 'secrete',
+          :rabbit_host         => '53.210.103.65',
+          :rabbit_port         => '1234',
+          :rabbit_userid       => 'me',
+          :rabbit_password     => 'secrete',
           :rabbit_virtual_host => 'vhost',
         }
       end
@@ -101,12 +101,12 @@ describe 'magnum' do
 
     context 'with rabbit ssl enabled with kombu' do
       let :params do
-        { :rabbit_hosts => ['rabbit:5673'],
-          :rabbit_use_ssl => true,
+        { :rabbit_hosts       => ['rabbit:5673'],
+          :rabbit_use_ssl     => true,
           :kombu_ssl_ca_certs => '/etc/ca.crt',
           :kombu_ssl_certfile => '/etc/certfile',
-          :kombu_ssl_keyfile => '/etc/key',
-          :kombu_ssl_version => 'TLSv1',
+          :kombu_ssl_keyfile  => '/etc/key',
+          :kombu_ssl_version  => 'TLSv1',
         }
       end
 

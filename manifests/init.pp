@@ -12,6 +12,11 @@
 #  (Optional) Notification driver to use
 #  Defaults to $::os_service_default
 #
+# [*rpc_backend*]
+#  (optional) The rpc backend implementation to use, can be:
+#  rabbit (for rabbitmq)
+#  Defaults to 'rabbit'
+#
 # [*rabbit_host*]
 #  (Optional) Host for rabbit server
 #  Defaults to $::os_service_default
@@ -61,6 +66,7 @@
 class magnum(
   $package_ensure      = 'present',
   $notification_driver = $::os_service_default,
+  $rpc_backend         = 'rabbit',
   $rabbit_host         = $::os_service_default,
   $rabbit_hosts        = $::os_service_default,
   $rabbit_port         = $::os_service_default,
@@ -85,32 +91,31 @@ class magnum(
     tag    => ['openstack', 'magnum-package'],
   }
 
-  magnum_config {
-    'DEFAULT/rpc_backend' :                        value => 'rabbit';
-    'oslo_messaging_rabbit/userid' :               value => $rabbit_userid;
-    'oslo_messaging_rabbit/rabbit_password' :      value => $rabbit_password, secret => true;
-    'oslo_messaging_rabbit/rabbit_virtual_host' :  value => $rabbit_virtual_host;
-    'oslo_messaging_rabbit/rabbit_use_ssl' :       value => $rabbit_use_ssl;
-    'oslo_messaging_rabbit/kombu_ssl_ca_certs' :   value => $kombu_ssl_ca_certs;
-    'oslo_messaging_rabbit/kombu_ssl_certfile' :   value => $kombu_ssl_certfile;
-    'oslo_messaging_rabbit/kombu_ssl_keyfile' :    value => $kombu_ssl_keyfile;
-    'oslo_messaging_rabbit/kombu_ssl_version' :    value => $kombu_ssl_version;
-  }
+  if $rpc_backend == 'rabbit' {
 
-  if ! is_service_default($rabbit_hosts) and $rabbit_hosts {
-    magnum_config { 'oslo_messaging_rabbit/rabbit_hosts':     value => join(any2array($rabbit_hosts), ',') }
-  } else {
-    magnum_config { 'oslo_messaging_rabbit/rabbit_host':      value => $rabbit_host }
-    magnum_config { 'oslo_messaging_rabbit/rabbit_port':      value => $rabbit_port }
-    magnum_config { 'oslo_messaging_rabbit/rabbit_hosts':     ensure => absent }
-  }
+    if ! $rabbit_password {
+      fail('Please specify a rabbit_password parameter.')
+    }
 
-  if !is_service_default($notification_driver) and $notification_driver {
-    magnum_config {
-      'DEFAULT/notification_driver': value => join(any2array($notification_driver), ',');
+    oslo::messaging::rabbit { 'magnum_config':
+      rabbit_userid       => $rabbit_userid,
+      rabbit_password     => $rabbit_password,
+      rabbit_virtual_host => $rabbit_virtual_host,
+      rabbit_host         => $rabbit_host,
+      rabbit_port         => $rabbit_port,
+      rabbit_hosts        => $rabbit_hosts,
+      rabbit_use_ssl      => $rabbit_use_ssl,
+      kombu_ssl_version   => $kombu_ssl_version,
+      kombu_ssl_keyfile   => $kombu_ssl_keyfile,
+      kombu_ssl_certfile  => $kombu_ssl_certfile,
+      kombu_ssl_ca_certs  => $kombu_ssl_ca_certs,
     }
   } else {
-    magnum_config { 'DEFAULT/notification_driver': ensure => absent; }
+    magnum_config { 'DEFAULT/rpc_backend': value => $rpc_backend }
+  }
+
+  oslo::messaging::notifications { 'magnum_config':
+    driver => $notification_driver
   }
 
 }
