@@ -7,6 +7,8 @@ describe 'basic magnum' do
     it 'should work with no errors' do
       pp= <<-EOS
       include ::openstack_integration
+      include ::openstack_integration::config
+      include ::openstack_integration::params
       include ::openstack_integration::repos
       include ::openstack_integration::rabbitmq
       include ::openstack_integration::mysql
@@ -32,34 +34,45 @@ describe 'basic magnum' do
 
       # Magnum resources
       class { '::magnum::keystone::auth':
-        password => 'a_big_secret',
+        password     => 'a_big_secret',
+        public_url   => "http://${::openstack_integration::config::ip_for_url}:9511/v1",
+        internal_url => "http://${::openstack_integration::config::ip_for_url}:9511/v1",
+        admin_url    => "http://${::openstack_integration::config::ip_for_url}:9511/v1",
       }
+     
       class { '::magnum::db::mysql':
-        password => 'a_big_secret',
+        password => 'magnum',
       }
-      case $::osfamily {
-        'Debian': {
-          warning('Magnum is not yet packaged on Ubuntu systems.')
-        }
-        'RedHat': {
-          class { '::magnum': }
-          class { '::magnum::api':
-            admin_password => 'a_big_secret',
-          }
-          class { '::magnum::conductor': }
-        }
-      }
-      EOS
 
+      class { '::magnum::db':
+        database_connection => 'mysql://magnum:magnum@127.0.0.1/magnum',
+      }
+      
+      class { '::magnum':
+        rabbit_host         => $::openstack_integration::config::ip_for_url,
+        rabbit_port         => $::openstack_integration::config::rabbit_port,
+        rabbit_userid       => 'magnum',
+        rabbit_password     => 'an_even_bigger_secret',
+        rabbit_use_ssl      => $::openstack_integration::config::ssl,
+        notification_driver => 'messagingv2',
+       }
+       class { '::magnum::api':
+        admin_password => 'a_big_secret',
+        auth_uri       => $::openstack_integration::config::keystone_auth_uri,
+        identity_uri   => $::openstack_integration::config::keystone_admin_uri,
+        host           => $::openstack_integration::config::ip_for_url,
+        auth_version   => 'v3',
+      }
+      class { '::magnum::conductor': }
+      class { '::magnum::client': }
+    EOS
       # Run it twice to test for idempotency
       apply_manifest(pp, :catch_failures => true)
       apply_manifest(pp, :catch_changes => true)
     end
 
-    if os[:family].casecmp('RedHat') == 0
-      describe port(9511) do
-        it { is_expected.to be_listening }
-      end
+    describe port(9511) do
+      it { is_expected.to be_listening }
     end
 
   end

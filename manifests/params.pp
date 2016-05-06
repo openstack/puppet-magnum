@@ -11,6 +11,7 @@ class magnum::params {
       # service names
       $api_service            = 'openstack-magnum-api'
       $conductor_service      = 'openstack-magnum-conductor'
+      $client_package         = 'python2-magnumclient'
     }
     'Debian': {
       # package names
@@ -20,6 +21,7 @@ class magnum::params {
       # service names
       $api_service            = 'magnum-api'
       $conductor_service      = 'magnum-conductor'
+      $client_package         = 'python-magnumclient'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem")

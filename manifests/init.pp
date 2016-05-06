@@ -87,7 +87,7 @@ class magnum(
 
   magnum_config {
     'DEFAULT/rpc_backend' :                        value => 'rabbit';
-    'oslo_messaging_rabbit/userid' :               value => $rabbit_userid;
+    'oslo_messaging_rabbit/rabbit_userid' :        value => $rabbit_userid;
     'oslo_messaging_rabbit/rabbit_password' :      value => $rabbit_password, secret => true;
     'oslo_messaging_rabbit/rabbit_virtual_host' :  value => $rabbit_virtual_host;
     'oslo_messaging_rabbit/rabbit_use_ssl' :       value => $rabbit_use_ssl;
