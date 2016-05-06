@@ -20,6 +20,7 @@ describe 'magnum::policy' do
         :key   => 'context_is_admin',
         :value => 'foo:bar'
       })
+      is_expected.to contain_magnum_config('oslo_policy/policy_file').with_value('/etc/magnum/policy.json')
     end
   end
 
