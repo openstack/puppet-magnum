@@ -14,10 +14,10 @@
 #
 class magnum::db::sync(
   $user         = 'magnum',
-  $extra_params = undef,
+  $extra_params = '--config-file /etc/magnum/magnum.conf',
 ) {
   exec { 'magnum-db-sync':
-    command     => "magnum-db-manage upgrade ${extra_params}",
+    command     => "magnum-db-manage ${extra_params} upgrade head",
     path        => '/usr/bin',
     user        => $user,
     refreshonly => true,
@@ -27,4 +27,5 @@ class magnum::db::sync(
   Package<| tag == 'magnum-package' |> ~> Exec['magnum-db-sync']
   Exec['magnum-db-sync'] ~> Service<| tag == 'magnum-db-sync-service' |>
   Magnum_config<| title == 'database/connection' |> ~> Exec['magnum-db-sync']
+  Magnum_config <| |> ~> Exec['magnum-db-sync']
 }

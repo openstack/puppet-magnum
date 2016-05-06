@@ -9,10 +9,11 @@ describe 'magnum::api' do
     { :package_ensure    => 'present',
       :enabled           => true,
       :port              => '9511',
-      :host_ip           => '127.0.0.1',
+      :host              => '127.0.0.1',
       :max_limit         => '1000',
-      :auth_uri          => 'http://localhost:5000/',
-      :identity_uri      => 'http://localhost:35357/',
+      :auth_uri          => 'http://127.0.0.1:5000/',
+      :identity_uri      => 'http://127.0.0.1:35357/',
+      :sync_db           => 'true',
       :admin_tenant_name => 'services',
       :admin_user        => 'magnum',
     }
@@ -50,7 +51,7 @@ describe 'magnum::api' do
 
     it 'configures magnum.conf' do
       is_expected.to contain_magnum_config('api/port').with_value(p[:port])
-      is_expected.to contain_magnum_config('api/host_ip').with_value(p[:host_ip])
+      is_expected.to contain_magnum_config('api/host').with_value(p[:host])
       is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
       is_expected.to contain_magnum_config('keystone_authtoken/admin_password').with_value(p[:admin_password]).with_secret(true)
       is_expected.to contain_magnum_config('keystone_authtoken/admin_user').with_value(p[:admin_user])
@@ -62,17 +63,17 @@ describe 'magnum::api' do
     context 'when overriding parameters' do
       before :each do
         params.merge!(
-          :port    => '1234',
-          :host_ip => '0.0.0.0',
-          :max_limit => '10',
-          :auth_uri => 'http://10.0.0.1:5000/',
-          :identity_uri => 'http://10.0.0.1:35357/',
+          :port         => '1234',
+          :host         => '0.0.0.0',
+          :max_limit    => '10',
+          :auth_uri     => 'http://127.0.0.1:5000/',
+          :identity_uri => 'http://127.0.0.1:35357/',
         )
       end
 
       it 'should replace default parameters with new values' do
         is_expected.to contain_magnum_config('api/port').with_value(p[:port])
-        is_expected.to contain_magnum_config('api/host_ip').with_value(p[:host_ip])
+        is_expected.to contain_magnum_config('api/host').with_value(p[:host])
         is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
         is_expected.to contain_magnum_config('keystone_authtoken/admin_password').with_value(p[:admin_password]).with_secret(true)
         is_expected.to contain_magnum_config('keystone_authtoken/admin_user').with_value(p[:admin_user])
@@ -84,29 +85,21 @@ describe 'magnum::api' do
 
   end
 
-  context 'on Debian platforms' do
-    let :facts do
-      @default_facts.merge({ :osfamily => 'Debian' })
-    end
+ on_supported_os({
+    :supported_os   => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts())
+      end
 
-    let :platform_params do
-      { :api_package => 'magnum-api',
-        :api_service => 'magnum-api' }
-    end
-
-    it_configures 'magnum-api'
-  end
-
-  context 'on RedHat platforms' do
-    let :facts do
-      @default_facts.merge({ :osfamily => 'RedHat' })
-    end
-
-    let :platform_params do
+      let :platform_params do
       { :api_service => 'magnum-api' }
+      end
+
+      it_configures 'magnum-api'
     end
 
-    it_configures 'magnum-api'
   end
 
 end

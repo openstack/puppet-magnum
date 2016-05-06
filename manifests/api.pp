@@ -19,7 +19,7 @@
 #  (Optional) The port for the Magnum API server.
 #  Defaults to '9511'
 #
-# [*host_ip*]
+# [*host*]
 #  (Optional) The listen IP for the Magnum API server.
 #  Defaults to '127.0.0.1'
 #
@@ -30,16 +30,20 @@
 #
 # [*auth_uri*]
 #  (Optional) Complete public identity API endpoint.
-#  Defaults to 'http://localhost:5000/'
+#  Defaults to 'http://127.0.0.1:5000/'
 #
 # [*identity_uri*]
 #  (Optional) Complete admin identity API endpoint.
-#  Defaults to 'http://localhost:35357/'
+#  Defaults to 'http://127.0.0.1:35357/'
 #
 # [*auth_version*]
 #  (Optional) API version of the admin identity API endpoint. For example,
 #  use 'v3' for the keystone version 3 API.
 #  Defaults to false
+#
+# [*sync_db*]
+#  (Optional) Enable DB sync
+#  Defaults to true
 #
 # [*admin_tenant_name*]
 #  (Optional) The name of the tenant to create in keystone for use by Magnum services.
@@ -55,11 +59,12 @@ class magnum::api(
   $package_ensure    = 'present',
   $enabled           = true,
   $port              = '9511',
-  $host_ip           = '127.0.0.1',
+  $host              = '127.0.0.1',
   $max_limit         = '1000',
-  $auth_uri          = 'http://localhost:5000/',
-  $identity_uri      = 'http://localhost:35357/',
+  $auth_uri          = 'http://127.0.0.1:5000/',
+  $identity_uri      = 'http://127.0.0.1:35357/',
   $auth_version      = false,
+  $sync_db           = true,
   $admin_tenant_name = 'services',
   $admin_user        = 'magnum',
 ) {
@@ -67,13 +72,17 @@ class magnum::api(
   include ::magnum::params
   include ::magnum::policy
 
+  if $sync_db {
+    include ::magnum::db::sync
+  }
+
   Magnum_config<||> ~> Service['magnum-api']
   Class['magnum::policy'] ~> Service['magnum-api']
 
   # Configure API conf
   magnum_config {
     'api/port' :      value => $port;
-    'api/host_ip' :   value => $host_ip;
+    'api/host' :      value => $host;
     'api/max_limit' : value => $max_limit;
   }
 

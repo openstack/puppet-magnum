@@ -4,7 +4,7 @@ describe 'magnum::db' do
 
   shared_examples 'magnum::db' do
     context 'with default parameters' do
-      it { is_expected.to contain_magnum_config('database/connection').with_value('mysql://magnum:secrete@localhost:3306/magnum') }
+      it { is_expected.to contain_magnum_config('database/connection').with_value('mysql://magnum:magnum@localhost:3306/magnum') }
       it { is_expected.to contain_magnum_config('database/idle_timeout').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('database/min_pool_size').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('database/max_retries').with_value('<SERVICE DEFAULT>') }

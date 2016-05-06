@@ -6,7 +6,7 @@
 #
 # [*database_connection*]
 #   Url used to connect to database.
-#   (Optional) Defaults to "mysql://magnum:secrete@localhost:3306/magnum".
+#   (Optional) Defaults to "mysql://magnum:magnum@localhost:3306/magnum".
 #
 # [*database_idle_timeout*]
 #   Timeout when db connections should be reaped.
@@ -34,7 +34,7 @@
 #   (Optional) Defaults to $::os_service_default
 #
 class magnum::db (
-  $database_connection     = 'mysql://magnum:secrete@localhost:3306/magnum',
+  $database_connection     = 'mysql://magnum:magnum@localhost:3306/magnum',
   $database_idle_timeout   = $::os_service_default,
   $database_min_pool_size  = $::os_service_default,
   $database_max_pool_size  = $::os_service_default,
@@ -43,25 +43,17 @@ class magnum::db (
   $database_max_overflow   = $::os_service_default,
 ) {
 
-  $database_connection_real = pick($::magnum::database_connection, $database_connection)
-  $database_idle_timeout_real = pick($::magnum::database_idle_timeout, $database_idle_timeout)
-  $database_min_pool_size_real = pick($::magnum::database_min_pool_size, $database_min_pool_size)
-  $database_max_pool_size_real = pick($::magnum::database_max_pool_size, $database_max_pool_size)
-  $database_max_retries_real = pick($::magnum::database_max_retries, $database_max_retries)
-  $database_retry_interval_real = pick($::magnum::database_retry_interval, $database_retry_interval)
-  $database_max_overflow_real = pick($::magnum::database_max_overflow, $database_max_overflow)
-
-  validate_re($database_connection_real,
-    '(mysql|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
+  validate_re($database_connection,
+    '^(mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
 
   oslo::db { 'magnum_config':
-    connection     => $database_connection_real,
-    idle_timeout   => $database_idle_timeout_real,
-    min_pool_size  => $database_min_pool_size_real,
-    max_pool_size  => $database_max_pool_size_real,
-    max_retries    => $database_max_retries_real,
-    retry_interval => $database_retry_interval_real,
-    max_overflow   => $database_max_overflow_real,
+    connection     => $database_connection,
+    idle_timeout   => $database_idle_timeout,
+    min_pool_size  => $database_min_pool_size,
+    max_pool_size  => $database_max_pool_size,
+    max_retries    => $database_max_retries,
+    retry_interval => $database_retry_interval,
+    max_overflow   => $database_max_overflow,
   }
 
 }
