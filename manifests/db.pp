@@ -5,33 +5,38 @@
 # === Parameters
 #
 # [*database_connection*]
-#   Url used to connect to database.
-#   (Optional) Defaults to "mysql://magnum:magnum@localhost:3306/magnum".
+#   (Optional) Url used to connect to database.
+#   Defaults to "mysql://magnum:magnum@localhost:3306/magnum".
 #
 # [*database_idle_timeout*]
-#   Timeout when db connections should be reaped.
-#   (Optional) Defaults to $::os_service_default
+#   (Optional) Timeout when db connections should be reaped.
+#   Defaults to $::os_service_default
 #
 # [*database_max_retries*]
-#   Maximum number of database connection retries during startup.
+#   (Optional) Maximum number of database connection retries during startup.
 #   Setting -1 implies an infinite retry count.
-#   (Optional) Defaults to $::os_service_default
+#   Defaults to $::os_service_default
 #
 # [*database_retry_interval*]
-#   Interval between retries of opening a database connection.
-#   (Optional) Defaults to $::os_service_default
+#   (Optional) Interval between retries of opening a database connection.
+#    Defaults to $::os_service_default
 #
 # [*database_min_pool_size*]
-#   Minimum number of SQL connections to keep open in a pool.
-#   (Optional) Defaults to $::os_service_default
+#   (Optional) Minimum number of SQL connections to keep open in a pool.
+#   Defaults to $::os_service_default
 #
 # [*database_max_pool_size*]
-#   Maximum number of SQL connections to keep open in a pool.
-#   (Optional) Defaults to $::os_service_default
+#   (Optional) Maximum number of SQL connections to keep open in a pool.
+#   Defaults to $::os_service_default
 #
 # [*database_max_overflow*]
-#   If set, use this value for max_overflow with sqlalchemy.
-#   (Optional) Defaults to $::os_service_default
+#   (Optional) If set, use this value for max_overflow with sqlalchemy.
+#   Defaults to $::os_service_default
+#
+# [*database_db_max_retries*]
+#   (Optional) Maximum retries in case of connection error or deadlock error
+#   before error is raised. Set to -1 to specify an infinite retry count.
+#   Defaults to $::os_service_default
 #
 class magnum::db (
   $database_connection     = 'mysql://magnum:magnum@localhost:3306/magnum',
@@ -41,6 +46,7 @@ class magnum::db (
   $database_max_retries    = $::os_service_default,
   $database_retry_interval = $::os_service_default,
   $database_max_overflow   = $::os_service_default,
+  $database_db_max_retries = $::os_service_default,
 ) {
 
   validate_re($database_connection,
@@ -54,6 +60,7 @@ class magnum::db (
     max_retries    => $database_max_retries,
     retry_interval => $database_retry_interval,
     max_overflow   => $database_max_overflow,
+    db_max_retries => $database_db_max_retries,
   }
 
 }
