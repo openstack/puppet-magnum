@@ -8,6 +8,7 @@ describe 'magnum::db::sync' do
       is_expected.to contain_exec('magnum-db-sync').with(
         :command     => 'magnum-db-manage --config-file /etc/magnum/magnum.conf upgrade head',
         :path        => '/usr/bin',
+        :user        => 'magnum',
         :refreshonly => 'true',
         :logoutput   => 'on_failure'
       )
@@ -24,6 +25,7 @@ describe 'magnum::db::sync' do
         is_expected.to contain_exec('magnum-db-sync').with(
           :command     => 'magnum-db-manage --config-file /etc/magnum/magnum.conf upgrade head',
           :path        => '/usr/bin',
+          :user        => 'magnum',
           :refreshonly => 'true',
           :logoutput   => 'on_failure'
         )
