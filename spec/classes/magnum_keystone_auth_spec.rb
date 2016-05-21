@@ -7,7 +7,7 @@ require 'spec_helper'
 describe 'magnum::keystone::auth' do
 
   let :facts do
-    @default_facts.merge({ :osfamily => 'Debian' })
+    OSDefaults.get_facts({ :osfamily => 'Debian' })
   end
 
   describe 'with default class parameters' do
