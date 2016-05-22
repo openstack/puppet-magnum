@@ -17,14 +17,20 @@
 #     DEFAULT/bar:
 #       value: barValue
 #
+# [*magnum_api_paste_ini*]
+#   (optional) Allow configuration of /etc/magnum/api-paste.ini options.
+#
 #   NOTE: The configuration MUST NOT be already handled by this module
 #   or Puppet catalog compilation will fail with duplicate resources.
 #
 class magnum::config (
-  $magnum_config = {},
+  $magnum_config        = {},
+  $magnum_api_paste_ini = {},
 ) {
 
   validate_hash($magnum_config)
+  validate_hash($magnum_api_paste_ini)
 
   create_resources('magnum_config', $magnum_config)
+  create_resources('magnum_api_paste_ini', $magnum_api_paste_ini)
 }
