@@ -63,6 +63,11 @@
 #  on some distributions.
 #  Defaults to $::os_service_default
 #
+# [*purge_config*]
+#   (optional) Whether to set only the specified config options
+#   in the magnum config.
+#   Defaults to false.
+#
 class magnum(
   $package_ensure      = 'present',
   $notification_driver = $::os_service_default,
@@ -78,6 +83,7 @@ class magnum(
   $kombu_ssl_certfile  = $::os_service_default,
   $kombu_ssl_keyfile   = $::os_service_default,
   $kombu_ssl_version   = $::os_service_default,
+  $purge_config        = false,
 ) {
 
   include ::magnum::params
@@ -89,6 +95,10 @@ class magnum(
     ensure => $package_ensure,
     name   => $::magnum::params::common_package,
     tag    => ['openstack', 'magnum-package'],
+  }
+
+  resources { 'magnum_config':
+    purge => $purge_config,
   }
 
   if $rpc_backend == 'rabbit' {

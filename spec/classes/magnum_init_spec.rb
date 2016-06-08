@@ -5,6 +5,9 @@ describe 'magnum' do
   shared_examples 'magnum' do
 
     context 'with default parameters' do
+      let :params do
+        { :purge_config => false  }
+      end
 
       it 'contains other classes' do
         is_expected.to contain_class('magnum::logging')
@@ -25,6 +28,12 @@ describe 'magnum' do
         is_expected.to contain_file('/etc/magnum/magnum.conf').with(
           :require => 'Package[magnum-common]',
         )
+      end
+
+      it 'passes purge to resource' do
+        is_expected.to contain_resources('magnum_config').with({
+          :purge => false
+        })
       end
 
       it 'configures rabbit' do
