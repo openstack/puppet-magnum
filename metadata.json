@@ -1,5 +1,5 @@
 {
-  "name": "puppet-magnum",
+  "name": "openstack-magnum",
   "version": "9.0.0",
   "author": "OpenStack Contributors",
   "summary": "Puppet module for OpenStack Magnum",
