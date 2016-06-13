@@ -59,5 +59,5 @@ class magnum::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['magnum'] ~> Exec<| title == 'magnum-manage db_sync' |>
+  ::Openstacklib::Db::Mysql['magnum'] ~> Exec<| title == 'magnum-db-sync' |>
 }

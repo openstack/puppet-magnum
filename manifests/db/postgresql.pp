@@ -42,6 +42,6 @@ class magnum::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['magnum'] ~> Exec<| title == 'magnum-manage db_sync' |>
+  ::Openstacklib::Db::Postgresql['magnum'] ~> Exec<| title == 'magnum-db-sync' |>
 
 }
