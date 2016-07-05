@@ -26,12 +26,12 @@ describe 'magnum::keystone::auth' do
       :roles   => ['admin']
     )}
 
-    it { is_expected.to contain_keystone_service('magnum::container').with(
+    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
       :ensure      => 'present',
       :description => 'magnum Container Service'
     ) }
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container').with(
+    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
       :ensure       => 'present',
       :public_url   => 'http://127.0.0.1:9511/v1',
       :admin_url    => 'http://127.0.0.1:9511/v1',
@@ -47,7 +47,7 @@ describe 'magnum::keystone::auth' do
         :admin_url    => 'http://10.10.10.12:81', }
     end
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container').with(
+    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
       :ensure       => 'present',
       :public_url   => 'https://10.10.10.10:80',
       :internal_url => 'http://10.10.10.11:81',
@@ -63,8 +63,8 @@ describe 'magnum::keystone::auth' do
 
     it { is_expected.to contain_keystone_user('magnumy') }
     it { is_expected.to contain_keystone_user_role('magnumy@services') }
-    it { is_expected.to contain_keystone_service('magnumy::container') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnumy::container') }
+    it { is_expected.to contain_keystone_service('magnumy::container-infra') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/magnumy::container-infra') }
   end
 
   describe 'when overriding service name' do
@@ -76,8 +76,8 @@ describe 'magnum::keystone::auth' do
 
     it { is_expected.to contain_keystone_user('magnum') }
     it { is_expected.to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum_service::container') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum_service::container') }
+    it { is_expected.to contain_keystone_service('magnum_service::container-infra') }
+    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum_service::container-infra') }
   end
 
   describe 'when disabling user configuration' do
@@ -91,9 +91,9 @@ describe 'magnum::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('magnum') }
     it { is_expected.to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum::container').with(
+    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
       :ensure      => 'present',
-      :type        => 'container',
+      :type        => 'container-infra',
       :description => 'magnum Container Service'
     ) }
 
@@ -111,9 +111,9 @@ describe 'magnum::keystone::auth' do
 
     it { is_expected.not_to contain_keystone_user('magnum') }
     it { is_expected.not_to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum::container').with(
+    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
       :ensure      => 'present',
-      :type        => 'container',
+      :type        => 'container-infra',
       :description => 'magnum Container Service'
     ) }
 

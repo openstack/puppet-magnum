@@ -28,7 +28,7 @@
 #   Defaults to 'true'.
 #
 # [*service_type*]
-#   Type of service. Defaults to 'container'.
+#   Type of service. Defaults to 'container-infra'.
 #
 # [*region*]
 #   Region for endpoint. Defaults to 'RegionOne'.
@@ -57,7 +57,7 @@ class magnum::keystone::auth (
   $configure_user      = true,
   $configure_user_role = true,
   $service_name        = undef,
-  $service_type        = 'container',
+  $service_type        = 'container-infra',
   $region              = 'RegionOne',
   $public_url          = 'http://127.0.0.1:9511/v1',
   $admin_url           = 'http://127.0.0.1:9511/v1',
