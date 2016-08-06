@@ -5,22 +5,22 @@ require 'spec_helper'
 
 describe 'magnum::api' do
 
+  let :pre_condition do
+    'class { "magnum::keystone::authtoken": password => "secret", }'
+  end
+
   let :default_params do
     { :package_ensure    => 'present',
       :enabled           => true,
       :port              => '9511',
       :host              => '127.0.0.1',
       :max_limit         => '1000',
-      :auth_uri          => 'http://127.0.0.1:5000/',
-      :identity_uri      => 'http://127.0.0.1:35357/',
       :sync_db           => 'true',
-      :admin_tenant_name => 'services',
-      :admin_user        => 'magnum',
     }
   end
 
   let :params do
-    { :admin_password => 'secrete' }
+    {}
   end
 
   shared_examples_for 'magnum-api' do
@@ -53,11 +53,6 @@ describe 'magnum::api' do
       is_expected.to contain_magnum_config('api/port').with_value(p[:port])
       is_expected.to contain_magnum_config('api/host').with_value(p[:host])
       is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
-      is_expected.to contain_magnum_config('keystone_authtoken/admin_password').with_value(p[:admin_password]).with_secret(true)
-      is_expected.to contain_magnum_config('keystone_authtoken/admin_user').with_value(p[:admin_user])
-      is_expected.to contain_magnum_config('keystone_authtoken/admin_tenant_name').with_value(p[:admin_tenant_name])
-      is_expected.to contain_magnum_config('keystone_authtoken/auth_uri').with_value(p[:auth_uri])
-      is_expected.to contain_magnum_config('keystone_authtoken/identity_uri').with_value(p[:identity_uri])
     end
 
     context 'when overriding parameters' do
@@ -66,8 +61,6 @@ describe 'magnum::api' do
           :port         => '1234',
           :host         => '0.0.0.0',
           :max_limit    => '10',
-          :auth_uri     => 'http://127.0.0.1:5000/',
-          :identity_uri => 'http://127.0.0.1:35357/',
         )
       end
 
@@ -75,11 +68,6 @@ describe 'magnum::api' do
         is_expected.to contain_magnum_config('api/port').with_value(p[:port])
         is_expected.to contain_magnum_config('api/host').with_value(p[:host])
         is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
-        is_expected.to contain_magnum_config('keystone_authtoken/admin_password').with_value(p[:admin_password]).with_secret(true)
-        is_expected.to contain_magnum_config('keystone_authtoken/admin_user').with_value(p[:admin_user])
-        is_expected.to contain_magnum_config('keystone_authtoken/admin_tenant_name').with_value(p[:admin_tenant_name])
-        is_expected.to contain_magnum_config('keystone_authtoken/auth_uri').with_value(p[:auth_uri])
-        is_expected.to contain_magnum_config('keystone_authtoken/identity_uri').with_value(p[:identity_uri])
       end
     end
 

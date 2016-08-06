@@ -38,6 +38,10 @@ describe 'basic magnum' do
         admin_url    => 'http://127.0.0.1:9511/v1',
       }
 
+      class { '::magnum::keystone::authtoken':
+        password => 'a_big_secret',
+      }
+
       class { '::magnum::db::mysql':
         password => 'magnum',
       }
@@ -60,9 +64,6 @@ describe 'basic magnum' do
        }
 
        class { '::magnum::api':
-        admin_password => 'a_big_secret',
-        auth_uri       => 'http://127.0.0.1:5000/',
-        identity_uri   => 'http://127.0.0.1:35357/',
         host           => '127.0.0.1',
       }
 
