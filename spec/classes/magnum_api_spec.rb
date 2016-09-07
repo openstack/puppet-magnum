@@ -16,6 +16,9 @@ describe 'magnum::api' do
       :host              => '127.0.0.1',
       :max_limit         => '1000',
       :sync_db           => 'true',
+      :enabled_ssl       => 'false',
+      :ssl_cert_file     => '<SERVICE DEFAULT>',
+      :ssl_key_file      => '<SERVICE DEFAULT>',
     }
   end
 
@@ -40,19 +43,22 @@ describe 'magnum::api' do
         )
         is_expected.to contain_package('magnum-api').with_before(/Service\[magnum-api\]/)
       end
-   end
+    end
 
     it 'ensures magnum api service is running' do
       is_expected.to contain_service('magnum-api').with(
         'hasstatus' => true,
         'tag'       => ['magnum-service', 'magnum-db-sync-service']
       )
-   end
+    end
 
     it 'configures magnum.conf' do
       is_expected.to contain_magnum_config('api/port').with_value(p[:port])
       is_expected.to contain_magnum_config('api/host').with_value(p[:host])
       is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
+      is_expected.to contain_magnum_config('api/enabled_ssl').with_value(p[:enabled_ssl])
+      is_expected.to contain_magnum_config('api/ssl_cert_file').with_value('<SERVICE DEFAULT>')
+      is_expected.to contain_magnum_config('api/ssl_key_file').with_value('<SERVICE DEFAULT>')
     end
 
     context 'when overriding parameters' do
@@ -71,6 +77,19 @@ describe 'magnum::api' do
       end
     end
 
+    context 'with SSL enabled' do
+      let :params do
+        {
+          :enabled_ssl   => true,
+          :ssl_cert_file => '/path/to/cert',
+          :ssl_key_file  => '/path/to/key'
+        }
+      end
+
+      it { is_expected.to contain_magnum_config('api/enabled_ssl').with_value(p[:enabled_ssl]) }
+      it { is_expected.to contain_magnum_config('api/ssl_cert_file').with_value(p[:ssl_cert_file]) }
+      it { is_expected.to contain_magnum_config('api/ssl_key_file').with_value(p[:ssl_key_file]) }
+    end
   end
 
  on_supported_os({
