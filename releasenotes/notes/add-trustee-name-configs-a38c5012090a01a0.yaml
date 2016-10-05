@@ -1,0 +1,5 @@
+---
+features:
+  - The domain_name and domain_admin parameters in magnum::keystone::domain
+    now set up the trust/trustee_domain_name and trust/trustee_domain_admin_name
+    config options.
