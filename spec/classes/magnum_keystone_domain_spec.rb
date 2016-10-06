@@ -12,10 +12,10 @@ describe 'magnum::keystone::domain' do
 
   shared_examples_for 'magnum keystone domain' do
     it 'configure magnum.conf' do
-      #is_expected.to contain_magnum_config('trust/trustee_domain_admin_id').with_value(params[:domain_admin])
+      is_expected.to contain_magnum_config('trust/trustee_domain_admin_name').with_value(params[:domain_admin])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_value(params[:domain_password])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_secret(true)
-      #is_expected.to contain_magnum_config('trust/trustee_domain_id').with_value(params[:domain_name])
+      is_expected.to contain_magnum_config('trust/trustee_domain_name').with_value(params[:domain_name])
     end
 
     it 'should create keystone domain' do
