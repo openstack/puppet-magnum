@@ -80,6 +80,8 @@ describe 'basic magnum' do
       class { '::magnum::certificates':
         cert_manager_type => 'local'
       }
+
+      class { '::magnum::clients': }
     EOS
       # Run it twice to test for idempotency
       apply_manifest(pp, :catch_failures => true)
