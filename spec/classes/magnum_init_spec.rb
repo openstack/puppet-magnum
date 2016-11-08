@@ -38,6 +38,7 @@ describe 'magnum' do
 
       it 'configures rabbit' do
         is_expected.to contain_magnum_config('DEFAULT/rpc_backend').with_value('rabbit')
+        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE_DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('<SERVICE_DEFAULT>').with_secret(true)
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE_DEFAULT>')
@@ -55,6 +56,7 @@ describe 'magnum' do
       let :params do
         { :package_ensure      => 'latest',
           :notification_driver => 'messagingv1',
+          :transport_url       => 'rabbit://user:pass@host:1234/virt',
           :rabbit_host         => '53.210.103.65',
           :rabbit_port         => '1234',
           :rabbit_userid       => 'me',
@@ -72,6 +74,7 @@ describe 'magnum' do
       end
 
       it 'configures rabbit' do
+        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('rabbit://user:pass@host:1234/virt')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('53.210.103.65')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('secrete').with_secret(true)
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('1234')

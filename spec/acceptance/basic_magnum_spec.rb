@@ -61,13 +61,10 @@ describe 'basic magnum' do
       }
 
       class { '::magnum':
-        rabbit_host         => '127.0.0.1',
-        rabbit_port         => '5672',
-        rabbit_userid       => 'magnum',
-        rabbit_password     => 'an_even_bigger_secret',
-        rabbit_use_ssl      => false,
-        notification_driver => 'messagingv2',
-       }
+        default_transport_url => 'rabbit://magnum:an_even_bigger_secret@127.0.0.1:5672/',
+        rabbit_use_ssl        => false,
+        notification_driver   => 'messagingv2',
+      }
 
        class { '::magnum::api':
         host           => '127.0.0.1',

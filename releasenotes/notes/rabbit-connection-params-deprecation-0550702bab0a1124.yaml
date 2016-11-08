@@ -1,0 +1,6 @@
+---
+deprecations:
+  - magnum::rabbit_host, magnum::rabbit_hosts, magnum::rabbit_password,
+    magnum::rabbit_port, magnum::rabbit_userid and
+    magnum::rabbit_virtual_host are deprecated.
+    magnum::default_transport_url should be used instead.
