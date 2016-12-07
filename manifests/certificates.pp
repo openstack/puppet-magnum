@@ -12,6 +12,8 @@ class magnum::certificates (
   $cert_manager_type = $::os_service_default,
 ) {
 
+  include ::magnum::deps
+
   magnum_config { 'certificates/cert_manager_type':
     value => $cert_manager_type;
   }

@@ -64,7 +64,9 @@ class magnum::keystone::auth (
   $internal_url        = 'http://127.0.0.1:9511/v1',
 ) {
 
-  $real_service_name    = pick($service_name, $auth_name)
+  include ::magnum::deps
+
+  $real_service_name = pick($service_name, $auth_name)
 
   if $configure_user_role {
     Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'magnum-server' |>

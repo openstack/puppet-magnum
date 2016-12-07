@@ -12,6 +12,7 @@ class magnum::client (
   $package_ensure = present
 ) {
 
+  include ::magnum::deps
   include ::magnum::params
 
   package { 'python-magnumclient':

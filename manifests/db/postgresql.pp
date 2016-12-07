@@ -32,7 +32,7 @@ class magnum::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  Class['magnum::db::postgresql'] -> Service<| title == 'magnum' |>
+  include ::magnum::deps
 
   ::openstacklib::db::postgresql { 'magnum':
     password_hash => postgresql_password($user, $password),
@@ -42,6 +42,8 @@ class magnum::db::postgresql(
     privileges    => $privileges,
   }
 
-  ::Openstacklib::Db::Postgresql['magnum'] ~> Exec<| title == 'magnum-db-sync' |>
+  Anchor['magnum::db::begin']
+  ~> Class['magnum::db::postgresql']
+  ~> Anchor['magnum::db::end']
 
 }

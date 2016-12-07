@@ -49,6 +49,8 @@ class magnum::db (
   $database_db_max_retries = $::os_service_default,
 ) {
 
+  include ::magnum::deps
+
   validate_re($database_connection,
     '^(mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
 

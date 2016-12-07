@@ -19,6 +19,7 @@ class magnum::clients (
   $endpoint_type = 'publicURL',
 ) {
 
+  include ::magnum::deps
   include ::magnum::params
 
   magnum_config {

@@ -28,6 +28,8 @@ class magnum::policy (
   $policy_path = '/etc/magnum/policy.json',
 ) {
 
+  include ::magnum::deps
+
   validate_hash($policies)
 
   Openstacklib::Policy::Base {

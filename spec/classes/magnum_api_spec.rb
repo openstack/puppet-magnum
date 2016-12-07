@@ -31,6 +31,7 @@ describe 'magnum::api' do
       default_params.merge(params)
     end
 
+    it { is_expected.to contain_class('magnum::deps') }
     it { is_expected.to contain_class('magnum::params') }
     it { is_expected.to contain_class('magnum::policy') }
 
@@ -41,7 +42,6 @@ describe 'magnum::api' do
           :name   => platform_params[:api_package],
           :tag    => ['openstack', 'magnum-package'],
         )
-        is_expected.to contain_package('magnum-api').with_before(/Service\[magnum-api\]/)
       end
     end
 

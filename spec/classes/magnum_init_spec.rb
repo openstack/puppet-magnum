@@ -11,6 +11,7 @@ describe 'magnum' do
 
       it 'contains other classes' do
         is_expected.to contain_class('magnum::logging')
+        is_expected.to contain_class('magnum::deps')
         is_expected.to contain_class('magnum::params')
         is_expected.to contain_class('magnum::policy')
         is_expected.to contain_class('magnum::db')

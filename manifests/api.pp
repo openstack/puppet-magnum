@@ -60,6 +60,7 @@ class magnum::api(
   $ssl_key_file   = $::os_service_default,
 ) {
 
+  include ::magnum::deps
   include ::magnum::params
   include ::magnum::policy
 
@@ -76,9 +77,6 @@ class magnum::api(
     include ::magnum::db::sync
   }
 
-  Magnum_config<||> ~> Service['magnum-api']
-  Class['magnum::policy'] ~> Service['magnum-api']
-
   # Configure API conf
   magnum_config {
     'api/port' :         value => $port;
@@ -91,8 +89,6 @@ class magnum::api(
 
   # Install package
   if $::magnum::params::api_package {
-    Package['magnum-api'] -> Class['magnum::policy']
-    Package['magnum-api'] -> Service['magnum-api']
     package { 'magnum-api':
       ensure => $package_ensure,
       name   => $::magnum::params::api_package,

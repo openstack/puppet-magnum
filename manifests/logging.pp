@@ -108,6 +108,8 @@ class magnum::logging(
   $log_date_format               = $::os_service_default,
 ) {
 
+  include ::magnum::deps
+
   oslo::log { 'magnum_config':
     debug                         => $debug,
     use_syslog                    => $use_syslog,

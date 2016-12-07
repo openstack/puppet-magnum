@@ -29,10 +29,10 @@ class magnum::conductor(
 ) {
 
   include ::magnum::db
+  include ::magnum::deps
   include ::magnum::params
 
   # Install package
-  Package['magnum-conductor'] -> Service['magnum-conductor']
   package { 'magnum-conductor':
     ensure => $package_ensure,
     name   => $::magnum::params::conductor_package,

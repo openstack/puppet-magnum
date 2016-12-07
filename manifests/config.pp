@@ -28,6 +28,8 @@ class magnum::config (
   $magnum_api_paste_ini = {},
 ) {
 
+  include ::magnum::deps
+
   validate_hash($magnum_config)
   validate_hash($magnum_api_paste_ini)
 

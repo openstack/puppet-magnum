@@ -96,6 +96,7 @@ class magnum(
   $rabbit_password       = $::os_service_default,
 ) {
 
+  include ::magnum::deps
   include ::magnum::params
   include ::magnum::logging
   include ::magnum::policy

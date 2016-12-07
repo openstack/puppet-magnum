@@ -47,6 +47,8 @@ class magnum::db::mysql(
   $allowed_hosts = undef
 ) {
 
+  include ::magnum::deps
+
   validate_string($password)
 
   ::openstacklib::db::mysql { 'magnum':
@@ -59,5 +61,8 @@ class magnum::db::mysql(
     allowed_hosts => $allowed_hosts,
   }
 
-  ::Openstacklib::Db::Mysql['magnum'] ~> Exec<| title == 'magnum-db-sync' |>
+  Anchor['magnum::db::begin']
+  ~> Class['magnum::db::mysql']
+  ~> Anchor['magnum::db::end']
+
 }

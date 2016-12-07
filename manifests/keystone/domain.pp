@@ -38,7 +38,9 @@ class magnum::keystone::domain (
   $manage_domain      = true,
   $manage_user        = true,
   $manage_role        = true,
-  ) {
+) {
+
+  include ::magnum::deps
   include ::magnum::params
 
   if $manage_domain {
