@@ -6,10 +6,10 @@
 #
 # [*package_ensure*]
 #   (optional) The state of the package
-#   Defaults to present
+#   Defaults to 'present'
 #
 class magnum::client (
-  $package_ensure = present
+  $package_ensure = 'present'
 ) {
 
   include ::magnum::deps
