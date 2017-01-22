@@ -24,6 +24,10 @@ class magnum::deps {
   ~> Service<| tag == 'magnum-service' |>
   ~> anchor { 'magnum::service::end': }
 
+  # all db settings should be applied and all packages should be installed
+  # before dbsync starts
+  Oslo::Db<||> -> Anchor['magnum::dbsync::begin']
+
   # policy config should occur in the config block also.
   Anchor['magnum::config::begin']
   -> Openstacklib::Policy::Base<||>
