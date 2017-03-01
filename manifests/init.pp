@@ -8,6 +8,17 @@
 #  (Optional) Ensure state for package
 #  Defaults to 'present'
 #
+# [*notification_transport_url*]
+#   (optional) A URL representing the messaging driver to use for notifications
+#   and its full configuration. Transport URLs take the form:
+#     transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#   Defaults to $::os_service_default
+#
+# [*notification_topics*]
+#   (optional) AMQP topics to publish to when using the RPC notification driver.
+#   (list value)
+#   Default to $::os_service_default
+#
 # [*notification_driver*]
 #  (Optional) Notification driver to use
 #  Defaults to $::os_service_default
@@ -87,25 +98,27 @@
 #  Defaults to $::os_service_default
 #
 class magnum(
-  $package_ensure        = 'present',
-  $notification_driver   = $::os_service_default,
-  $rpc_backend           = 'rabbit',
-  $default_transport_url = $::os_service_default,
-  $rpc_response_timeout  = $::os_service_default,
-  $control_exchange      = $::os_service_default,
-  $rabbit_use_ssl        = $::os_service_default,
-  $kombu_ssl_ca_certs    = $::os_service_default,
-  $kombu_ssl_certfile    = $::os_service_default,
-  $kombu_ssl_keyfile     = $::os_service_default,
-  $kombu_ssl_version     = $::os_service_default,
-  $purge_config          = false,
+  $package_ensure             = 'present',
+  $notification_transport_url = $::os_service_default,
+  $notification_driver        = $::os_service_default,
+  $notification_topics        = $::os_service_default,
+  $rpc_backend                = 'rabbit',
+  $default_transport_url      = $::os_service_default,
+  $rpc_response_timeout       = $::os_service_default,
+  $control_exchange           = $::os_service_default,
+  $rabbit_use_ssl             = $::os_service_default,
+  $kombu_ssl_ca_certs         = $::os_service_default,
+  $kombu_ssl_certfile         = $::os_service_default,
+  $kombu_ssl_keyfile          = $::os_service_default,
+  $kombu_ssl_version          = $::os_service_default,
+  $purge_config               = false,
   # DEPRECATED PARAMTERS
-  $rabbit_host           = $::os_service_default,
-  $rabbit_hosts          = $::os_service_default,
-  $rabbit_port           = $::os_service_default,
-  $rabbit_userid         = $::os_service_default,
-  $rabbit_virtual_host   = $::os_service_default,
-  $rabbit_password       = $::os_service_default,
+  $rabbit_host                = $::os_service_default,
+  $rabbit_hosts               = $::os_service_default,
+  $rabbit_port                = $::os_service_default,
+  $rabbit_userid              = $::os_service_default,
+  $rabbit_virtual_host        = $::os_service_default,
+  $rabbit_password            = $::os_service_default,
 ) {
 
   include ::magnum::deps
@@ -154,7 +167,9 @@ class magnum(
   }
 
   oslo::messaging::notifications { 'magnum_config':
-    driver => $notification_driver
+    transport_url => $notification_transport_url,
+    driver        => $notification_driver,
+    topics        => $notification_topics,
   }
 
 }

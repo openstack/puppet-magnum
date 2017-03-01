@@ -50,23 +50,27 @@ describe 'magnum' do
       end
 
       it 'configures various things' do
-        is_expected.to contain_magnum_config('DEFAULT/notification_driver').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('<SERVICE_DEFAULT>')
       end
 
     end
 
     context 'with overridden parameters' do
       let :params do
-        { :package_ensure       => 'latest',
-          :notification_driver  => 'messagingv1',
-          :transport_url        => 'rabbit://user:pass@host:1234/virt',
-          :rpc_response_timeout => '120',
-          :control_exchange     => 'magnum',
-          :rabbit_host          => '53.210.103.65',
-          :rabbit_port          => '1234',
-          :rabbit_userid        => 'me',
-          :rabbit_password      => 'secrete',
-          :rabbit_virtual_host  => 'vhost',
+        { :package_ensure             => 'latest',
+          :notification_transport_url => 'rabbit://user:pass@host:1234/virt',
+          :notification_topics        => 'openstack',
+          :notification_driver        => 'messagingv1',
+          :transport_url              => 'rabbit://user:pass@host:1234/virt',
+          :rpc_response_timeout       => '120',
+          :control_exchange           => 'magnum',
+          :rabbit_host                => '53.210.103.65',
+          :rabbit_port                => '1234',
+          :rabbit_userid              => 'me',
+          :rabbit_password            => 'secrete',
+          :rabbit_virtual_host        => 'vhost',
         }
       end
 
@@ -90,7 +94,9 @@ describe 'magnum' do
       end
 
       it 'configures various things' do
-        is_expected.to contain_magnum_config('DEFAULT/notification_driver').with_value('messagingv1')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('rabbit://user:pass@host:1234/virt')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('messagingv1')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('openstack')
       end
     end
 
