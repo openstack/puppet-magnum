@@ -54,7 +54,7 @@ describe 'magnum::logging' do
   end
 
   shared_examples 'basic default logging settings' do
-    it 'configures magnum logging settins with default values' do
+    it 'configures magnum logging settings with default values' do
       is_expected.to contain_magnum_config('DEFAULT/use_syslog').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_magnum_config('DEFAULT/use_stderr').with(:value => '<SERVICE DEFAULT>')
       is_expected.to contain_magnum_config('DEFAULT/syslog_log_facility').with(:value => '<SERVICE DEFAULT>')
@@ -64,7 +64,7 @@ describe 'magnum::logging' do
   end
 
   shared_examples 'basic non-default logging settings' do
-    it 'configures magnum logging settins with non-default values' do
+    it 'configures magnum logging settings with non-default values' do
       is_expected.to contain_magnum_config('DEFAULT/use_syslog').with(:value => 'true')
       is_expected.to contain_magnum_config('DEFAULT/use_stderr').with(:value => 'false')
       is_expected.to contain_magnum_config('DEFAULT/syslog_log_facility').with(:value => 'LOG_FOO')
