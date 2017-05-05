@@ -52,6 +52,10 @@ describe 'basic magnum' do
         password => 'magnum',
       }
 
+      class { '::magnum::logging':
+        debug => true,
+      }
+
       class { '::magnum::db':
         database_connection => 'mysql://magnum:magnum@127.0.0.1/magnum',
       }
