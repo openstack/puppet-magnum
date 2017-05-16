@@ -19,15 +19,9 @@ describe 'magnum' do
 
       it 'installs packages' do
         is_expected.to contain_package('magnum-common').with(
-          :name   => platform_params[:magnum_common_package],
           :ensure => 'present',
+          :name   => platform_params[:magnum_common_package],
           :tag    => ['openstack', 'magnum-package']
-        )
-      end
-
-      it 'creates various files and folders' do
-        is_expected.to contain_file('/etc/magnum/magnum.conf').with(
-          :require => 'Package[magnum-common]',
         )
       end
 
@@ -41,18 +35,18 @@ describe 'magnum' do
         is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('<SERVICE_DEFAULT>').with_secret(true)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('<SERVICE DEFAULT>').with_secret(true)
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE DEFAULT>')
       end
 
       it 'configures various things' do
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('<SERVICE_DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('<SERVICE DEFAULT>')
       end
 
     end
@@ -63,7 +57,7 @@ describe 'magnum' do
           :notification_transport_url => 'rabbit://user:pass@host:1234/virt',
           :notification_topics        => 'openstack',
           :notification_driver        => 'messagingv1',
-          :transport_url              => 'rabbit://user:pass@host:1234/virt',
+          :default_transport_url      => 'rabbit://user:pass@host:1234/virt',
           :rpc_response_timeout       => '120',
           :control_exchange           => 'magnum',
           :rabbit_host                => '53.210.103.65',
@@ -76,9 +70,9 @@ describe 'magnum' do
       end
 
       it 'installs packages' do
-        is_expected.to contain_package('magnum_common').with(
-          :name   => platform_params[:magnum_common_package],
+        is_expected.to contain_package('magnum-common').with(
           :ensure => 'latest',
+          :name   => platform_params[:magnum_common_package],
           :tag    => ['openstack', 'magnum-package']
         )
       end
@@ -104,12 +98,12 @@ describe 'magnum' do
 
     context 'with rabbit_hosts parameter' do
       let :params do
-        { :rabbit_hosts => ['rabbit:5673', 'rabbit:5674'] }
+        { :rabbit_hosts => ['rabbit:5673', 'rabbit2:5674'] }
       end
 
       it 'configures rabbit' do
-        is_expected.to_not contain_magnum_config('oslo_messaging_rabbit/rabbit_host')
-        is_expected.to_not contain_magnum_config('oslo_messaging_rabbit/rabbit_port')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_hosts').with_value('rabbit:5673,rabbit2:5674')
       end
     end
@@ -120,8 +114,8 @@ describe 'magnum' do
       end
 
       it 'configures rabbit' do
-        is_expected.to_not contain_magnum_config('oslo_messaging_rabbit/rabbit_host')
-        is_expected.to_not contain_magnum_config('oslo_messaging_rabbit/rabbit_port')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_hosts').with_value('rabbit:5673')
       end
     end
@@ -140,7 +134,7 @@ describe 'magnum' do
       it 'configures rabbit' do
         is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
           :rabbit_use_ssl     => true,
-          :kombu_ssl_ca_certs => '/etc/ca.cert',
+          :kombu_ssl_ca_certs => '/etc/ca.crt',
           :kombu_ssl_certfile => '/etc/certfile',
           :kombu_ssl_keyfile  => '/etc/key',
           :kombu_ssl_version  => 'TLSv1',
@@ -170,7 +164,6 @@ describe 'magnum' do
       let :params do
         { :rabbit_password    => 'pass',
           :rabbit_use_ssl     => false,
-          :kombu_ssl_version  => 'TLSv1',
         }
       end
 
@@ -184,26 +177,25 @@ describe 'magnum' do
         )
       end
     end
+  end
 
-    on_supported_os({
-      :supported_os => OSDefaults.get_supported_os
-    }).each do |os,facts|
-      context "on #{os}" do
-        let (:facts) do
-          facts.merge(OSDefaults.get_facts())
-        end
-
-        let :platform_params do
-          if facts[:os_family] == 'Debian'
-            { :magnum_common_package => 'magnum-common' }
-          else
-            { :magnum_common_package => 'openstack-magnum-common' }
-          end
-        end
-
-        it_behaves_like 'magnum'
+  on_supported_os({
+    :supported_os => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge(OSDefaults.get_facts())
       end
 
+      let :platform_params do
+        if facts[:osfamily] == 'Debian'
+          { :magnum_common_package => 'magnum-common' }
+        else
+          { :magnum_common_package => 'openstack-magnum-common' }
+        end
+      end
+
+      it_behaves_like 'magnum'
     end
 
   end

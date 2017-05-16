@@ -9,24 +9,24 @@
 #  Defaults to 'present'
 #
 # [*notification_transport_url*]
-#   (optional) A URL representing the messaging driver to use for notifications
-#   and its full configuration. Transport URLs take the form:
-#     transport://user:pass@host1:port[,hostN:portN]/virtual_host
-#   Defaults to $::os_service_default
+#  (Optional) A URL representing the messaging driver to use for notifications
+#  and its full configuration. Transport URLs take the form:
+#  transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#  Defaults to $::os_service_default
 #
 # [*notification_topics*]
-#   (optional) AMQP topics to publish to when using the RPC notification driver.
-#   (list value)
-#   Default to $::os_service_default
+#  (Optional) AMQP topics to publish to when using the RPC notification driver.
+#  (list value)
+#  Default to $::os_service_default
 #
 # [*notification_driver*]
 #  (Optional) Notification driver to use
 #  Defaults to $::os_service_default
 #
 # [*default_transport_url*]
-#  (optional) A URL representing the messaging driver to use and its full
+#  (Optional) A URL representing the messaging driver to use and its full
 #  configuration. Transport URLs take the form:
-#    transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#  transport://user:pass@host1:port[,hostN:portN]/virtual_host
 #  Defaults to $::os_service_default
 #
 # [*rpc_response_timeout*]
@@ -34,10 +34,10 @@
 #  Defaults to $::os_service_default
 #
 # [*control_exchange*]
-#   (Optional) The default exchange under which topics are scoped. May be
-#   overridden by an exchange name specified in the transport_url
-#   option.
-#   Defaults to $::os_service_default
+#  (Optional) The default exchange under which topics are scoped. May be
+#  overridden by an exchange name specified in the transport_url
+#  option.
+#  Defaults to $::os_service_default
 #
 # [*rabbit_use_ssl*]
 #  (Optional) Connect over SSL for rabbit
@@ -62,15 +62,15 @@
 #  Defaults to $::os_service_default
 #
 # [*kombu_failover_strategy*]
-#   (Optional) Determines how the next RabbitMQ node is chosen in case the one
-#   we are currently connected to becomes unavailable. Takes effect only if
-#   more than one RabbitMQ node is provided in config. (string value)
-#   Defaults to $::os_service_default
+#  (Optional) Determines how the next RabbitMQ node is chosen in case the one
+#  we are currently connected to becomes unavailable. Takes effect only if
+#  more than one RabbitMQ node is provided in config. (string value)
+#  Defaults to $::os_service_default
 #
 # [*purge_config*]
-#   (optional) Whether to set only the specified config options
-#   in the magnum config.
-#   Defaults to false.
+#  (Optional) Whether to set only the specified config options
+#  in the magnum config.
+#  Defaults to false.
 #
 # === DEPRECATED PARAMTERS
 #
