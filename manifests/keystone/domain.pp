@@ -66,20 +66,10 @@ class magnum::keystone::domain (
     )
   }
 
-# TODO(vanditboy): wait for a bugfix https://bugs.launchpad.net/puppet-magnum/+bug/1581372 or wirte
-# a custom type to get ID.
-
   magnum_config {
-    #'trust/trustee_domain_id':
-    #  value => $domain_name;
-
-    #'trust/trustee_domain_admin_id':
-    #  value => $domain_admin;
-
-    'trust/trustee_domain_admin_password':
-      value  => $domain_password,
-      secret => true;
-
-
+    'trust/trustee_domain_name':           value => $domain_name;
+    'trust/trustee_domain_admin_name':     value => $domain_admin;
+    'trust/trustee_domain_admin_password': value => $domain_password, secret => true;
   }
+
 }
