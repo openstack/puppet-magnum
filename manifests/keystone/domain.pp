@@ -4,6 +4,9 @@
 #
 # === Parameters
 #
+# [*cluster_user_trust*]
+#   enable creation of a user trust for clusters.  Defaults to $::os_service_default.
+#
 # [*domain_name*]
 #   magnum domain name. Defaults to 'magnum'.
 #
@@ -31,6 +34,7 @@
 #   Defaults to 'true'.
 #
 class magnum::keystone::domain (
+  $cluster_user_trust = $::os_service_default,
   $domain_name        = 'magnum',
   $domain_admin       = 'magnum_admin',
   $domain_admin_email = 'magnum_admin@localhost',
@@ -69,6 +73,7 @@ class magnum::keystone::domain (
   }
 
   magnum_config {
+    'trust/cluster_user_trust':            value => $cluster_user_trust;
     'trust/trustee_domain_name':           value => $domain_name;
     'trust/trustee_domain_admin_name':     value => $domain_admin;
     'trust/trustee_domain_admin_password': value => $domain_password, secret => true;

@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'magnum::keystone::domain' do
 
   let :params do {
+    :cluster_user_trust => true,
     :domain_name        => 'magnum',
     :domain_admin       => 'magnum_admin',
     :domain_admin_email => 'magnum_admin@localhost',
@@ -12,6 +13,7 @@ describe 'magnum::keystone::domain' do
 
   shared_examples_for 'magnum keystone domain' do
     it 'configure magnum.conf' do
+      is_expected.to contain_magnum_config('trust/cluster_user_trust').with_value(params[:cluster_user_trust])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_name').with_value(params[:domain_admin])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_value(params[:domain_password])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_secret(true)
