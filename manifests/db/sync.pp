@@ -12,16 +12,21 @@
 #   to the magnum-dbsync command.
 #   Defaults to undef
 #
+# [*exec_path*]
+#   (optional) The path  to use for finding the magnum-db-manage binary.
+#   Defaults to /usr/bin
+#
 class magnum::db::sync(
   $user         = 'magnum',
   $extra_params = '--config-file /etc/magnum/magnum.conf',
+  $exec_path    = '/usr/bin',
 ) {
 
   include ::magnum::deps
 
   exec { 'magnum-db-sync':
     command     => "magnum-db-manage ${extra_params} upgrade head",
-    path        => '/usr/bin',
+    path        => $exec_path,
     user        => $user,
     refreshonly => true,
     try_sleep   => 5,

@@ -44,6 +44,30 @@ describe 'magnum::db::sync' do
     }
     end
 
+    describe "overriding exec_path" do
+    let :params do
+      {
+        :exec_path => '/opt/venvs/magnum/bin',
+      }
+    end
+
+    it {
+        is_expected.to contain_exec('magnum-db-sync').with(
+          :command     => 'magnum-db-manage --config-file /etc/magnum/magnum.conf upgrade head',
+          :path        => '/opt/venvs/magnum/bin',
+          :user        => 'magnum',
+          :refreshonly => 'true',
+          :try_sleep   => 5,
+          :tries       => 10,
+          :logoutput   => 'on_failure',
+          :subscribe   => ['Anchor[magnum::install::end]',
+                           'Anchor[magnum::config::end]',
+                           'Anchor[magnum::dbsync::begin]'],
+          :notify      => 'Anchor[magnum::dbsync::end]',
+        )
+    }
+    end
+
   end
 
   on_supported_os({
