@@ -38,7 +38,6 @@ describe 'magnum' do
       end
 
       it 'configures rabbit' do
-        is_expected.to contain_magnum_config('DEFAULT/rpc_backend').with_value('rabbit')
         is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')

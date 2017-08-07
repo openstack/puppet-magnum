@@ -23,11 +23,6 @@
 #  (Optional) Notification driver to use
 #  Defaults to $::os_service_default
 #
-# [*rpc_backend*]
-#  (optional) The rpc backend implementation to use, can be:
-#  rabbit (for rabbitmq)
-#  Defaults to 'rabbit'
-#
 # [*default_transport_url*]
 #  (optional) A URL representing the messaging driver to use and its full
 #  configuration. Transport URLs take the form:
@@ -97,12 +92,16 @@
 #  (Optional) Password used to connect to rabbit
 #  Defaults to $::os_service_default
 #
+# [*rpc_backend*]
+#  (optional) The rpc backend implementation to use, can be:
+#  rabbit (for rabbitmq)
+#  Defaults to 'rabbit'
+#
 class magnum(
   $package_ensure             = 'present',
   $notification_transport_url = $::os_service_default,
   $notification_driver        = $::os_service_default,
   $notification_topics        = $::os_service_default,
-  $rpc_backend                = 'rabbit',
   $default_transport_url      = $::os_service_default,
   $rpc_response_timeout       = $::os_service_default,
   $control_exchange           = $::os_service_default,
@@ -119,6 +118,7 @@ class magnum(
   $rabbit_userid              = $::os_service_default,
   $rabbit_virtual_host        = $::os_service_default,
   $rabbit_password            = $::os_service_default,
+  $rpc_backend                = 'rabbit',
 ) {
 
   include ::magnum::deps
@@ -137,27 +137,31 @@ class magnum(
     purge => $purge_config,
   }
 
-  if $rpc_backend == 'rabbit' {
+  if !is_service_default($rabbit_host) or
+    !is_service_default($rabbit_hosts) or
+    !is_service_default($rabbit_password) or
+    !is_service_default($rabbit_port) or
+    !is_service_default($rabbit_userid) or
+    !is_service_default($rabbit_virtual_host) or
+    $rpc_backend {
+    warning("magnum::rabbit_host, magnum::rabbit_hosts, magnum::rabbit_password, \
+magnum::rabbit_port, magnum::rabbit_userid, magnum::rabbit_virtual_host and \
+magnum::rpc_backend are deprecated. Please use magnum::default_transport_url \
+instead.")
+  }
 
-    if ! $rabbit_password {
-      fail('Please specify a rabbit_password parameter.')
-    }
-
-    oslo::messaging::rabbit { 'magnum_config':
-      rabbit_userid       => $rabbit_userid,
-      rabbit_password     => $rabbit_password,
-      rabbit_virtual_host => $rabbit_virtual_host,
-      rabbit_host         => $rabbit_host,
-      rabbit_port         => $rabbit_port,
-      rabbit_hosts        => $rabbit_hosts,
-      rabbit_use_ssl      => $rabbit_use_ssl,
-      kombu_ssl_version   => $kombu_ssl_version,
-      kombu_ssl_keyfile   => $kombu_ssl_keyfile,
-      kombu_ssl_certfile  => $kombu_ssl_certfile,
-      kombu_ssl_ca_certs  => $kombu_ssl_ca_certs,
-    }
-  } else {
-    magnum_config { 'DEFAULT/rpc_backend': value => $rpc_backend }
+  oslo::messaging::rabbit { 'magnum_config':
+    rabbit_userid       => $rabbit_userid,
+    rabbit_password     => $rabbit_password,
+    rabbit_virtual_host => $rabbit_virtual_host,
+    rabbit_host         => $rabbit_host,
+    rabbit_port         => $rabbit_port,
+    rabbit_hosts        => $rabbit_hosts,
+    rabbit_use_ssl      => $rabbit_use_ssl,
+    kombu_ssl_version   => $kombu_ssl_version,
+    kombu_ssl_keyfile   => $kombu_ssl_keyfile,
+    kombu_ssl_certfile  => $kombu_ssl_certfile,
+    kombu_ssl_ca_certs  => $kombu_ssl_ca_certs,
   }
 
   oslo::messaging::default { 'magnum_config':

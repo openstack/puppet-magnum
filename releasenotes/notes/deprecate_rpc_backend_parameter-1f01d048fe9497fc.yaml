@@ -1,0 +1,4 @@
+---
+deprecations:
+  - magnum::rpc_backend is deprecated and will be removed in a future
+    release. Please use magnum::default_transport_url instead.
