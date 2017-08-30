@@ -262,4 +262,10 @@ class magnum::keystone::authtoken(
     signing_dir                    => $signing_dir,
     token_cache_time               => $token_cache_time,
   }
+
+  magnum_config {
+    'keystone_authtoken/admin_tenant_name': value => $project_name;
+    'keystone_authtoken/admin_user'       : value => $username;
+    'keystone_authtoken/admin_password'   : value => $password, secret => true;
+  }
 }
