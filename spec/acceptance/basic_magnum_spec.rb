@@ -8,12 +8,6 @@ describe 'basic magnum' do
       pp= <<-EOS
       include ::openstack_integration
       include ::openstack_integration::repos
-      # TODO(aschultz): a hack to get past LP#1632743
-      if $::osfamily == 'Debian' {
-        Apt::Source<| title == $::openstack_extras::repo::debian::params::uca_name |> {
-          release => "${::lsbdistcodename}-proposed/${::openstack_extras::repo::debian::ubuntu::release}"
-        }
-      }
       include ::openstack_integration::rabbitmq
       include ::openstack_integration::mysql
       include ::openstack_integration::keystone
