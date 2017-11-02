@@ -239,10 +239,7 @@ class magnum::keystone::authtoken(
     auth_section                   => $auth_section,
     user_domain_name               => $user_domain_name,
     project_domain_name            => $project_domain_name,
-    insecure                       => $insecure,
     cache                          => $cache,
-    cafile                         => $cafile,
-    certfile                       => $certfile,
     check_revocations_for_cached   => $check_revocations_for_cached,
     delay_auth_decision            => $delay_auth_decision,
     enforce_token_bind             => $enforce_token_bind,
@@ -250,7 +247,6 @@ class magnum::keystone::authtoken(
     http_connect_timeout           => $http_connect_timeout,
     http_request_max_retries       => $http_request_max_retries,
     include_service_catalog        => $include_service_catalog,
-    keyfile                        => $keyfile,
     memcache_pool_conn_get_timeout => $memcache_pool_conn_get_timeout,
     memcache_pool_dead_retry       => $memcache_pool_dead_retry,
     memcache_pool_maxsize          => $memcache_pool_maxsize,
@@ -269,5 +265,9 @@ class magnum::keystone::authtoken(
     'keystone_authtoken/admin_tenant_name': value => $project_name;
     'keystone_authtoken/admin_user'       : value => $username;
     'keystone_authtoken/admin_password'   : value => $password, secret => true;
+    'keystone_auth/cafile'                : value => $cafile;
+    'keystone_auth/keyfile'               : value => $keyfile;
+    'keystone_auth/certfile'              : value => $certfile;
+    'keystone_auth/insecure'              : value => $insecure;
   }
 }
