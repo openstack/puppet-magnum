@@ -3,11 +3,17 @@ require 'spec_helper'
 describe 'magnum::keystone::domain' do
 
   let :params do {
-    :cluster_user_trust => true,
-    :domain_name        => 'magnum',
-    :domain_admin       => 'magnum_admin',
-    :domain_admin_email => 'magnum_admin@localhost',
-    :domain_password    => 'domain_passwd'
+    :cluster_user_trust       => true,
+    :domain_name              => 'magnum',
+    :domain_id                => '16264508d9b6476da952a3971ca9d4b4',
+    :domain_admin             => 'magnum_admin',
+    :domain_admin_id          => '16264508d9b6476da952a3971ca9d4b4',
+    :domain_admin_domain_name => 'magnum',
+    :domain_admin_domain_id   => '16264508d9b6476da952a3971ca9d4b4',
+    :domain_admin_email       => 'magnum_admin@localhost',
+    :domain_password          => 'domain_passwd',
+    :roles                    => 'admin,',
+    :keystone_interface       => 'public'
     }
   end
 
@@ -15,9 +21,15 @@ describe 'magnum::keystone::domain' do
     it 'configure magnum.conf' do
       is_expected.to contain_magnum_config('trust/cluster_user_trust').with_value(params[:cluster_user_trust])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_name').with_value(params[:domain_admin])
+      is_expected.to contain_magnum_config('trust/trustee_domain_admin_id').with_value(params[:domain_admin_id])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_value(params[:domain_password])
       is_expected.to contain_magnum_config('trust/trustee_domain_admin_password').with_secret(true)
+      is_expected.to contain_magnum_config('trust/trustee_domain_admin_domain_name').with_value(params[:domain_admin_domain_name])
+      is_expected.to contain_magnum_config('trust/trustee_domain_admin_domain_id').with_value(params[:domain_admin_domain_id])
       is_expected.to contain_magnum_config('trust/trustee_domain_name').with_value(params[:domain_name])
+      is_expected.to contain_magnum_config('trust/trustee_domain_id').with_value(params[:domain_id])
+      is_expected.to contain_magnum_config('trust/roles').with_value(params[:roles])
+      is_expected.to contain_magnum_config('trust/trustee_keystone_interface').with_value(params[:keystone_interface])
     end
 
     it 'should create keystone domain' do

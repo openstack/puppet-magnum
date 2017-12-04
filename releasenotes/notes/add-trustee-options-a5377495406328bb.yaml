@@ -1,0 +1,5 @@
+---
+features:
+  - Add domain_id, domain_admin_id, domain_admin_domain_name, domain_admin_domain_id,
+    roles, keystone_interface parameters in magnum::keystone::domain to manage related
+    options in [trust] section.
