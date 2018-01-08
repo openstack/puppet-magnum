@@ -1,0 +1,3 @@
+---
+features:
+    - Original magnum::clients has been splited into serveral sub class for related OpenStack services.
