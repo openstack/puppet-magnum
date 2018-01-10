@@ -17,8 +17,10 @@ describe 'magnum::policy' do
 
     it 'set up the policies' do
       is_expected.to contain_openstacklib__policy__base('context_is_admin').with({
-        :key   => 'context_is_admin',
-        :value => 'foo:bar'
+        :key        => 'context_is_admin',
+        :value      => 'foo:bar',
+        :file_user  => 'root',
+        :file_group => 'magnum',
       })
       is_expected.to contain_oslo__policy('magnum_config').with(
         :policy_file => '/etc/magnum/policy.json',
@@ -34,7 +36,7 @@ describe 'magnum::policy' do
         facts.merge!(OSDefaults.get_facts())
       end
 
-      it_behaves_like 'magnum policies'
+      it_configures 'magnum policies'
     end
   end
 end
