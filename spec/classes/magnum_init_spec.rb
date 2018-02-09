@@ -46,6 +46,7 @@ describe 'magnum' do
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE_DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('<SERVICE_DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('<SERVICE_DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE_DEFAULT>')
       end
 
       it 'configures various things' do
@@ -70,6 +71,7 @@ describe 'magnum' do
           :rabbit_userid              => 'me',
           :rabbit_password            => 'secrete',
           :rabbit_virtual_host        => 'vhost',
+          :kombu_failover_strategy    => 'shuffle',
         }
       end
 
@@ -90,6 +92,7 @@ describe 'magnum' do
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('1234')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('me')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('vhost')
+        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('shuffle')
       end
 
       it 'configures various things' do
