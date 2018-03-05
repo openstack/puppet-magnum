@@ -6,7 +6,7 @@
 #
 # [*database_connection*]
 #   (Optional) Url used to connect to database.
-#   Defaults to "mysql://magnum:magnum@localhost:3306/magnum".
+#   Defaults to "mysql+pymysql://magnum:magnum@localhost:3306/magnum".
 #
 # [*database_idle_timeout*]
 #   (Optional) Timeout when db connections should be reaped.
@@ -39,7 +39,7 @@
 #   Defaults to $::os_service_default
 #
 class magnum::db (
-  $database_connection     = 'mysql://magnum:magnum@localhost:3306/magnum',
+  $database_connection     = 'mysql+pymysql://magnum:magnum@localhost:3306/magnum',
   $database_idle_timeout   = $::os_service_default,
   $database_min_pool_size  = $::os_service_default,
   $database_max_pool_size  = $::os_service_default,
