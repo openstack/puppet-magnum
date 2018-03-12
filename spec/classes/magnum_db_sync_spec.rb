@@ -17,6 +17,7 @@ describe 'magnum::db::sync' do
                          'Anchor[magnum::config::end]',
                          'Anchor[magnum::dbsync::begin]'],
         :notify      => 'Anchor[magnum::dbsync::end]',
+        :tag         => 'openstack-db',
       )
     end
 
@@ -40,6 +41,7 @@ describe 'magnum::db::sync' do
                            'Anchor[magnum::config::end]',
                            'Anchor[magnum::dbsync::begin]'],
           :notify      => 'Anchor[magnum::dbsync::end]',
+          :tag         => 'openstack-db',
         )
     }
     end
