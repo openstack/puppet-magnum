@@ -38,6 +38,7 @@ class magnum::db::sync(
       Anchor['magnum::dbsync::begin']
     ],
     notify      => Anchor['magnum::dbsync::end'],
+    tag         => 'openstack-db',
   }
 
 }
