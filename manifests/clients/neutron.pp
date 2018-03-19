@@ -11,7 +11,7 @@
 #
 # [*endpoint_type*]
 #   (optional) Type of endpoint in Identity service catalog to use for
-#   communication with the the OpenStack service.
+#   communication with the OpenStack service.
 #   Defaults to publicURL
 #
 # [*ca_file*]
