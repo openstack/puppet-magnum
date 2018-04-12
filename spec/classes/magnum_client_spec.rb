@@ -10,7 +10,7 @@ describe 'magnum::client' do
     it 'installs magnum client package' do
       is_expected.to contain_package('python-magnumclient').with(
         :ensure => 'present',
-        :name   => platform_params[:client_package],
+        :name   => platform_params[:client_package_name],
         :tag    => 'openstack',
       )
     end
@@ -27,9 +27,13 @@ describe 'magnum::client' do
       let(:platform_params) do
         case facts[:osfamily]
         when 'Debian'
-          { :client_package => 'python-magnumclient' }
+          if facts[:os_package_type] == 'debian'
+            { :client_package_name => 'python3-magnumclient' }
+          else
+            { :client_package_name => 'python-magnumclient' }
+          end
         when 'RedHat'
-          { :client_package => 'python2-magnumclient' }
+          { :client_package_name => 'python2-magnumclient' }
         end
       end
       it_configures 'magnum client'
