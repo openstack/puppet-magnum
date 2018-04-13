@@ -4,6 +4,13 @@
 #
 class magnum::params {
   include ::openstacklib::defaults
+
+  if ($::os_package_type == 'debian') {
+    $pyvers = '3'
+  } else {
+    $pyvers = ''
+  }
+
   $group = 'magnum'
   case $::osfamily {
     'RedHat': {
@@ -24,7 +31,7 @@ class magnum::params {
       # service names
       $api_service       = 'magnum-api'
       $conductor_service = 'magnum-conductor'
-      $client_package    = 'python-magnumclient'
+      $client_package    = "python${pyvers}-magnumclient"
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem")
