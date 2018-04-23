@@ -14,6 +14,8 @@ describe 'magnum::config' do
       { :magnum_config => config_hash }
     end
 
+    it { is_expected.to contain_class('magnum::deps') }
+
     it 'configures arbitrary magnum-config configurations' do
       is_expected.to contain_magnum_config('DEFAULT/foo').with_value('fooValue')
       is_expected.to contain_magnum_config('DEFAULT/bar').with_value('barValue')
