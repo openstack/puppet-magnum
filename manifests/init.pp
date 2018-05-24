@@ -72,37 +72,6 @@
 #  in the magnum config.
 #  Defaults to false.
 #
-# === DEPRECATED PARAMTERS
-#
-# [*rabbit_host*]
-#  (Optional) Host for rabbit server
-#  Defaults to $::os_service_default
-#
-# [*rabbit_hosts*]
-#  (Optional) List of clustered rabbit servers
-#  Defaults to $::os_service_default
-#
-# [*rabbit_port*]
-#  (Optional) Port for rabbit server
-#  Defaults to $::os_service_default
-#
-# [*rabbit_userid*]
-#  (Optional) Username used to connecting to rabbit
-#  Defaults to $::os_service_default
-#
-# [*rabbit_virtual_host*]
-#  (Optional) Virtual host for rabbit server
-#  Defaults to $::os_service_default
-#
-# [*rabbit_password*]
-#  (Optional) Password used to connect to rabbit
-#  Defaults to $::os_service_default
-#
-# [*rpc_backend*]
-#  (optional) The rpc backend implementation to use, can be:
-#  rabbit (for rabbitmq)
-#  Defaults to 'rabbit'
-#
 class magnum(
   $package_ensure             = 'present',
   $notification_transport_url = $::os_service_default,
@@ -118,14 +87,6 @@ class magnum(
   $kombu_ssl_version          = $::os_service_default,
   $kombu_failover_strategy    = $::os_service_default,
   $purge_config               = false,
-  # DEPRECATED PARAMTERS
-  $rabbit_host                = $::os_service_default,
-  $rabbit_hosts               = $::os_service_default,
-  $rabbit_port                = $::os_service_default,
-  $rabbit_userid              = $::os_service_default,
-  $rabbit_virtual_host        = $::os_service_default,
-  $rabbit_password            = $::os_service_default,
-  $rpc_backend                = 'rabbit',
 ) {
 
   include ::magnum::deps
@@ -144,26 +105,7 @@ class magnum(
     purge => $purge_config,
   }
 
-  if !is_service_default($rabbit_host) or
-    !is_service_default($rabbit_hosts) or
-    !is_service_default($rabbit_password) or
-    !is_service_default($rabbit_port) or
-    !is_service_default($rabbit_userid) or
-    !is_service_default($rabbit_virtual_host) or
-    $rpc_backend {
-    warning("magnum::rabbit_host, magnum::rabbit_hosts, magnum::rabbit_password, \
-magnum::rabbit_port, magnum::rabbit_userid, magnum::rabbit_virtual_host and \
-magnum::rpc_backend are deprecated. Please use magnum::default_transport_url \
-instead.")
-  }
-
   oslo::messaging::rabbit { 'magnum_config':
-    rabbit_userid           => $rabbit_userid,
-    rabbit_password         => $rabbit_password,
-    rabbit_virtual_host     => $rabbit_virtual_host,
-    rabbit_host             => $rabbit_host,
-    rabbit_port             => $rabbit_port,
-    rabbit_hosts            => $rabbit_hosts,
     rabbit_use_ssl          => $rabbit_use_ssl,
     kombu_ssl_version       => $kombu_ssl_version,
     kombu_ssl_keyfile       => $kombu_ssl_keyfile,

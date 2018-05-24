@@ -1,0 +1,6 @@
+---
+upgrade:
+  - |
+    The deprecated magnum::rabbit_host, magnum::rabbit_hosts, magnum::rabbit_password,
+    magnum::rabbit_port, magnum::rabbit_userid and magnum::rabit_virtual_host are now
+    removed. Please use magnum::default_transport_url instead.
