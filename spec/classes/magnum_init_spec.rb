@@ -35,11 +35,6 @@ describe 'magnum' do
         is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('<SERVICE DEFAULT>').with_secret(true)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE DEFAULT>')
       end
 
@@ -60,11 +55,6 @@ describe 'magnum' do
           :default_transport_url      => 'rabbit://user:pass@host:1234/virt',
           :rpc_response_timeout       => '120',
           :control_exchange           => 'magnum',
-          :rabbit_host                => '53.210.103.65',
-          :rabbit_port                => '1234',
-          :rabbit_userid              => 'me',
-          :rabbit_password            => 'secrete',
-          :rabbit_virtual_host        => 'vhost',
           :kombu_failover_strategy    => 'shuffle',
         }
       end
@@ -81,11 +71,6 @@ describe 'magnum' do
         is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('rabbit://user:pass@host:1234/virt')
         is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('120')
         is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('magnum')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('53.210.103.65')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_password').with_value('secrete').with_secret(true)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('1234')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_userid').with_value('me')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_virtual_host').with_value('vhost')
         is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('shuffle')
       end
 
@@ -96,33 +81,9 @@ describe 'magnum' do
       end
     end
 
-    context 'with rabbit_hosts parameter' do
-      let :params do
-        { :rabbit_hosts => ['rabbit:5673', 'rabbit2:5674'] }
-      end
-
-      it 'configures rabbit' do
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_hosts').with_value('rabbit:5673,rabbit2:5674')
-      end
-    end
-
-    context 'with rabbit_hosts parameter (one server)' do
-      let :params do
-        { :rabbit_hosts => ['rabbit:5673'] }
-      end
-
-      it 'configures rabbit' do
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_host').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_port').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_hosts').with_value('rabbit:5673')
-      end
-    end
-
     context 'with rabbit ssl enabled with kombu' do
       let :params do
-        { :rabbit_hosts       => ['rabbit:5673'],
+        { 
           :rabbit_use_ssl     => true,
           :kombu_ssl_ca_certs => '/etc/ca.crt',
           :kombu_ssl_certfile => '/etc/certfile',
@@ -144,7 +105,7 @@ describe 'magnum' do
 
     context 'with rabbit ssl enabled without kombu' do
       let :params do
-        { :rabbit_hosts       => ['rabbit:5673'],
+        { 
           :rabbit_use_ssl     => 'true',
         }
       end
@@ -162,7 +123,7 @@ describe 'magnum' do
 
     context 'with rabbit ssl disabled' do
       let :params do
-        { :rabbit_password    => 'pass',
+        {
           :rabbit_use_ssl     => false,
         }
       end
