@@ -86,3 +86,8 @@ Contributors
 ------------
 
 * https://github.com/openstack/puppet-magnum/graphs/contributors
+
+Release Notes
+-------------
+
+* https://docs.openstack.org/releasenotes/puppet-magnum
