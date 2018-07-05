@@ -37,7 +37,7 @@
 
 class magnum::clients::heat(
   $region_name   = $magnum::clients::region_name,
-  $endpoint_type = $magnum::clietns::endpoint_type,
+  $endpoint_type = $magnum::clients::endpoint_type,
   $api_version   = '1',
   $ca_file       = $magnum::clients::ca_file,
   $cert_file     = $magnum::clients::cert_file,
