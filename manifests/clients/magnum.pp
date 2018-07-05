@@ -16,7 +16,7 @@
 
 class magnum::clients::magnum(
   $region_name   = $magnum::clients::region_name,
-  $endpoint_type = $magnum::clietns::endpoint_type,
+  $endpoint_type = $magnum::clients::endpoint_type,
 ){
 
   include ::magnum::deps

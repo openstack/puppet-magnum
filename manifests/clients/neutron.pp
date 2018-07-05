@@ -32,7 +32,7 @@
 #
 class magnum::clients::neutron(
   $region_name   = $magnum::clients::region_name,
-  $endpoint_type = $magnum::clietns::endpoint_type,
+  $endpoint_type = $magnum::clients::endpoint_type,
   $ca_file       = $magnum::clients::ca_file,
   $cert_file     = $magnum::clients::cert_file,
   $key_file      = $magnum::clients::key_file,
