@@ -21,11 +21,16 @@
 #    used for bay locking.
 #    Defaults to $::os_service_default
 #
+# [*auth_strategy*]
+#   (optional) Type of authentication to be used.
+#   Defaults to 'keystone'
+#
 class magnum::conductor(
   $enabled                      = true,
   $manage_service               = true,
   $package_ensure               = 'present',
   $conductor_life_check_timeout = $::os_service_default,
+  $auth_strategy                = 'keystone',
 ) {
 
   include ::magnum::db
@@ -58,5 +63,9 @@ class magnum::conductor(
 
   magnum_config {
     'conductor/conductor_life_check_timeout': value => $conductor_life_check_timeout;
+  }
+
+  if $auth_strategy == 'keystone' {
+    include ::magnum::keystone::authtoken
   }
 }
