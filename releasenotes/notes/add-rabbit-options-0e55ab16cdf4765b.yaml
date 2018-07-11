@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    Added new parameters magnum::rabbit_ha_queues, magnum::rabbit_heartbeat_timeout_threshold
+    and magnum::rabbit_heartbeat_rate.
