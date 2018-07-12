@@ -91,6 +91,10 @@
 #  in the magnum config.
 #  Defaults to false.
 #
+# [*amqp_durable_queues*]
+#   (optional) Whether to use durable queues in AMQP.
+#   Defaults to $::os_service_default.
+#
 class magnum(
   $package_ensure                     = 'present',
   $notification_transport_url         = $::os_service_default,
@@ -109,6 +113,7 @@ class magnum(
   $kombu_ssl_version                  = $::os_service_default,
   $kombu_failover_strategy            = $::os_service_default,
   $purge_config                       = false,
+  $amqp_durable_queues                = $::os_service_default,
 ) {
 
   include ::magnum::deps
@@ -137,6 +142,7 @@ class magnum(
     kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
     kombu_failover_strategy     => $kombu_failover_strategy,
     rabbit_ha_queues            => $rabbit_ha_queues,
+    amqp_durable_queues         => $amqp_durable_queues,
   }
 
   oslo::messaging::default { 'magnum_config':
