@@ -52,7 +52,7 @@ class magnum::db (
   include ::magnum::deps
 
   validate_re($database_connection,
-    '^(mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
+    '^(sqlite|mysql(\+pymysql)?|postgresql):\/\/(\S+:\S+@\S+\/\S+)?')
 
   oslo::db { 'magnum_config':
     connection     => $database_connection,

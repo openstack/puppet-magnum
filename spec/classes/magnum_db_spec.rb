@@ -54,7 +54,7 @@ describe 'magnum::db' do
 
     context 'with incorrect database_connection string' do
       let :params do
-        { :database_connection => 'sqlite://magnum:magnum@localhost/magnum', }
+        { :database_connection => 'invalid://magnum:magnum@localhost/magnum', }
       end
 
       it_raises 'a Puppet::Error', /validate_re/
