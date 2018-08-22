@@ -25,12 +25,17 @@
 #   (optional) Type of authentication to be used.
 #   Defaults to 'keystone'
 #
+# [*workers*]
+#   (optional) Number of conductor workers.
+#   Defaults to $::os_workers
+#
 class magnum::conductor(
   $enabled                      = true,
   $manage_service               = true,
   $package_ensure               = 'present',
   $conductor_life_check_timeout = $::os_service_default,
   $auth_strategy                = 'keystone',
+  $workers                      = $::os_workers,
 ) {
 
   include ::magnum::db
@@ -63,6 +68,7 @@ class magnum::conductor(
 
   magnum_config {
     'conductor/conductor_life_check_timeout': value => $conductor_life_check_timeout;
+    'conductor/workers':                      value => $workers;
   }
 
   if $auth_strategy == 'keystone' {
