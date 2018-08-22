@@ -59,6 +59,7 @@ describe 'magnum::api' do
       is_expected.to contain_magnum_config('api/enabled_ssl').with_value(p[:enabled_ssl])
       is_expected.to contain_magnum_config('api/ssl_cert_file').with_value('<SERVICE DEFAULT>')
       is_expected.to contain_magnum_config('api/ssl_key_file').with_value('<SERVICE DEFAULT>')
+      is_expected.to contain_magnum_config('api/workers').with_value(facts[:os_workers])
     end
 
     context 'when overriding parameters' do
@@ -67,6 +68,7 @@ describe 'magnum::api' do
           :port         => '1234',
           :host         => '0.0.0.0',
           :max_limit    => '10',
+          :workers      => 10,
         )
       end
 
@@ -74,6 +76,7 @@ describe 'magnum::api' do
         is_expected.to contain_magnum_config('api/port').with_value(p[:port])
         is_expected.to contain_magnum_config('api/host').with_value(p[:host])
         is_expected.to contain_magnum_config('api/max_limit').with_value(p[:max_limit])
+        is_expected.to contain_magnum_config('api/workers').with_value(p[:workers])
       end
     end
 

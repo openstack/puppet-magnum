@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    Added magnum::api::workers and magnum::conductor::workers which can be used
+    to specify the number of worker processes.
