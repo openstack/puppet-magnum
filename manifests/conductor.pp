@@ -21,11 +21,16 @@
 #    used for bay locking.
 #    Defaults to $::os_service_default
 #
+# [*workers*]
+#   (optional) Number of conductor workers.
+#   Defaults to $::os_workers
+#
 class magnum::conductor(
   $enabled                      = true,
   $manage_service               = true,
   $package_ensure               = 'present',
   $conductor_life_check_timeout = $::os_service_default,
+  $workers                      = $::os_workers,
 ) {
 
   include ::magnum::db
@@ -58,5 +63,6 @@ class magnum::conductor(
 
   magnum_config {
     'conductor/conductor_life_check_timeout': value => $conductor_life_check_timeout;
+    'conductor/workers':                      value => $workers;
   }
 }
