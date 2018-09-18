@@ -64,12 +64,13 @@ describe 'basic magnum' do
         notification_driver   => 'messagingv2',
       }
 
-       class { '::magnum::api':
-        host           => '127.0.0.1',
+      class { '::magnum::api':
+        service_name => 'httpd',
       }
+      include ::apache
+      include ::magnum::wsgi::apache
 
       class { '::magnum::conductor': }
-
       class { '::magnum::client': }
 
       class { '::magnum::certificates':
@@ -84,7 +85,7 @@ describe 'basic magnum' do
     end
 
     describe port(9511) do
-      it { is_expected.to be_listening.with('tcp') }
+      it { is_expected.to be_listening.with('tcp6') }
     end
 
   end
