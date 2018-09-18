@@ -1,0 +1,8 @@
+---
+features:
+  - |
+    Added magnum::api::manage_service that can be used to determine if we should
+    manage the service state or not.
+  - |
+    Added new class magnum::wsgi::apache, you can now run the magnum API under
+    Apache with mod_wsgi.

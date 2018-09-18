@@ -36,13 +36,11 @@ describe 'magnum::api' do
     it { is_expected.to contain_class('magnum::policy') }
 
     it 'configures magnum api package' do
-      if platform_params.has_key?(:api_package)
-        is_expected.to contain_package('magnum-api').with(
-          :ensure => p[:package_ensure],
-          :name   => platform_params[:api_package],
-          :tag    => ['openstack', 'magnum-package'],
-        )
-      end
+      is_expected.to contain_package('magnum-api').with(
+        :ensure => p[:package_ensure],
+        :name   => platform_params[:api_package],
+        :tag    => ['openstack', 'magnum-package'],
+      )
     end
 
     it 'ensures magnum api service is running' do
@@ -95,6 +93,32 @@ describe 'magnum::api' do
     end
   end
 
+  shared_examples 'magnum-api wsgi' do
+    let :pre_condition do
+      "include ::magnum
+       class { 'magnum::keystone::authtoken':
+         password => 'secret',
+       }
+       include ::apache"
+    end
+
+    let :params do
+      {
+        :service_name => 'httpd',
+      }
+    end
+
+    context 'with required params' do
+      it { should contain_service('magnum-api').with(
+        :ensure    => 'stopped',
+        :name      => platform_params[:api_service],
+        :enable    => false,
+        :hasstatus => true,
+        :tag       => ['magnum-service', 'magnum-db-sync-service'],
+      )}
+    end
+  end
+
  on_supported_os({
     :supported_os   => OSDefaults.get_supported_os
   }).each do |os,facts|
@@ -103,11 +127,19 @@ describe 'magnum::api' do
         facts.merge!(OSDefaults.get_facts())
       end
 
-      let :platform_params do
-      { :api_service => 'magnum-api' }
+      let(:platform_params) do
+        case facts[:osfamily]
+        when 'Debian'
+          { :api_package => 'magnum-api',
+            :api_service => 'magnum-api' }
+        when 'RedHat'
+          { :api_package => 'openstack-magnum-api',
+            :api_service => 'openstack-magnum-api' }
+        end
       end
 
       it_configures 'magnum-api'
+      it_configures 'magnum-api wsgi'
     end
 
   end
