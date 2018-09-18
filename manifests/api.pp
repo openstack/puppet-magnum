@@ -12,6 +12,19 @@
 #   (Optional) Define if the service should be enabled or not.
 #   Defaults to true
 #
+# [*manage_service*]
+#   (Optional) Whether the service should be managed by Puppet.
+#   Defaults to true
+#
+# [*service_name*]
+#   (Optional) Name of the service that will be providing the
+#   server functionality of magnum-api.
+#   If the value is 'httpd', this means magnum-api will be a web
+#   service, and you must use another class to configure that
+#   web service. For example, use class { 'magnum::wsgi::apache'...}
+#   to make magnum-api be a web app using apache mod_wsgi.
+#   Defaults to $::magnum::params::api_service
+#
 # [*port*]
 #   (Optional) The port for the Magnum API server.
 #   Defaults to '9511'
@@ -54,6 +67,8 @@
 class magnum::api(
   $package_ensure = 'present',
   $enabled        = true,
+  $manage_service = true,
+  $service_name   = $::magnum::params::api_service,
   $port           = '9511',
   $host           = '127.0.0.1',
   $max_limit      = '1000',
@@ -63,7 +78,7 @@ class magnum::api(
   $ssl_cert_file  = $::os_service_default,
   $ssl_key_file   = $::os_service_default,
   $workers        = $::os_workers,
-) {
+) inherits magnum::params {
 
   include ::magnum::deps
   include ::magnum::params
@@ -102,19 +117,33 @@ class magnum::api(
     }
   }
 
-  if $enabled {
-    $ensure = 'running'
-  } else {
-    $ensure = 'stopped'
-  }
+  if $manage_service {
+    if $enabled {
+      $ensure = 'running'
+    } else {
+      $ensure = 'stopped'
+    }
 
-  # Manage service
-  service { 'magnum-api':
-    ensure    => $ensure,
-    name      => $::magnum::params::api_service,
-    enable    => $enabled,
-    hasstatus => true,
-    tag       => ['magnum-service', 'magnum-db-sync-service'],
+    if $service_name == $::magnum::params::api_service {
+      service { 'magnum-api':
+        ensure     => $ensure,
+        name       => $::magnum::params::api_service,
+        enable     => $enabled,
+        hasstatus  => true,
+        tag        => ['magnum-service', 'magnum-db-sync-service'],
+      }
+    } elsif $service_name == 'httpd' {
+      include ::apache::params
+      service { 'magnum-api':
+        ensure    => 'stopped',
+        name      => $::magnum::params::api_service,
+        enable    => false,
+        hasstatus => true,
+        tag       => ['magnum-service', 'magnum-db-sync-service'],
+      }
+      Service['magnum-api'] -> Service[$service_name]
+      Service<| title == 'httpd' |> { tag +> ['magnum-service', 'magnum-db-sync-service'] }
+    }
   }
 
   if $auth_strategy == 'keystone' {
