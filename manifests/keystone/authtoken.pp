@@ -231,7 +231,7 @@ class magnum::keystone::authtoken(
     password                       => $password,
     project_name                   => $project_name,
     auth_url                       => $auth_url,
-    www_authenticate_uri           => $www_authenticate_uri,
+    www_authenticate_uri           => $www_authenticate_uri_real,
     auth_version                   => $auth_version,
     auth_type                      => $auth_type,
     auth_section                   => $auth_section,
