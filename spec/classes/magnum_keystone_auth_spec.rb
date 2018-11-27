@@ -1,122 +1,132 @@
-#
-# Unit tests for magnum::keystone::auth
-#
-
 require 'spec_helper'
 
 describe 'magnum::keystone::auth' do
+  shared_examples 'magnum::keystone::auth' do
+    context 'with default class parameters' do
+      let :params do
+        {
+          :password => 'magnum_password',
+          :tenant   => 'foobar'
+        }
+      end
 
-  let :facts do
-    OSDefaults.get_facts({ :osfamily => 'Debian' })
-  end
+      it { should contain_keystone_user('magnum').with(
+        :ensure   => 'present',
+        :password => 'magnum_password',
+      )}
 
-  describe 'with default class parameters' do
-    let :params do
-      { :password => 'magnum_password',
-        :tenant   => 'foobar' }
+      it { should contain_keystone_user_role('magnum@foobar').with(
+        :ensure  => 'present',
+        :roles   => ['admin']
+      )}
+
+      it { should contain_keystone_service('magnum::container-infra').with(
+        :ensure      => 'present',
+        :description => 'magnum Container Service'
+      )}
+
+      it { should contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
+        :ensure       => 'present',
+        :public_url   => 'http://127.0.0.1:9511/v1',
+        :admin_url    => 'http://127.0.0.1:9511/v1',
+        :internal_url => 'http://127.0.0.1:9511/v1',
+      )}
     end
 
-    it { is_expected.to contain_keystone_user('magnum').with(
-      :ensure   => 'present',
-      :password => 'magnum_password',
-    ) }
+    context 'when overriding URL paramaters' do
+      let :params do
+        {
+          :password     => 'magnum_password',
+          :public_url   => 'https://10.10.10.10:80',
+          :internal_url => 'http://10.10.10.11:81',
+          :admin_url    => 'http://10.10.10.12:81',
+        }
+      end
 
-    it { is_expected.to contain_keystone_user_role('magnum@foobar').with(
-      :ensure  => 'present',
-      :roles   => ['admin']
-    )}
-
-    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
-      :ensure      => 'present',
-      :description => 'magnum Container Service'
-    ) }
-
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
-      :ensure       => 'present',
-      :public_url   => 'http://127.0.0.1:9511/v1',
-      :admin_url    => 'http://127.0.0.1:9511/v1',
-      :internal_url => 'http://127.0.0.1:9511/v1',
-    ) }
-  end
-
-  describe 'when overriding URL paramaters' do
-    let :params do
-      { :password     => 'magnum_password',
+      it { should contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
+        :ensure       => 'present',
         :public_url   => 'https://10.10.10.10:80',
         :internal_url => 'http://10.10.10.11:81',
-        :admin_url    => 'http://10.10.10.12:81', }
+        :admin_url    => 'http://10.10.10.12:81',
+      )}
     end
 
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
-      :ensure       => 'present',
-      :public_url   => 'https://10.10.10.10:80',
-      :internal_url => 'http://10.10.10.11:81',
-      :admin_url    => 'http://10.10.10.12:81',
-    ) }
-  end
+    context 'when overriding auth name' do
+      let :params do
+        {
+          :password => 'foo',
+          :auth_name => 'magnumy'
+        }
+      end
 
-  describe 'when overriding auth name' do
-    let :params do
-      { :password => 'foo',
-        :auth_name => 'magnumy' }
+      it { should contain_keystone_user('magnumy') }
+      it { should contain_keystone_user_role('magnumy@services') }
+      it { should contain_keystone_service('magnumy::container-infra') }
+      it { should contain_keystone_endpoint('RegionOne/magnumy::container-infra') }
     end
 
-    it { is_expected.to contain_keystone_user('magnumy') }
-    it { is_expected.to contain_keystone_user_role('magnumy@services') }
-    it { is_expected.to contain_keystone_service('magnumy::container-infra') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnumy::container-infra') }
-  end
+    context 'when overriding service name' do
+      let :params do
+        {
+          :service_name => 'magnum_service',
+          :auth_name    => 'magnum',
+          :password     => 'magnum_password'
+        }
+      end
 
-  describe 'when overriding service name' do
-    let :params do
-      { :service_name => 'magnum_service',
-        :auth_name    => 'magnum',
-        :password     => 'magnum_password' }
+      it { should contain_keystone_user('magnum') }
+      it { should contain_keystone_user_role('magnum@services') }
+      it { should contain_keystone_service('magnum_service::container-infra') }
+      it { should contain_keystone_endpoint('RegionOne/magnum_service::container-infra') }
     end
 
-    it { is_expected.to contain_keystone_user('magnum') }
-    it { is_expected.to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum_service::container-infra') }
-    it { is_expected.to contain_keystone_endpoint('RegionOne/magnum_service::container-infra') }
-  end
+    context 'when disabling user configuration' do
+      let :params do
+        {
+          :password       => 'magnum_password',
+          :configure_user => false
+        }
+      end
 
-  describe 'when disabling user configuration' do
+      it { should_not contain_keystone_user('magnum') }
+      it { should contain_keystone_user_role('magnum@services') }
 
-    let :params do
-      {
-        :password       => 'magnum_password',
-        :configure_user => false
-      }
+      it { should contain_keystone_service('magnum::container-infra').with(
+        :ensure      => 'present',
+        :type        => 'container-infra',
+        :description => 'magnum Container Service'
+      )}
     end
 
-    it { is_expected.not_to contain_keystone_user('magnum') }
-    it { is_expected.to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
-      :ensure      => 'present',
-      :type        => 'container-infra',
-      :description => 'magnum Container Service'
-    ) }
+    context 'when disabling user and user role configuration' do
+      let :params do
+        {
+          :password            => 'magnum_password',
+          :configure_user      => false,
+          :configure_user_role => false
+        }
+      end
 
-  end
+      it { should_not contain_keystone_user('magnum') }
+      it { should_not contain_keystone_user_role('magnum@services') }
 
-  describe 'when disabling user and user role configuration' do
-
-    let :params do
-      {
-        :password            => 'magnum_password',
-        :configure_user      => false,
-        :configure_user_role => false
-      }
+      it { should contain_keystone_service('magnum::container-infra').with(
+        :ensure      => 'present',
+        :type        => 'container-infra',
+        :description => 'magnum Container Service'
+      )}
     end
-
-    it { is_expected.not_to contain_keystone_user('magnum') }
-    it { is_expected.not_to contain_keystone_user_role('magnum@services') }
-    it { is_expected.to contain_keystone_service('magnum::container-infra').with(
-      :ensure      => 'present',
-      :type        => 'container-infra',
-      :description => 'magnum Container Service'
-    ) }
-
   end
 
+  on_supported_os({
+    :supported_os => OSDefaults.get_supported_os
+  }).each do |os,facts|
+    context "on #{os}" do
+      let (:facts) do
+        facts.merge!(OSDefaults.get_facts())
+      end
+
+      it_behaves_like 'magnum::keystone::auth'
+    end
+  end
 end
