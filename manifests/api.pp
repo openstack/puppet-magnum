@@ -126,11 +126,11 @@ class magnum::api(
 
     if $service_name == $::magnum::params::api_service {
       service { 'magnum-api':
-        ensure     => $ensure,
-        name       => $::magnum::params::api_service,
-        enable     => $enabled,
-        hasstatus  => true,
-        tag        => ['magnum-service', 'magnum-db-sync-service'],
+        ensure    => $ensure,
+        name      => $::magnum::params::api_service,
+        enable    => $enabled,
+        hasstatus => true,
+        tag       => ['magnum-service', 'magnum-db-sync-service'],
       }
     } elsif $service_name == 'httpd' {
       include ::apache::params
