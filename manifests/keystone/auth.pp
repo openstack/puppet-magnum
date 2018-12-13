@@ -5,48 +5,57 @@
 # === Parameters
 #
 # [*password*]
-#   (required) Password for magnum user.
+#   (Required) Password for magnum user.
 #
 # [*auth_name*]
-#   Username for magnum service. Defaults to 'magnum'.
+#   (Optional) Username for magnum service.
+#   Defaults to 'magnum'.
 #
 # [*email*]
-#   Email for magnum user. Defaults to 'magnum@localhost'.
+#   (Optional) Email for magnum user.
+#   Defaults to 'magnum@localhost'.
 #
 # [*tenant*]
-#   Tenant for magnum user. Defaults to 'services'.
+#   (Optional) Tenant for magnum user.
+#   Defaults to 'services'.
 #
 # [*configure_endpoint*]
-#   Should magnum endpoint be configured? Defaults to 'true'.
+#   (Optional) Should magnum endpoint be configured?
+#   Defaults to true.
 #
 # [*configure_user*]
 #   (Optional) Should the service user be configured?
-#   Defaults to 'true'.
+#   Defaults to true.
 #
 # [*configure_user_role*]
 #   (Optional) Should the admin role be configured for the service user?
-#   Defaults to 'true'.
+#   Defaults to true.
 #
 # [*service_type*]
-#   Type of service. Defaults to 'container-infra'.
+#   (Optional) Type of service.
+#   Defaults to 'container-infra'.
 #
 # [*region*]
-#   Region for endpoint. Defaults to 'RegionOne'.
+#   (Optional) Region for endpoint.
+#   Defaults to 'RegionOne'.
 #
 # [*service_name*]
-#   (optional) Name of the service.
+#   (Optional) Name of the service.
 #   Defaults to the value of auth_name.
 #
 # [*public_url*]
-#   (optional) The endpoint's public url. (Defaults to 'http://127.0.0.1:9511/v1')
+#   (0ptional) The endpoint's public url.
 #   This url should *not* contain any trailing '/'.
+#   Defaults to 'http://127.0.0.1:9511/v1'
 #
 # [*admin_url*]
-#   (optional) The endpoint's admin url. (Defaults to 'http://127.0.0.1:9511/v1')
+#   (Optional) The endpoint's admin url.
 #   This url should *not* contain any trailing '/'.
+#   Defaults to 'http://127.0.0.1:9511/v1'
 #
 # [*internal_url*]
-#   (optional) The endpoint's internal url. (Defaults to 'http://127.0.0.1:9511/v1')
+#   (Optional) The endpoint's internal url.
+#   Defaults to 'http://127.0.0.1:9511/v1'
 #
 class magnum::keystone::auth (
   $password,

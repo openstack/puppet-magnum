@@ -4,17 +4,17 @@
 # == Parameters
 #
 # [*user*]
-#   (optional) User to run dbsync command.
+#   (Optional) User to run dbsync command.
 #   Defaults to 'magnum'
 #
 # [*extra_params*]
-#   (optional) String of extra command line parameters to append
+#   (Optional) String of extra command line parameters to append
 #   to the magnum-dbsync command.
 #   Defaults to undef
 #
 # [*exec_path*]
-#   (optional) The path  to use for finding the magnum-db-manage binary.
-#   Defaults to /usr/bin
+#   (Optional) The path  to use for finding the magnum-db-manage binary.
+#   Defaults to '/usr/bin'
 #
 class magnum::db::sync(
   $user         = 'magnum',
