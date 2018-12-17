@@ -43,6 +43,10 @@
 #   (Optional) Name of the service.
 #   Defaults to the value of auth_name.
 #
+# [*service_description*]
+#   (Optional) Description of the service.
+#   Default to 'magnum Container Service'
+#
 # [*public_url*]
 #   (0ptional) The endpoint's public url.
 #   This url should *not* contain any trailing '/'.
@@ -65,6 +69,7 @@ class magnum::keystone::auth (
   $configure_endpoint  = true,
   $configure_user      = true,
   $configure_user_role = true,
+  $service_description = 'magnum Container Service',
   $service_name        = undef,
   $service_type        = 'container-infra',
   $region              = 'RegionOne',
@@ -88,7 +93,7 @@ class magnum::keystone::auth (
     configure_endpoint  => $configure_endpoint,
     service_name        => $real_service_name,
     service_type        => $service_type,
-    service_description => 'magnum Container Service',
+    service_description => $service_description,
     region              => $region,
     auth_name           => $auth_name,
     password            => $password,
