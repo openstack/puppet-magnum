@@ -118,7 +118,6 @@ class magnum(
 
   include ::magnum::deps
   include ::magnum::params
-  include ::magnum::logging
   include ::magnum::policy
   include ::magnum::db
 
