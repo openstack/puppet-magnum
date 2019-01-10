@@ -15,15 +15,15 @@
         },
         {
             "name": "openstack/keystone",
-            "version_requirement": ">=14.1.0 <15.0.0"
+            "version_requirement": ">=14.2.0 <15.0.0"
         },
         {
             "name": "openstack/openstacklib",
-            "version_requirement": ">=14.1.0 <15.0.0"
+            "version_requirement": ">=14.2.0 <15.0.0"
         },
         {
             "name": "openstack/oslo",
-            "version_requirement": ">=14.1.0 <15.0.0"
+            "version_requirement": ">=14.2.0 <15.0.0"
         }
     ],
     "description": "Installs and configures OpenStack Magnum.",
@@ -60,5 +60,5 @@
     "project_page": "https://launchpad.net/puppet-magnum",
     "source": "git://github.com/openstack/puppet-magnum.git",
     "summary": "Puppet module for OpenStack Magnum",
-    "version": "14.1.0"
+    "version": "14.2.0"
 }
