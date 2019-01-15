@@ -57,6 +57,12 @@
             ]
         }
     ],
+    "requirements": [
+        {
+            "name": "puppet",
+            "version_requirement": "5.x"
+        }
+    ],
     "project_page": "https://launchpad.net/puppet-magnum",
     "source": "git://github.com/openstack/puppet-magnum.git",
     "summary": "Puppet module for OpenStack Magnum",
