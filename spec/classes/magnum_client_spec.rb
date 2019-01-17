@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe 'magnum::client' do
-
   shared_examples_for 'magnum client' do
-
     it { is_expected.to contain_class('magnum::deps') }
     it { is_expected.to contain_class('magnum::params') }
 
@@ -27,17 +25,13 @@ describe 'magnum::client' do
       let(:platform_params) do
         case facts[:osfamily]
         when 'Debian'
-          if facts[:os_package_type] == 'debian'
-            { :client_package_name => 'python3-magnumclient' }
-          else
-            { :client_package_name => 'python-magnumclient' }
-          end
+          { :client_package_name => 'python3-magnumclient' }
         when 'RedHat'
           { :client_package_name => 'python2-magnumclient' }
         end
       end
+
       it_configures 'magnum client'
     end
   end
-
 end
