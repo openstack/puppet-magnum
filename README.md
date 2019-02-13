@@ -35,7 +35,7 @@ Setup
 
 **What the magnum module affects**
 
-* [Magnum](https://wiki.openstack.org/wiki/Magnum), the container service for OpenStack.
+* [Magnum](https://docs.openstack.org/magnum/latest/), the container service for OpenStack.
 
 ### Installing magnum
 
