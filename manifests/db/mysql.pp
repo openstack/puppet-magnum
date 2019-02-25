@@ -45,7 +45,7 @@ class magnum::db::mysql(
 
   include ::magnum::deps
 
-  validate_string($password)
+  validate_legacy(String, 'validate_string', $password)
 
   ::openstacklib::db::mysql { 'magnum':
     user          => $user,

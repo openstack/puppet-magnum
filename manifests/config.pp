@@ -30,8 +30,8 @@ class magnum::config (
 
   include ::magnum::deps
 
-  validate_hash($magnum_config)
-  validate_hash($magnum_api_paste_ini)
+  validate_legacy(Hash, 'validate_hash', $magnum_config)
+  validate_legacy(Hash, 'validate_hash', $magnum_api_paste_ini)
 
   create_resources('magnum_config', $magnum_config)
   create_resources('magnum_api_paste_ini', $magnum_api_paste_ini)
