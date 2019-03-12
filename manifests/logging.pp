@@ -33,6 +33,10 @@
 #   If set to boolean false, it will not log to any directory.
 #   Defaults to '/var/log/magnum'.
 #
+# [*log_file*]
+#   (Optional) File where logs should be stored.
+#   Defaults to $::os_service_default
+#
 # [*logging_context_format_string*]
 #   (Optional) Format string to use for log messages with context.
 #   Defaults to $::os_service_default
@@ -104,6 +108,7 @@ class magnum::logging(
   $use_stderr                    = $::os_service_default,
   $log_facility                  = $::os_service_default,
   $log_dir                       = '/var/log/magnum',
+  $log_file                      = $::os_service_default,
   $debug                         = $::os_service_default,
   $logging_context_format_string = $::os_service_default,
   $logging_default_format_string = $::os_service_default,
@@ -127,6 +132,7 @@ class magnum::logging(
     use_journal                   => $use_journal,
     use_stderr                    => $use_stderr,
     log_dir                       => $log_dir,
+    log_file                      => $log_file,
     syslog_log_facility           => $log_facility,
     logging_context_format_string => $logging_context_format_string,
     logging_default_format_string => $logging_default_format_string,
