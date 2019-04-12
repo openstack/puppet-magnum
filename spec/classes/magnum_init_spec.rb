@@ -94,7 +94,7 @@ describe 'magnum' do
 
     context 'with rabbit ssl enabled with kombu' do
       let :params do
-        { 
+        {
           :rabbit_use_ssl     => true,
           :kombu_ssl_ca_certs => '/etc/ca.crt',
           :kombu_ssl_certfile => '/etc/certfile',
@@ -116,7 +116,7 @@ describe 'magnum' do
 
     context 'with rabbit ssl enabled without kombu' do
       let :params do
-        { 
+        {
           :rabbit_use_ssl     => 'true',
         }
       end
