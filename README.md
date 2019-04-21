@@ -98,4 +98,4 @@ Release Notes
 Repository
 ----------
 
-* https://git.openstack.org/cgit/openstack/puppet-magnum
+* https://opendev.org/openstack/puppet-magnum
