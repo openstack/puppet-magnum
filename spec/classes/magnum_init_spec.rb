@@ -31,20 +31,26 @@ describe 'magnum' do
       end
 
       it 'configures rabbit' do
-        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_ha_queues').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/heartbeat_rate').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/amqp_durable_queues').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
+          :rabbit_ha_queues            => '<SERVICE DEFAULT>',
+          :heartbeat_timeout_threshold => '<SERVICE DEFAULT>',
+          :heartbeat_rate              => '<SERVICE DEFAULT>',
+          :rabbit_use_ssl              => '<SERVICE DEFAULT>',
+          :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
+          :kombu_failover_strategy     => '<SERVICE DEFAULT>',
+          :kombu_ssl_version           => '<SERVICE DEFAULT>',
+          :kombu_ssl_keyfile           => '<SERVICE DEFAULT>',
+          :kombu_ssl_certfile          => '<SERVICE DEFAULT>',
+          :kombu_ssl_ca_certs          => '<SERVICE DEFAULT>',
+          :amqp_durable_queues         => '<SERVICE DEFAULT>',
+          :kombu_compression           => '<SERVICE DEFAULT>')
       end
 
-      it 'configures various things' do
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('<SERVICE DEFAULT>')
+      it 'configures notifications' do
+        is_expected.to contain_oslo__messaging__notifications('magnum_config').with(
+          :transport_url => '<SERVICE DEFAULT>',
+          :driver        => '<SERVICE DEFAULT>',
+          :topics        => '<SERVICE DEFAULT>')
       end
 
     end
@@ -75,20 +81,31 @@ describe 'magnum' do
       end
 
       it 'configures rabbit' do
-        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('rabbit://user:pass@host:1234/virt')
-        is_expected.to contain_magnum_config('DEFAULT/rpc_response_timeout').with_value('120')
-        is_expected.to contain_magnum_config('DEFAULT/control_exchange').with_value('magnum')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/kombu_failover_strategy').with_value('shuffle')
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/rabbit_ha_queues').with_value(true)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/heartbeat_timeout_threshold').with_value(60)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/heartbeat_rate').with_value(10)
-        is_expected.to contain_magnum_config('oslo_messaging_rabbit/amqp_durable_queues').with_value(true)
+        is_expected.to contain_oslo__messaging__default('magnum_config').with(
+          :transport_url        => 'rabbit://user:pass@host:1234/virt',
+          :rpc_response_timeout => '120',
+          :control_exchange     => 'magnum',
+        )
+        is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
+          :rabbit_ha_queues            => true,
+          :heartbeat_timeout_threshold => 60,
+          :heartbeat_rate              => 10,
+          :rabbit_use_ssl              => '<SERVICE DEFAULT>',
+          :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
+          :kombu_failover_strategy     => 'shuffle',
+          :kombu_ssl_version           => '<SERVICE DEFAULT>',
+          :kombu_ssl_keyfile           => '<SERVICE DEFAULT>',
+          :kombu_ssl_certfile          => '<SERVICE DEFAULT>',
+          :kombu_ssl_ca_certs          => '<SERVICE DEFAULT>',
+          :amqp_durable_queues         => true,
+          :kombu_compression           => '<SERVICE DEFAULT>')
       end
 
-      it 'configures various things' do
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/transport_url').with_value('rabbit://user:pass@host:1234/virt')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/driver').with_value('messagingv1')
-        is_expected.to contain_magnum_config('oslo_messaging_notifications/topics').with_value('openstack')
+      it 'configures notifications' do
+        is_expected.to contain_oslo__messaging__notifications('magnum_config').with(
+          :transport_url => 'rabbit://user:pass@host:1234/virt',
+          :driver        => 'messagingv1',
+          :topics        => 'openstack')
       end
     end
 
@@ -151,22 +168,23 @@ describe 'magnum' do
     end
     context 'with default amqp parameters' do
       it 'configures amqp' do
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/server_request_prefix').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/broadcast_prefix').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/group_request_prefix').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/container_name').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/idle_timeout').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/trace').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_ca_file').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_cert_file').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_file').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_password').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/allow_insecure_clients').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_mechanisms').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_config_dir').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_config_name').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/username').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/password').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_oslo__messaging__amqp('magnum_config').with(
+          :server_request_prefix  => '<SERVICE DEFAULT>',
+          :broadcast_prefix       => '<SERVICE DEFAULT>',
+          :group_request_prefix   => '<SERVICE DEFAULT>',
+          :container_name         => '<SERVICE DEFAULT>',
+          :idle_timeout           => '<SERVICE DEFAULT>',
+          :trace                  => '<SERVICE DEFAULT>',
+          :ssl_ca_file            => '<SERVICE DEFAULT>',
+          :ssl_cert_file          => '<SERVICE DEFAULT>',
+          :ssl_key_file           => '<SERVICE DEFAULT>',
+          :ssl_key_password       => '<SERVICE DEFAULT>',
+          :allow_insecure_clients => '<SERVICE DEFAULT>',
+          :sasl_mechanisms        => '<SERVICE DEFAULT>',
+          :sasl_config_dir        => '<SERVICE DEFAULT>',
+          :sasl_config_name       => '<SERVICE DEFAULT>',
+          :username               => '<SERVICE DEFAULT>',
+          :password               => '<SERVICE DEFAULT>')
       end
     end
 
@@ -184,14 +202,25 @@ describe 'magnum' do
       end
 
       it 'configures amqp' do
-        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('amqp://amqp_user:password@localhost:5672')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/idle_timeout').with_value('60')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/trace').with_value('true')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_ca_file').with_value('/etc/ca.cert')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_cert_file').with_value('/etc/certfile')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_file').with_value('/etc/key')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/username').with_value('amqp_user')
-        is_expected.to contain_magnum_config('oslo_messaging_amqp/password').with_value('password')
+        is_expected.to contain_oslo__messaging__amqp('magnum_config').with(
+          :server_request_prefix  => '<SERVICE DEFAULT>',
+          :broadcast_prefix       => '<SERVICE DEFAULT>',
+          :group_request_prefix   => '<SERVICE DEFAULT>',
+          :container_name         => '<SERVICE DEFAULT>',
+          :idle_timeout           => 60,
+          :trace                  => 'true',
+          :ssl_ca_file            => '/etc/ca.cert',
+          :ssl_cert_file          => '/etc/certfile',
+          :ssl_key_file           => '/etc/key',
+          :ssl_key_password       => '<SERVICE DEFAULT>',
+          :allow_insecure_clients => '<SERVICE DEFAULT>',
+          :sasl_mechanisms        => '<SERVICE DEFAULT>',
+          :sasl_config_dir        => '<SERVICE DEFAULT>',
+          :sasl_config_name       => '<SERVICE DEFAULT>',
+          :username               => 'amqp_user',
+          :password               => 'password')
+        is_expected.to contain_oslo__messaging__default('magnum_config').with(
+          :transport_url        => 'amqp://amqp_user:password@localhost:5672')
       end
     end
   end
