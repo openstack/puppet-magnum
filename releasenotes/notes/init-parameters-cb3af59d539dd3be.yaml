@@ -1,0 +1,6 @@
+---
+features:
+  - |
+    The init.pp main class has been modified to include more standard
+    parameters, as seen in other puppet-openstack modules. None of the new
+    parameters are required, therefore the module stays backward compatible.

@@ -149,6 +149,51 @@ describe 'magnum' do
         )
       end
     end
+    context 'with default amqp parameters' do
+      it 'configures amqp' do
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/server_request_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/broadcast_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/group_request_prefix').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/container_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/idle_timeout').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/trace').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_ca_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_cert_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_file').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_password').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/allow_insecure_clients').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_mechanisms').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_config_dir').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/sasl_config_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/username').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/password').with_value('<SERVICE DEFAULT>')
+      end
+    end
+
+    context 'with overridden amqp parameters' do
+      let :params do
+        {  :default_transport_url => 'amqp://amqp_user:password@localhost:5672',
+          :amqp_idle_timeout     => '60',
+          :amqp_trace            => true,
+          :amqp_ssl_ca_file      => '/etc/ca.cert',
+          :amqp_ssl_cert_file    => '/etc/certfile',
+          :amqp_ssl_key_file     => '/etc/key',
+          :amqp_username         => 'amqp_user',
+          :amqp_password         => 'password',
+        }
+      end
+
+      it 'configures amqp' do
+        is_expected.to contain_magnum_config('DEFAULT/transport_url').with_value('amqp://amqp_user:password@localhost:5672')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/idle_timeout').with_value('60')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/trace').with_value('true')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_ca_file').with_value('/etc/ca.cert')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_cert_file').with_value('/etc/certfile')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/ssl_key_file').with_value('/etc/key')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/username').with_value('amqp_user')
+        is_expected.to contain_magnum_config('oslo_messaging_amqp/password').with_value('password')
+      end
+    end
   end
 
   on_supported_os({

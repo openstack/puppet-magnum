@@ -80,20 +80,95 @@
 #  on some distributions.
 #  Defaults to $::os_service_default
 #
+# [*kombu_reconnect_delay*]
+#   (Optional) How long to wait before reconnecting in response
+#   to an AMQP consumer cancel notification. (floating point value)
+#   Defaults to $::os_service_default
+#
 # [*kombu_failover_strategy*]
 #  (Optional) Determines how the next RabbitMQ node is chosen in case the one
 #  we are currently connected to becomes unavailable. Takes effect only if
 #  more than one RabbitMQ node is provided in config. (string value)
 #  Defaults to $::os_service_default
 #
+# [*kombu_compression*]
+#   (optional) Possible values are: gzip, bz2. If not set compression will not
+#   be used. This option may notbe available in future versions. EXPERIMENTAL.
+#   (string value)
+#   Defaults to $::os_service_default
+#
+# [*amqp_durable_queues*]
+#   (Optional) Use durable queues in amqp.
+#   Defaults to $::os_service_default.
+#
+# [*amqp_server_request_prefix*]
+#   (Optional) Address prefix used when sending to a specific server
+#   Defaults to $::os_service_default.
+#
+# [*amqp_broadcast_prefix*]
+#   (Optional) address prefix used when broadcasting to all servers
+#   Defaults to $::os_service_default.
+#
+# [*amqp_group_request_prefix*]
+#   (Optional) address prefix when sending to any server in group
+#   Defaults to $::os_service_default.
+#
+# [*amqp_container_name*]
+#   (Optional) Name for the AMQP container
+#   Defaults to $::os_service_default.
+#
+# [*amqp_idle_timeout*]
+#   (Optional) Timeout for inactive connections
+#   Defaults to $::os_service_default.
+#
+# [*amqp_trace*]
+#   (Optional) Debug: dump AMQP frames to stdout
+#   Defaults to $::os_service_default.
+#
+# [*amqp_ssl_ca_file*]
+#   (Optional) CA certificate PEM file to verify server certificate
+#   Defaults to $::os_service_default.
+#
+# [*amqp_ssl_cert_file*]
+#   (Optional) Identifying certificate PEM file to present to clients
+#   Defaults to $::os_service_default.
+#
+# [*amqp_ssl_key_file*]
+#   (Optional) Private key PEM file used to sign cert_file certificate
+#   Defaults to $::os_service_default.
+#
+# [*amqp_ssl_key_password*]
+#   (Optional) Password for decrypting ssl_key_file (if encrypted)
+#   Defaults to $::os_service_default.
+#
+# [*amqp_allow_insecure_clients*]
+#   (Optional) Accept clients using either SSL or plain TCP
+#   Defaults to $::os_service_default.
+#
+# [*amqp_sasl_mechanisms*]
+#   (Optional) Space separated list of acceptable SASL mechanisms
+#   Defaults to $::os_service_default.
+#
+# [*amqp_sasl_config_dir*]
+#   (Optional) Path to directory that contains the SASL configuration
+#   Defaults to $::os_service_default.
+#
+# [*amqp_sasl_config_name*]
+#   (Optional) Name of configuration file (without .conf suffix)
+#   Defaults to $::os_service_default.
+#
+# [*amqp_username*]
+#   (Optional) User name for message broker authentication
+#   Defaults to $::os_service_default.
+#
+# [*amqp_password*]
+#   (Optional) Password for message broker authentication
+#   Defaults to $::os_service_default.
+#
 # [*purge_config*]
 #  (Optional) Whether to set only the specified config options
 #  in the magnum config.
 #  Defaults to false.
-#
-# [*amqp_durable_queues*]
-#   (optional) Whether to use durable queues in AMQP.
-#   Defaults to $::os_service_default.
 #
 class magnum(
   $package_ensure                     = 'present',
@@ -111,9 +186,27 @@ class magnum(
   $kombu_ssl_certfile                 = $::os_service_default,
   $kombu_ssl_keyfile                  = $::os_service_default,
   $kombu_ssl_version                  = $::os_service_default,
+  $kombu_reconnect_delay              = $::os_service_default,
   $kombu_failover_strategy            = $::os_service_default,
-  $purge_config                       = false,
+  $kombu_compression                  = $::os_service_default,
   $amqp_durable_queues                = $::os_service_default,
+  $amqp_server_request_prefix         = $::os_service_default,
+  $amqp_broadcast_prefix              = $::os_service_default,
+  $amqp_group_request_prefix          = $::os_service_default,
+  $amqp_container_name                = $::os_service_default,
+  $amqp_idle_timeout                  = $::os_service_default,
+  $amqp_trace                         = $::os_service_default,
+  $amqp_ssl_ca_file                   = $::os_service_default,
+  $amqp_ssl_cert_file                 = $::os_service_default,
+  $amqp_ssl_key_file                  = $::os_service_default,
+  $amqp_ssl_key_password              = $::os_service_default,
+  $amqp_allow_insecure_clients        = $::os_service_default,
+  $amqp_sasl_mechanisms               = $::os_service_default,
+  $amqp_sasl_config_dir               = $::os_service_default,
+  $amqp_sasl_config_name              = $::os_service_default,
+  $amqp_username                      = $::os_service_default,
+  $amqp_password                      = $::os_service_default,
+  $purge_config                       = false,
 ) {
 
   include ::magnum::deps
@@ -132,16 +225,37 @@ class magnum(
   }
 
   oslo::messaging::rabbit { 'magnum_config':
+    rabbit_ha_queues            => $rabbit_ha_queues,
     heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
     heartbeat_rate              => $rabbit_heartbeat_rate,
     rabbit_use_ssl              => $rabbit_use_ssl,
+    kombu_reconnect_delay       => $kombu_reconnect_delay,
+    kombu_failover_strategy     => $kombu_failover_strategy,
     kombu_ssl_version           => $kombu_ssl_version,
     kombu_ssl_keyfile           => $kombu_ssl_keyfile,
     kombu_ssl_certfile          => $kombu_ssl_certfile,
     kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
-    kombu_failover_strategy     => $kombu_failover_strategy,
-    rabbit_ha_queues            => $rabbit_ha_queues,
     amqp_durable_queues         => $amqp_durable_queues,
+    kombu_compression           => $kombu_compression,
+  }
+
+  oslo::messaging::amqp { 'magnum_config':
+    server_request_prefix  => $amqp_server_request_prefix,
+    broadcast_prefix       => $amqp_broadcast_prefix,
+    group_request_prefix   => $amqp_group_request_prefix,
+    container_name         => $amqp_container_name,
+    idle_timeout           => $amqp_idle_timeout,
+    trace                  => $amqp_trace,
+    ssl_ca_file            => $amqp_ssl_ca_file,
+    ssl_cert_file          => $amqp_ssl_cert_file,
+    ssl_key_file           => $amqp_ssl_key_file,
+    ssl_key_password       => $amqp_ssl_key_password,
+    allow_insecure_clients => $amqp_allow_insecure_clients,
+    sasl_mechanisms        => $amqp_sasl_mechanisms,
+    sasl_config_dir        => $amqp_sasl_config_dir,
+    sasl_config_name       => $amqp_sasl_config_name,
+    username               => $amqp_username,
+    password               => $amqp_password,
   }
 
   oslo::messaging::default { 'magnum_config':
