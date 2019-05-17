@@ -4,12 +4,13 @@
 #
 # === Parameters
 #
-# [*password*]
-#   (Required) Password to create for the service user
-#
 # [*username*]
 #   (Optional) The name of the service user
 #   Defaults to 'magnum'
+#
+# [*password*]
+#   (Required) Password to create for the service user
+#   Defaults to $::os_service_default
 #
 # [*auth_url*]
 #   (Optional) The URL to use for authentication.
@@ -29,7 +30,8 @@
 #
 # [*insecure*]
 #   (Optional) If true, explicitly allow TLS without checking server cert
-#   against any certificate authorities.  WARNING: not recommended.  Use with caution.
+#   against any certificate authorities.  WARNING: not recommended.  Use with
+#   caution.
 #   Defaults to $::os_service_default
 #
 # [*auth_section*]
@@ -53,7 +55,8 @@
 #   Defaults to $::os_service_default.
 #
 # [*cafile*]
-#   (Optional) A PEM encoded Certificate Authority to use when verifying HTTPs connections.
+#   (Optional) A PEM encoded Certificate Authority to use when verifying HTTPs
+#   connections.
 #   Defaults to $::os_service_default.
 #
 # [*certfile*]
@@ -62,8 +65,8 @@
 #
 # [*delay_auth_decision*]
 #   (Optional) Do not handle authorization requests within the middleware, but
-#   delegate the authorization decision to downstream WSGI components.
-#   Boolean value
+#   delegate the authorization decision to downstream WSGI components. Boolean
+#   value
 #   Defaults to $::os_service_default.
 #
 # [*enforce_token_bind*]
@@ -183,8 +186,8 @@
 #   Defaults to undef.
 #
 class magnum::keystone::authtoken(
-  $password,
   $username                       = 'magnum',
+  $password                       = $::os_service_default,
   $auth_url                       = 'http://localhost:5000',
   $project_name                   = 'services',
   $user_domain_name               = 'Default',
@@ -223,6 +226,10 @@ class magnum::keystone::authtoken(
 
   include ::magnum::deps
 
+  if is_service_default($password) {
+    fail('Please set password for magnum service user')
+  }
+
   if $check_revocations_for_cached {
     warning('check_revocations_for_cached parameter is deprecated, has no effect and will be removed in the future.')
   }
@@ -242,12 +249,16 @@ class magnum::keystone::authtoken(
     auth_section                   => $auth_section,
     user_domain_name               => $user_domain_name,
     project_domain_name            => $project_domain_name,
+    insecure                       => $insecure,
     cache                          => $cache,
+    cafile                         => $cafile,
+    certfile                       => $certfile,
     delay_auth_decision            => $delay_auth_decision,
     enforce_token_bind             => $enforce_token_bind,
     http_connect_timeout           => $http_connect_timeout,
     http_request_max_retries       => $http_request_max_retries,
     include_service_catalog        => $include_service_catalog,
+    keyfile                        => $keyfile,
     memcache_pool_conn_get_timeout => $memcache_pool_conn_get_timeout,
     memcache_pool_dead_retry       => $memcache_pool_dead_retry,
     memcache_pool_maxsize          => $memcache_pool_maxsize,
@@ -262,11 +273,7 @@ class magnum::keystone::authtoken(
     token_cache_time               => $token_cache_time,
     service_token_roles_required   => $service_token_roles_required,
   }
-
   magnum_config {
-    'keystone_authtoken/admin_tenant_name': value => $project_name;
-    'keystone_authtoken/admin_user'       : value => $username;
-    'keystone_authtoken/admin_password'   : value => $password, secret => true;
     'keystone_auth/cafile'                : value => $cafile;
     'keystone_auth/keyfile'               : value => $keyfile;
     'keystone_auth/certfile'              : value => $certfile;
