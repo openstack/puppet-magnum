@@ -35,6 +35,7 @@ describe 'magnum' do
           :rabbit_ha_queues            => '<SERVICE DEFAULT>',
           :heartbeat_timeout_threshold => '<SERVICE DEFAULT>',
           :heartbeat_rate              => '<SERVICE DEFAULT>',
+          :heartbeat_in_pthread        => '<SERVICE DEFAULT>',
           :rabbit_use_ssl              => '<SERVICE DEFAULT>',
           :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
           :kombu_failover_strategy     => '<SERVICE DEFAULT>',
@@ -68,6 +69,7 @@ describe 'magnum' do
           :rabbit_ha_queues                   => true,
           :rabbit_heartbeat_timeout_threshold => 60,
           :rabbit_heartbeat_rate              => 10,
+          :rabbit_heartbeat_in_pthread        => true,
           :amqp_durable_queues                => true,
         }
       end
@@ -90,6 +92,7 @@ describe 'magnum' do
           :rabbit_ha_queues            => true,
           :heartbeat_timeout_threshold => 60,
           :heartbeat_rate              => 10,
+          :heartbeat_in_pthread        => true,
           :rabbit_use_ssl              => '<SERVICE DEFAULT>',
           :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
           :kombu_failover_strategy     => 'shuffle',
