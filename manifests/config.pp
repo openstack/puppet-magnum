@@ -28,7 +28,7 @@ class magnum::config (
   $magnum_api_paste_ini = {},
 ) {
 
-  include ::magnum::deps
+  include magnum::deps
 
   validate_legacy(Hash, 'validate_hash', $magnum_config)
   validate_legacy(Hash, 'validate_hash', $magnum_api_paste_ini)

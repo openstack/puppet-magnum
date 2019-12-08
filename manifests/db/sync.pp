@@ -22,7 +22,7 @@ class magnum::db::sync(
   $exec_path    = '/usr/bin',
 ) {
 
-  include ::magnum::deps
+  include magnum::deps
 
   exec { 'magnum-db-sync':
     command     => "magnum-db-manage ${extra_params} upgrade head",

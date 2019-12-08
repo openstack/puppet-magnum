@@ -39,8 +39,8 @@ class magnum::clients::neutron(
   $insecure      = $magnum::clients::insecure
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'neutron_client/region_name':   value => $region_name;

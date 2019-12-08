@@ -45,8 +45,8 @@ class magnum::clients::heat(
   $insecure      = $magnum::clients::insecure
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'heat_client/region_name':   value => $region_name;

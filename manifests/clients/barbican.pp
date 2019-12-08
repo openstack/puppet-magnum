@@ -19,8 +19,8 @@ class magnum::clients::barbican(
   $endpoint_type = $magnum::clients::endpoint_type,
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'barbican_client/region_name':   value => $region_name;

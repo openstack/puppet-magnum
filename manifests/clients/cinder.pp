@@ -13,8 +13,8 @@ class magnum::clients::cinder(
   $region_name   = $magnum::clients::region_name,
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'cinder_client/region_name': value => $region_name;

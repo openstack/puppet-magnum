@@ -95,11 +95,11 @@ describe 'magnum::api' do
 
   shared_examples 'magnum-api wsgi' do
     let :pre_condition do
-      "include ::magnum
+      "include magnum
        class { 'magnum::keystone::authtoken':
          password => 'secret',
        }
-       include ::apache"
+       include apache"
     end
 
     let :params do

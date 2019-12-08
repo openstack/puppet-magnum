@@ -19,8 +19,8 @@ class magnum::clients::magnum(
   $endpoint_type = $magnum::clients::endpoint_type,
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'magnum_client/region_name':   value => $region_name;

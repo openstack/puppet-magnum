@@ -43,7 +43,7 @@ class magnum::db::mysql(
   $allowed_hosts = undef
 ) {
 
-  include ::magnum::deps
+  include magnum::deps
 
   validate_legacy(String, 'validate_string', $password)
 

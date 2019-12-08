@@ -78,7 +78,7 @@ class magnum::keystone::auth (
   $internal_url        = 'http://127.0.0.1:9511/v1',
 ) {
 
-  include ::magnum::deps
+  include magnum::deps
 
   $real_service_name = pick($service_name, $auth_name)
 

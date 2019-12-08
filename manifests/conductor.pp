@@ -38,9 +38,9 @@ class magnum::conductor(
   $workers                      = $::os_workers,
 ) {
 
-  include ::magnum::db
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::db
+  include magnum::deps
+  include magnum::params
 
   # Install package
   package { 'magnum-conductor':
@@ -72,6 +72,6 @@ class magnum::conductor(
   }
 
   if $auth_strategy == 'keystone' {
-    include ::magnum::keystone::authtoken
+    include magnum::keystone::authtoken
   }
 }

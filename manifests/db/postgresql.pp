@@ -32,7 +32,7 @@ class magnum::db::postgresql(
   $privileges = 'ALL',
 ) {
 
-  include ::magnum::deps
+  include magnum::deps
 
   ::openstacklib::db::postgresql { 'magnum':
     password_hash => postgresql_password($user, $password),

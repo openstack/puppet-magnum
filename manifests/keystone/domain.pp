@@ -79,8 +79,8 @@ class magnum::keystone::domain (
   $keystone_interface       = 'public'
 ) {
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   if $manage_domain {
     ensure_resource('keystone_domain', $domain_name, {

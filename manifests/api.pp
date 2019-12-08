@@ -80,9 +80,9 @@ class magnum::api(
   $workers        = $::os_workers,
 ) inherits magnum::params {
 
-  include ::magnum::deps
-  include ::magnum::params
-  include ::magnum::policy
+  include magnum::deps
+  include magnum::params
+  include magnum::policy
 
   if $enabled_ssl {
     if is_service_default($ssl_cert_file) {
@@ -94,7 +94,7 @@ class magnum::api(
   }
 
   if $sync_db {
-    include ::magnum::db::sync
+    include magnum::db::sync
   }
 
   # Configure API conf
@@ -133,7 +133,7 @@ class magnum::api(
         tag       => ['magnum-service', 'magnum-db-sync-service'],
       }
     } elsif $service_name == 'httpd' {
-      include ::apache::params
+      include apache::params
       service { 'magnum-api':
         ensure    => 'stopped',
         name      => $::magnum::params::api_service,
@@ -147,6 +147,6 @@ class magnum::api(
   }
 
   if $auth_strategy == 'keystone' {
-    include ::magnum::keystone::authtoken
+    include magnum::keystone::authtoken
   }
 }

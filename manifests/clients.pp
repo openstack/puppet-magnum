@@ -38,13 +38,13 @@ class magnum::clients (
   $key_file      = $::os_service_default,
   $insecure      = false
 ) {
-  include ::magnum::deps
-  include ::magnum::params
-  include ::magnum::clients::barbican
-  include ::magnum::clients::cinder
-  include ::magnum::clients::glance
-  include ::magnum::clients::heat
-  include ::magnum::clients::magnum
-  include ::magnum::clients::neutron
-  include ::magnum::clients::nova
+  include magnum::deps
+  include magnum::params
+  include magnum::clients::barbican
+  include magnum::clients::cinder
+  include magnum::clients::glance
+  include magnum::clients::heat
+  include magnum::clients::magnum
+  include magnum::clients::neutron
+  include magnum::clients::nova
 }

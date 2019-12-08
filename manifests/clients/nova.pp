@@ -45,8 +45,8 @@ class magnum::clients::nova(
   $insecure      = $magnum::clients::insecure
 ){
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   magnum_config {
     'nova_client/region_name':   value => $region_name;

@@ -3,7 +3,7 @@
 # Parameters for puppet-magnum
 #
 class magnum::params {
-  include ::openstacklib::defaults
+  include openstacklib::defaults
 
   $pyvers = $::openstacklib::defaults::pyvers
   $pyver3 = $::openstacklib::defaults::pyver3

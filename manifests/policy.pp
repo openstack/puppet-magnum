@@ -28,8 +28,8 @@ class magnum::policy (
   $policy_path = '/etc/magnum/policy.json',
 ) {
 
-  include ::magnum::deps
-  include ::magnum::params
+  include magnum::deps
+  include magnum::params
 
   validate_legacy(Hash, 'validate_hash', $policies)
 
