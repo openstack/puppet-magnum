@@ -18,9 +18,9 @@ class magnum::params {
       # service names
       $api_service        = 'openstack-magnum-api'
       $conductor_service  = 'openstack-magnum-conductor'
-      $client_package     = 'python2-magnumclient'
+      $client_package     = "python${pyvers}-magnumclient"
       $wsgi_script_path   = '/var/www/cgi-bin/magnum'
-      $wsgi_script_source = '/usr/lib/python2.7/site-packages/magnum/api/app.wsgi'
+      $wsgi_script_source = '/usr/bin/magnum-api-wsgi'
     }
     'Debian': {
       # package names
