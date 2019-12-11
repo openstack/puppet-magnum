@@ -27,7 +27,7 @@ describe 'magnum::client' do
         when 'Debian'
           { :client_package_name => 'python3-magnumclient' }
         when 'RedHat'
-          { :client_package_name => 'python2-magnumclient' }
+          { :client_package_name => 'python-magnumclient' }
         end
       end
 
