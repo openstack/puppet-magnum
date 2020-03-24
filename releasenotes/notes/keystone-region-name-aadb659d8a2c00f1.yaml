@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    Added keystone_region_name parameter to magnum::keystone::domain class.
