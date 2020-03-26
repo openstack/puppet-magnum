@@ -48,6 +48,11 @@
 #   Auth interface used by instances/trustee.
 #   Defaults to 'public'.
 #
+# [*keystone_region_name*]
+#   Region in Identity service catalog to use for
+#   communication with the OpenStack service.
+#   Defaults to $::os_service_default.
+#
 # [*manage_domain*]
 #   Whether manage or not the domain creation.
 #   If using the default domain, it needs to be False because puppet-keystone
@@ -72,11 +77,12 @@ class magnum::keystone::domain (
   $domain_password          = 'changeme',
   $domain_admin_domain_name = $::os_service_default,
   $domain_admin_domain_id   = $::os_service_default,
+  $roles                    = $::os_service_default,
+  $keystone_interface       = 'public',
+  $keystone_region_name     = $::os_service_default,
   $manage_domain            = true,
   $manage_user              = true,
   $manage_role              = true,
-  $roles                    = $::os_service_default,
-  $keystone_interface       = 'public'
 ) {
 
   include magnum::deps
@@ -118,6 +124,7 @@ class magnum::keystone::domain (
     'trust/trustee_domain_admin_password':     value => $domain_password, secret => true;
     'trust/roles':                             value => $roles;
     'trust/trustee_keystone_interface':        value => $keystone_interface;
+    'trust/trustee_keystone_region_name':      value => $keystone_region_name;
   }
 
 }
