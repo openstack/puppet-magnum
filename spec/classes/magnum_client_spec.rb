@@ -27,7 +27,15 @@ describe 'magnum::client' do
         when 'Debian'
           { :client_package_name => 'python3-magnumclient' }
         when 'RedHat'
-          { :client_package_name => 'python-magnumclient' }
+          if facts[:operatingsystem] == 'Fedora'
+            { :client_package_name => 'python3-magnumclient' }
+          else
+            if facts[:operatingsystemmajrelease] > '7'
+              { :client_package_name => 'python3-magnumclient' }
+            else
+              { :client_package_name => 'python-magnumclient' }
+            end
+          end
         end
       end
 
