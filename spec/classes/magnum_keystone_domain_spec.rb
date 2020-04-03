@@ -13,7 +13,8 @@ describe 'magnum::keystone::domain' do
     :domain_admin_email       => 'magnum_admin@localhost',
     :domain_password          => 'domain_passwd',
     :roles                    => 'admin,',
-    :keystone_interface       => 'public'
+    :keystone_interface       => 'public',
+    :keystone_region_name     => 'RegionOne'
     }
   end
 
@@ -30,6 +31,7 @@ describe 'magnum::keystone::domain' do
       is_expected.to contain_magnum_config('trust/trustee_domain_id').with_value(params[:domain_id])
       is_expected.to contain_magnum_config('trust/roles').with_value(params[:roles])
       is_expected.to contain_magnum_config('trust/trustee_keystone_interface').with_value(params[:keystone_interface])
+      is_expected.to contain_magnum_config('trust/trustee_keystone_region_name').with_value(params[:keystone_region_name])
     end
 
     it 'should create keystone domain' do
