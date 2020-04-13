@@ -75,5 +75,5 @@
     "project_page": "https://launchpad.net/puppet-magnum",
     "source": "git://github.com/openstack/puppet-magnum.git",
     "summary": "Puppet module for OpenStack Magnum",
-    "version": "16.2.0"
+    "version": "16.2.1"
 }
