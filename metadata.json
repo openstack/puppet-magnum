@@ -69,11 +69,7 @@
     "requirements": [
         {
             "name": "puppet",
-            "version_requirement": "5.x"
-        },
-        {
-            "name": "puppet",
-            "version_requirement": "6.x"
+            "version_requirement": ">= 5.0.0 < 7.0.0"
         }
     ],
     "project_page": "https://launchpad.net/puppet-magnum",
