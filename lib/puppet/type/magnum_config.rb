@@ -46,8 +46,8 @@ Puppet::Type.newtype(:magnum_config) do
     defaultto('<SERVICE DEFAULT>')
   end
 
-  autorequire(:package) do
-    'magnum-common'
+  autorequire(:anchor) do
+    ['magnum::install::end']
   end
 
 end

@@ -45,8 +45,8 @@ Puppet::Type.newtype(:magnum_api_paste_ini) do
     defaultto('<SERVICE DEFAULT>')
   end
 
-  autorequire(:package) do
-    'magnum-common'
+  autorequire(:anchor) do
+    ['magnum::install::end']
   end
 
 end

@@ -1,5 +1,6 @@
 require 'puppet'
 require 'puppet/type/magnum_config'
+
 describe 'Puppet::Type.type(:magnum_config)' do
   before :each do
     @magnum_config = Puppet::Type.type(:magnum_config).new(:name => 'DEFAULT/foo', :value => 'bar')
@@ -52,13 +53,12 @@ describe 'Puppet::Type.type(:magnum_config)' do
 
   it 'should autorequire the package that install the file' do
     catalog = Puppet::Resource::Catalog.new
-    package = Puppet::Type.type(:package).new(:name => 'magnum-common')
-    catalog.add_resource package, @magnum_config
+    anchor = Puppet::Type.type(:anchor).new(:name => 'magnum::install::end')
+    catalog.add_resource anchor, @magnum_config
     dependency = @magnum_config.autorequire
     expect(dependency.size).to eq(1)
     expect(dependency[0].target).to eq(@magnum_config)
-    expect(dependency[0].source).to eq(package)
+    expect(dependency[0].source).to eq(anchor)
   end
-
 
 end
