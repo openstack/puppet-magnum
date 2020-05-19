@@ -4,7 +4,7 @@ describe 'magnum::db::postgresql' do
 
   shared_examples_for 'magnum::db::postgresql' do
     let :req_params do
-      { :password => 'pw' }
+      { :password => 'magnumpass' }
     end
 
     let :pre_condition do
@@ -16,12 +16,14 @@ describe 'magnum::db::postgresql' do
         req_params
       end
 
-      it { is_expected.to contain_postgresql__server__db('magnum').with(
-        :user     => 'magnum',
-        :password => 'md5585fc4c4dbcc92bd48a21848bfed8b08'
+      it { is_expected.to contain_openstacklib__db__postgresql('magnum').with(
+        :user       => 'magnum',
+        :password   => 'magnumpass',
+        :dbname     => 'magnum',
+        :encoding   => nil,
+        :privileges => 'ALL',
       )}
     end
-
   end
 
   on_supported_os({
