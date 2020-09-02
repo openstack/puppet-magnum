@@ -6,8 +6,9 @@ require 'spec_helper'
 describe 'magnum::conductor' do
 
   let :pre_condition do
-    'include magnum'
-    'class { "magnum::keystone::authtoken": password => "secret", }'
+    ['class { "magnum::keystone::authtoken": password => "secret", }',
+     'class { "magnum::keystone::keystone_auth": password => "secret", }',
+    ]
   end
 
   shared_examples_for 'magnum-conductor' do
