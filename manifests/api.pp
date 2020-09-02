@@ -64,20 +64,26 @@
 #   (Optional) Number of API workers.
 #   Defaults to $::os_workers
 #
+# [*enable_proxy_headers_parsing*]
+#   (optional) This determines if the HTTPProxyToWSGI
+#   middleware should parse the proxy headers or not.(boolean value)
+#   Defaults to $::os_service_default
+#
 class magnum::api(
-  $package_ensure = 'present',
-  $enabled        = true,
-  $manage_service = true,
-  $service_name   = $::magnum::params::api_service,
-  $port           = '9511',
-  $host           = '127.0.0.1',
-  $max_limit      = '1000',
-  $sync_db        = true,
-  $auth_strategy  = 'keystone',
-  $enabled_ssl    = false,
-  $ssl_cert_file  = $::os_service_default,
-  $ssl_key_file   = $::os_service_default,
-  $workers        = $::os_workers,
+  $package_ensure               = 'present',
+  $enabled                      = true,
+  $manage_service               = true,
+  $service_name                 = $::magnum::params::api_service,
+  $port                         = '9511',
+  $host                         = '127.0.0.1',
+  $max_limit                    = '1000',
+  $sync_db                      = true,
+  $auth_strategy                = 'keystone',
+  $enabled_ssl                  = false,
+  $ssl_cert_file                = $::os_service_default,
+  $ssl_key_file                 = $::os_service_default,
+  $workers                      = $::os_workers,
+  $enable_proxy_headers_parsing = $::os_service_default,
 ) inherits magnum::params {
 
   include magnum::deps
@@ -149,4 +155,9 @@ class magnum::api(
   if $auth_strategy == 'keystone' {
     include magnum::keystone::authtoken
   }
+
+  oslo::middleware {'magnum_config':
+    enable_proxy_headers_parsing => $enable_proxy_headers_parsing,
+  }
+
 }

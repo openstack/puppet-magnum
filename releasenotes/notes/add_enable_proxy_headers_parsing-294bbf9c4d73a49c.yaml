@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    Add support to configure the enable_proxy_headers_parsing parameter in the
+    oslo_middlware section.

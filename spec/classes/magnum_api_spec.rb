@@ -10,15 +10,16 @@ describe 'magnum::api' do
   end
 
   let :default_params do
-    { :package_ensure    => 'present',
-      :enabled           => true,
-      :port              => '9511',
-      :host              => '127.0.0.1',
-      :max_limit         => '1000',
-      :sync_db           => 'true',
-      :enabled_ssl       => 'false',
-      :ssl_cert_file     => '<SERVICE DEFAULT>',
-      :ssl_key_file      => '<SERVICE DEFAULT>',
+    { :package_ensure               => 'present',
+      :enabled                      => true,
+      :port                         => '9511',
+      :host                         => '127.0.0.1',
+      :max_limit                    => '1000',
+      :sync_db                      => 'true',
+      :enabled_ssl                  => 'false',
+      :ssl_cert_file                => '<SERVICE DEFAULT>',
+      :ssl_key_file                 => '<SERVICE DEFAULT>',
+      :enable_proxy_headers_parsing => '<SERVICE DEFAULT>',
     }
   end
 
@@ -60,6 +61,10 @@ describe 'magnum::api' do
       is_expected.to contain_magnum_config('api/workers').with_value(facts[:os_workers])
     end
 
+    it { is_expected.to contain_oslo__middleware('magnum_config').with(
+      :enable_proxy_headers_parsing => '<SERVICE DEFAULT>',
+    )}
+
     context 'when overriding parameters' do
       before :each do
         params.merge!(
@@ -90,6 +95,18 @@ describe 'magnum::api' do
       it { is_expected.to contain_magnum_config('api/enabled_ssl').with_value(p[:enabled_ssl]) }
       it { is_expected.to contain_magnum_config('api/ssl_cert_file').with_value(p[:ssl_cert_file]) }
       it { is_expected.to contain_magnum_config('api/ssl_key_file').with_value(p[:ssl_key_file]) }
+    end
+
+    context 'with oslo_middleware configured' do
+      let :params do
+        {
+          :enable_proxy_headers_parsing => true,
+        }
+      end
+
+      it { is_expected.to contain_oslo__middleware('magnum_config').with(
+        :enable_proxy_headers_parsing => 'true',
+      )}
     end
   end
 
