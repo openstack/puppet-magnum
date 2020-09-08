@@ -73,5 +73,6 @@ class magnum::conductor(
 
   if $auth_strategy == 'keystone' {
     include magnum::keystone::authtoken
+    include magnum::keystone::keystone_auth
   }
 }
