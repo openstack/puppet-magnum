@@ -15,11 +15,10 @@ magnum
 3. [Setup - The basics of getting started with magnum](#setup)
 4. [Implementation - An under-the-hood peek at what the module is doing](#implementation)
 5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Beaker-Rspec - Beaker-rspec tests for the project](#beaker-rspec)
-7. [Development - Guide for contributing to the module](#development)
-8. [Contributors - Those with commits](#contributors)
-9. [Release Notes - Release notes for the project](#release-notes)
-10. [Repository - The project source code repository](#repository)
+6. [Development - Guide for contributing to the module](#development)
+7. [Contributors - Those with commits](#contributors)
+8. [Release Notes - Release notes for the project](#release-notes)
+9. [Repository - The project source code repository](#repository)
 
 Overview
 --------
@@ -61,22 +60,6 @@ Limitations
 -----------
 
 * All the magnum types use the CLI tools and so need to be run on the magnum node.
-
-Beaker-Rspec
-------------
-
-This module has beaker-rspec tests
-
-To run the tests on the default vagrant node:
-
-```shell
-bundle install
-bundle exec rake acceptance
-```
-
-For more information on writing and running beaker-rspec tests visit the documentation:
-
-* https://github.com/puppetlabs/beaker-rspec/blob/master/README.md
 
 Development
 -----------
