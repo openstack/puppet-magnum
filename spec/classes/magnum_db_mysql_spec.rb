@@ -16,6 +16,8 @@ describe 'magnum::db::mysql' do
       }
     end
 
+    it { is_expected.to contain_class('magnum::deps') }
+
     context 'with only required params' do
       it { is_expected.to contain_openstacklib__db__mysql('magnum').with(
         :user     => 'magnum',
