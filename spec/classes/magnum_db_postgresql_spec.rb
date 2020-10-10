@@ -16,6 +16,8 @@ describe 'magnum::db::postgresql' do
         req_params
       end
 
+      it { is_expected.to contain_class('magnum::deps') }
+
       it { is_expected.to contain_openstacklib__db__postgresql('magnum').with(
         :user       => 'magnum',
         :password   => 'magnumpass',
