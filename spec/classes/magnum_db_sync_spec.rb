@@ -4,6 +4,8 @@ describe 'magnum::db::sync' do
 
   shared_examples_for 'magnum-dbsync' do
 
+    it { is_expected.to contain_class('magnum::deps') }
+
     it 'runs magnum-db-sync' do
       is_expected.to contain_exec('magnum-db-sync').with(
         :command     => 'magnum-db-manage --config-file /etc/magnum/magnum.conf upgrade head',
