@@ -1,0 +1,5 @@
+---
+features:
+  - Added global quota configuration parameter ``max_clusters_per_project``
+    to configure the ``quotas/max_clusters_per_project`` setting.
+  - Added new ``magnum::quota`` class for above and future magnum quotas.
