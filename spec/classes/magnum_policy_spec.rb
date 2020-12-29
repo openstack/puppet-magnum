@@ -5,7 +5,7 @@ describe 'magnum::policy' do
   shared_examples_for 'magnum policies' do
     let :params do
       {
-        :policy_path => '/etc/magnum/policy.json',
+        :policy_path => '/etc/magnum/policy.yaml',
         :policies    => {
           'context_is_admin' => {
             'key'   => 'context_is_admin',
@@ -17,13 +17,14 @@ describe 'magnum::policy' do
 
     it 'set up the policies' do
       is_expected.to contain_openstacklib__policy__base('context_is_admin').with({
-        :key        => 'context_is_admin',
-        :value      => 'foo:bar',
-        :file_user  => 'root',
-        :file_group => 'magnum',
+        :key         => 'context_is_admin',
+        :value       => 'foo:bar',
+        :file_user   => 'root',
+        :file_group  => 'magnum',
+        :file_format => 'yaml',
       })
       is_expected.to contain_oslo__policy('magnum_config').with(
-        :policy_file => '/etc/magnum/policy.json',
+        :policy_file => '/etc/magnum/policy.yaml',
       )
     end
   end
