@@ -7,6 +7,7 @@ describe 'magnum::policy' do
         :enforce_scope        => false,
         :enforce_new_defaults => false,
         :policy_path          => '/etc/magnum/policy.yaml',
+        :policy_dirs          => '/etc/magnum/policy.d',
         :policies             => {
           'context_is_admin' => {
             'key'   => 'context_is_admin',
@@ -28,6 +29,7 @@ describe 'magnum::policy' do
         :enforce_scope        => false,
         :enforce_new_defaults => false,
         :policy_file          => '/etc/magnum/policy.yaml',
+        :policy_dirs          => '/etc/magnum/policy.d',
       )
     end
   end
