@@ -33,6 +33,11 @@ class magnum::deps {
   -> Openstacklib::Policy::Base<||>
   ~> Anchor['magnum::config::end']
 
+  # On any uwsgi config change, we must restart Magnum API.
+  Anchor['magnum::config::begin']
+  -> Magnum_api_uwsgi_config<||>
+  ~> Anchor['magnum::config::end']
+
   # Installation or config changes will always restart services.
   Anchor['magnum::install::end'] ~> Anchor['magnum::service::begin']
   Anchor['magnum::config::end']  ~> Anchor['magnum::service::begin']
