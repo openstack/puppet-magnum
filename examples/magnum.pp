@@ -4,7 +4,7 @@
     admin    => true,
     password => 'an_even_bigger_secret',
     provider => 'rabbitmqctl',
-    require  => Class['::rabbitmq'],
+    require  => Class['rabbitmq'],
   }
 
   rabbitmq_user_permissions { 'magnum@/':
@@ -12,7 +12,7 @@
     write_permission     => '.*',
     read_permission      => '.*',
     provider             => 'rabbitmqctl',
-    require              => Class['::rabbitmq'],
+    require              => Class['rabbitmq'],
   }
 
   class { 'magnum::db::mysql':
