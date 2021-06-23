@@ -43,7 +43,7 @@ describe 'magnum::conductor' do
           :manage_service => false
         }
       end
-      it { is_expected.to contain_service('magnum-conductor').without_ensure }
+      it { is_expected.not_to contain_service('magnum-conductor') }
     end
 
     context 'with workers specified' do

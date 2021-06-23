@@ -55,15 +55,15 @@ class magnum::conductor(
     } else {
       $service_ensure = 'stopped'
     }
-  }
 
-  # Manage service
-  service { 'magnum-conductor':
-    ensure    => $service_ensure,
-    name      => $::magnum::params::conductor_package,
-    enable    => $enabled,
-    hasstatus => true,
-    tag       => ['magnum-service', 'magnum-db-sync-service'],
+    # Manage service
+    service { 'magnum-conductor':
+      ensure    => $service_ensure,
+      name      => $::magnum::params::conductor_package,
+      enable    => $enabled,
+      hasstatus => true,
+      tag       => ['magnum-service', 'magnum-db-sync-service'],
+    }
   }
 
   magnum_config {
