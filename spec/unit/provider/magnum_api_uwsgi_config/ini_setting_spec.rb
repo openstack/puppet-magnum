@@ -26,7 +26,7 @@ $LOAD_PATH.push(
     'lib')
 )
 require 'spec_helper'
-provider_class = Puppet::Type.type(:magnum_api_uwsgi_config).provider(:openstackconfig)
+provider_class = Puppet::Type.type(:magnum_api_uwsgi_config).provider(:ini_setting)
 describe provider_class do
 
   it 'should default to the default setting when no other one is specified' do
