@@ -62,7 +62,7 @@ class magnum::conductor(
       name      => $::magnum::params::conductor_package,
       enable    => $enabled,
       hasstatus => true,
-      tag       => ['magnum-service', 'magnum-db-sync-service'],
+      tag       => 'magnum-service',
     }
   }
 
