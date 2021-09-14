@@ -30,6 +30,7 @@ describe 'magnum::logging' do
      :log_facility                   => 'LOG_FOO',
      :log_dir                        => '/var/log',
      :log_file                       => '/var/log/magnum/magnum.log',
+     :watch_log_file                 => true,
      :debug                          => true,
     }
   end
@@ -59,13 +60,14 @@ describe 'magnum::logging' do
   shared_examples 'basic default logging settings' do
     it 'configures magnum logging settings with default values' do
       is_expected.to contain_oslo__log('magnum_config').with(
-        :use_syslog  => '<SERVICE DEFAULT>',
-        :use_json    => '<SERVICE DEFAULT>',
-        :use_journal => '<SERVICE DEFAULT>',
-        :use_stderr  => '<SERVICE DEFAULT>',
-        :log_dir     => '/var/log/magnum',
-        :log_file    => '<SERVICE DEFAULT>',
-        :debug       => '<SERVICE DEFAULT>',
+        :use_syslog     => '<SERVICE DEFAULT>',
+        :use_json       => '<SERVICE DEFAULT>',
+        :use_journal    => '<SERVICE DEFAULT>',
+        :use_stderr     => '<SERVICE DEFAULT>',
+        :log_dir        => '/var/log/magnum',
+        :log_file       => '<SERVICE DEFAULT>',
+        :watch_log_file => '<SERVICE DEFAULT>',
+        :debug          => '<SERVICE DEFAULT>',
       )
     end
   end
@@ -80,6 +82,7 @@ describe 'magnum::logging' do
         :syslog_log_facility => 'LOG_FOO',
         :log_dir             => '/var/log',
         :log_file            => '/var/log/magnum/magnum.log',
+        :watch_log_file      => true,
         :debug               => true,
       )
     end
