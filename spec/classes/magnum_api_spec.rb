@@ -47,7 +47,7 @@ describe 'magnum::api' do
     it 'ensures magnum api service is running' do
       is_expected.to contain_service('magnum-api').with(
         'hasstatus' => true,
-        'tag'       => ['magnum-service', 'magnum-db-sync-service']
+        'tag'       => 'magnum-service',
       )
     end
 
@@ -131,7 +131,7 @@ describe 'magnum::api' do
         :name      => platform_params[:api_service],
         :enable    => false,
         :hasstatus => true,
-        :tag       => ['magnum-service', 'magnum-db-sync-service'],
+        :tag       => 'magnum-service',
       )}
     end
   end
