@@ -85,7 +85,9 @@ class magnum::keystone::auth (
   if $configure_user_role {
     Keystone_user_role["${auth_name}@${tenant}"] ~> Service <| name == 'magnum-server' |>
   }
-  Keystone_endpoint["${region}/${real_service_name}::${service_name}"]  ~> Service <| name == 'magnum-server' |>
+  if $configure_endpoint {
+    Keystone_endpoint["${region}/${real_service_name}::${service_name}"]  ~> Service <| name == 'magnum-server' |>
+  }
 
   keystone::resource::service_identity { 'magnum':
     configure_user      => $configure_user,
