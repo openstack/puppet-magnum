@@ -1,120 +1,68 @@
+#
+# Unit tests for magnum::keystone::auth
+#
+
 require 'spec_helper'
 
 describe 'magnum::keystone::auth' do
-  shared_examples 'magnum::keystone::auth' do
+  shared_examples_for 'magnum::keystone::auth' do
     context 'with default class parameters' do
       let :params do
-        {
-          :password => 'magnum_password',
-          :tenant   => 'foobar'
-        }
+        { :password => 'magnum_password' }
       end
 
-      it { should contain_keystone_user('magnum').with(
-        :ensure   => 'present',
-        :password => 'magnum_password',
-      )}
-
-      it { should contain_keystone_user_role('magnum@foobar').with(
-        :ensure  => 'present',
-        :roles   => ['admin']
-      )}
-
-      it { should contain_keystone_service('magnum::container-infra').with(
-        :ensure      => 'present',
-        :description => 'magnum Container Service'
-      )}
-
-      it { should contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
-        :ensure       => 'present',
-        :public_url   => 'http://127.0.0.1:9511/v1',
-        :admin_url    => 'http://127.0.0.1:9511/v1',
-        :internal_url => 'http://127.0.0.1:9511/v1',
-      )}
+      it { is_expected.to contain_keystone__resource__service_identity('magnum').with(
+        :configure_user      => true,
+        :configure_user_role => true,
+        :configure_endpoint  => true,
+        :service_name        => 'magnum',
+        :service_type        => 'container-infra',
+        :service_description => 'magnum Container Service',
+        :region              => 'RegionOne',
+        :auth_name           => 'magnum',
+        :password            => 'magnum_password',
+        :email               => 'magnum@localhost',
+        :tenant              => 'services',
+        :public_url          => 'http://127.0.0.1:9511/v1',
+        :internal_url        => 'http://127.0.0.1:9511/v1',
+        :admin_url           => 'http://127.0.0.1:9511/v1',
+      ) }
     end
 
-    context 'when overriding URL paramaters' do
+    context 'when overriding parameters' do
       let :params do
-        {
-          :password     => 'magnum_password',
-          :public_url   => 'https://10.10.10.10:80',
-          :internal_url => 'http://10.10.10.11:81',
-          :admin_url    => 'http://10.10.10.12:81',
-        }
-      end
-
-      it { should contain_keystone_endpoint('RegionOne/magnum::container-infra').with(
-        :ensure       => 'present',
-        :public_url   => 'https://10.10.10.10:80',
-        :internal_url => 'http://10.10.10.11:81',
-        :admin_url    => 'http://10.10.10.12:81',
-      )}
-    end
-
-    context 'when overriding auth name' do
-      let :params do
-        {
-          :password => 'foo',
-          :auth_name => 'magnumy'
-        }
-      end
-
-      it { should contain_keystone_user('magnumy') }
-      it { should contain_keystone_user_role('magnumy@services') }
-      it { should contain_keystone_service('magnumy::container-infra') }
-      it { should contain_keystone_endpoint('RegionOne/magnumy::container-infra') }
-    end
-
-    context 'when overriding service name' do
-      let :params do
-        {
-          :service_name => 'magnum_service',
-          :auth_name    => 'magnum',
-          :password     => 'magnum_password'
-        }
-      end
-
-      it { should contain_keystone_user('magnum') }
-      it { should contain_keystone_user_role('magnum@services') }
-      it { should contain_keystone_service('magnum_service::container-infra') }
-      it { should contain_keystone_endpoint('RegionOne/magnum_service::container-infra') }
-    end
-
-    context 'when disabling user configuration' do
-      let :params do
-        {
-          :password       => 'magnum_password',
-          :configure_user => false
-        }
-      end
-
-      it { should_not contain_keystone_user('magnum') }
-      it { should contain_keystone_user_role('magnum@services') }
-
-      it { should contain_keystone_service('magnum::container-infra').with(
-        :ensure      => 'present',
-        :type        => 'container-infra',
-        :description => 'magnum Container Service'
-      )}
-    end
-
-    context 'when disabling user and user role configuration' do
-      let :params do
-        {
-          :password            => 'magnum_password',
+        { :password            => 'magnum_password',
+          :auth_name           => 'alt_magnum',
+          :email               => 'alt_magnum@alt_localhost',
+          :tenant              => 'alt_service',
+          :configure_endpoint  => false,
           :configure_user      => false,
-          :configure_user_role => false
-        }
+          :configure_user_role => false,
+          :service_description => 'Alternative magnum Container Service',
+          :service_name        => 'alt_service',
+          :service_type        => 'alt_container-infra',
+          :region              => 'RegionTwo',
+          :public_url          => 'https://10.10.10.10:80',
+          :internal_url        => 'http://10.10.10.11:81',
+          :admin_url           => 'http://10.10.10.12:81' }
       end
 
-      it { should_not contain_keystone_user('magnum') }
-      it { should_not contain_keystone_user_role('magnum@services') }
-
-      it { should contain_keystone_service('magnum::container-infra').with(
-        :ensure      => 'present',
-        :type        => 'container-infra',
-        :description => 'magnum Container Service'
-      )}
+      it { is_expected.to contain_keystone__resource__service_identity('magnum').with(
+        :configure_user      => false,
+        :configure_user_role => false,
+        :configure_endpoint  => false,
+        :service_name        => 'alt_service',
+        :service_type        => 'alt_container-infra',
+        :service_description => 'Alternative magnum Container Service',
+        :region              => 'RegionTwo',
+        :auth_name           => 'alt_magnum',
+        :password            => 'magnum_password',
+        :email               => 'alt_magnum@alt_localhost',
+        :tenant              => 'alt_service',
+        :public_url          => 'https://10.10.10.10:80',
+        :internal_url        => 'http://10.10.10.11:81',
+        :admin_url           => 'http://10.10.10.12:81',
+      ) }
     end
   end
 
