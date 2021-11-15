@@ -1,0 +1,12 @@
+---
+features:
+  - |
+    The following parameters have been added to the ``magnum::clients::cinder``
+    class.
+
+    - ``endpoint_type``
+    - ``api_version``
+    - ``ca_file``
+    - ``cert_file``
+    - ``key_file``
+    - ``insecure``
