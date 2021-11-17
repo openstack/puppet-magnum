@@ -1,6 +1,6 @@
-# == Class: magnum::clients
+# == Class: magnum::clients::octavia
 #
-# Manages the clients configuration in magnum server
+# Manages octavia clients configuration in magnum server
 #
 # === Parameters:
 #
@@ -30,22 +30,24 @@
 #   (optional) If set, then the server's certificate will not be verified.
 #   Defaults to false
 #
-class magnum::clients (
-  $region_name   = 'RegionOne',
-  $endpoint_type = 'publicURL',
-  $ca_file       = $::os_service_default,
-  $cert_file     = $::os_service_default,
-  $key_file      = $::os_service_default,
-  $insecure      = false
-) {
+class magnum::clients::octavia(
+  $region_name   = $magnum::clients::region_name,
+  $endpoint_type = $magnum::clients::endpoint_type,
+  $ca_file       = $magnum::clients::ca_file,
+  $cert_file     = $magnum::clients::cert_file,
+  $key_file      = $magnum::clients::key_file,
+  $insecure      = $magnum::clients::insecure,
+){
+
   include magnum::deps
   include magnum::params
-  include magnum::clients::barbican
-  include magnum::clients::cinder
-  include magnum::clients::glance
-  include magnum::clients::heat
-  include magnum::clients::magnum
-  include magnum::clients::neutron
-  include magnum::clients::nova
-  include magnum::clients::octavia
+
+  magnum_config {
+    'octavia_client/region_name':   value => $region_name;
+    'octavia_client/endpoint_type': value => $endpoint_type;
+    'octavia_client/ca_file':       value => $ca_file;
+    'octavia_client/cert_file':     value => $cert_file;
+    'octavia_client/key_file':      value => $key_file;
+    'octavia_client/insecure':      value => $insecure;
+  }
 }

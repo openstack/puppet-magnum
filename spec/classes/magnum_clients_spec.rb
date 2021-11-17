@@ -14,6 +14,7 @@ describe 'magnum::clients' do
       is_expected.to contain_class('magnum::clients::nova')
       is_expected.to contain_class('magnum::clients::magnum')
       is_expected.to contain_class('magnum::clients::neutron')
+      is_expected.to contain_class('magnum::clients::octavia')
     end
   end
 
