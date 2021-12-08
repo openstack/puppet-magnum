@@ -117,11 +117,7 @@ class magnum::wsgi::apache (
 
   include magnum::deps
   include magnum::params
-  include apache
-  include apache::mod::wsgi
-  if $ssl {
-    include apache::mod::ssl
-  }
+
   ::openstacklib::wsgi::apache { 'magnum_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
