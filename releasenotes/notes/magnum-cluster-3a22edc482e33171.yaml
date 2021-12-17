@@ -1,0 +1,7 @@
+---
+features:
+  - |
+    The following two classes have been added.
+
+    - ``magnum::cluster``
+    - ``magnum::cluster_template``
