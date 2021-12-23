@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    The new ``magnum::docker_registry`` class has been added.
