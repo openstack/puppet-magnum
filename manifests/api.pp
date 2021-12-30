@@ -139,7 +139,6 @@ class magnum::api(
         tag       => 'magnum-service',
       }
     } elsif $service_name == 'httpd' {
-      include apache::params
       service { 'magnum-api':
         ensure    => 'stopped',
         name      => $::magnum::params::api_service,
