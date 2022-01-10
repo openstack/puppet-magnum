@@ -28,6 +28,10 @@
 #   (Optional) Name of domain for $project_name
 #   Defaults to 'Default'
 #
+# [*auth_type*]
+#   (Optional) Authentication type to load
+#   Defaults to 'password'
+#
 class magnum::keystone::keystone_auth(
   $username            = 'magnum',
   $password            = $::os_service_default,
@@ -35,6 +39,7 @@ class magnum::keystone::keystone_auth(
   $project_name        = 'services',
   $user_domain_name    = 'Default',
   $project_domain_name = 'Default',
+  $auth_type           = 'password',
 ) {
 
   include magnum::deps
@@ -49,6 +54,7 @@ class magnum::keystone::keystone_auth(
       'keystone_auth/project_name'        : value => $project_name;
       'keystone_auth/project_domain_name' : value => $project_domain_name;
       'keystone_auth/user_domain_name'    : value => $user_domain_name;
+      'keystone_auth/auth_type'           : value => $auth_type;
     }
   }
 }

@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    The new ``auth_type`` parameter has been added to
+    the ``magnum::keystone::keystone_auth`` class.

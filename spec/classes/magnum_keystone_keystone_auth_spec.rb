@@ -28,6 +28,7 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_name').with_value('services')
         is_expected.to contain_magnum_config('keystone_auth/user_domain_name').with_value('Default')
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value('Default')
+        is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value('password')
       end
     end
 
@@ -41,6 +42,7 @@ describe 'magnum::keystone::keystone_auth' do
           :project_name        => 'service_project',
           :user_domain_name    => 'domainX',
           :project_domain_name => 'domainX',
+          :auth_type           => 'v3password',
         })
       end
 
@@ -51,6 +53,7 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_name').with_value(params[:project_name])
         is_expected.to contain_magnum_config('keystone_auth/user_domain_name').with_value(params[:user_domain_name])
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value(params[:project_domain_name])
+        is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value(params[:auth_type])
       end
     end
   end
