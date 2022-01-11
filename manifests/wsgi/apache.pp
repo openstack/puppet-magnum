@@ -118,6 +118,8 @@ class magnum::wsgi::apache (
   include magnum::deps
   include magnum::params
 
+  Anchor['magnum::install::end'] -> Class['apache']
+
   ::openstacklib::wsgi::apache { 'magnum_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
@@ -146,6 +148,5 @@ class magnum::wsgi::apache (
     access_log_format           => $access_log_format,
     error_log_file              => $error_log_file,
     custom_wsgi_process_options => $custom_wsgi_process_options,
-    require                     => Anchor['magnum::install::end'],
   }
 }
