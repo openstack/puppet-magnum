@@ -20,7 +20,7 @@
 #   Defaults to 'services'.
 #
 # [*roles*]
-#   (Optional) List of roles assigned to aodh user.
+#   (Optional) List of roles assigned to magnum user.
 #   Defaults to ['admin']
 #
 # [*system_scope*]
@@ -28,7 +28,7 @@
 #   Defaults to 'all'
 #
 # [*system_roles*]
-#   (Optional) List of system roles assigned to aodh user.
+#   (Optional) List of system roles assigned to magnum user.
 #   Defaults to []
 #
 # [*configure_endpoint*]
