@@ -86,7 +86,7 @@ describe 'magnum::wsgi::apache' do
         when 'Debian'
           {
             :wsgi_script_path   => '/usr/lib/cgi-bin/magnum',
-            :wsgi_script_source => '/usr/lib/python3/dist-packages/magnum/api/app.wsgi'
+            :wsgi_script_source => '/usr/bin/magnum-api-wsgi'
           }
         when 'RedHat'
           {

@@ -29,7 +29,7 @@ class magnum::params {
       $conductor_service  = 'magnum-conductor'
       $client_package     = 'python3-magnumclient'
       $wsgi_script_path   = '/usr/lib/cgi-bin/magnum'
-      $wsgi_script_source = '/usr/lib/python3/dist-packages/magnum/api/app.wsgi'
+      $wsgi_script_source = '/usr/bin/magnum-api-wsgi'
     }
     default: {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem")
