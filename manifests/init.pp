@@ -176,12 +176,6 @@
 #  in the magnum config.
 #  Defaults to false.
 #
-# DEPRECATED PARAMETERS
-#
-# [*amqp_allow_insecure_clients*]
-#   (Optional) Accept clients using either SSL or plain TCP
-#   Defaults to undef.
-#
 class magnum(
   $package_ensure                     = 'present',
   $notification_transport_url         = $::os_service_default,
@@ -219,19 +213,12 @@ class magnum(
   $amqp_username                      = $::os_service_default,
   $amqp_password                      = $::os_service_default,
   $purge_config                       = false,
-  # DEPRECATED PARAMETERS
-  $amqp_allow_insecure_clients        = undef,
 ) {
 
   include magnum::deps
   include magnum::params
   include magnum::policy
   include magnum::db
-
-  if $amqp_allow_insecure_clients != undef {
-    warning('The amqp_allow_insecure_clients parameter is deprecated and \
-will be removed in a future release.')
-  }
 
   package { 'magnum-common':
     ensure => $package_ensure,
