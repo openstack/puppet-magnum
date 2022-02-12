@@ -30,12 +30,12 @@ describe 'Puppet::Type.type(:magnum_config)' do
 
   it 'should accept a valid value' do
     @magnum_config[:value] = 'bar'
-    expect(@magnum_config[:value]).to eq('bar')
+    expect(@magnum_config[:value]).to eq(['bar'])
   end
 
   it 'should not accept a value with whitespace' do
     @magnum_config[:value] = 'b ar'
-    expect(@magnum_config[:value]).to eq('b ar')
+    expect(@magnum_config[:value]).to eq(['b ar'])
   end
 
   it 'should accept valid ensure values' do
