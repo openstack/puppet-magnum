@@ -43,12 +43,6 @@
 #   before error is raised. Set to -1 to specify an infinite retry count.
 #   Defaults to $::os_service_default
 #
-# DEPRECATED PARAMETERS
-#
-# [*database_min_pool_size*]
-#   (Optional) Minimum number of SQL connections to keep open in a pool.
-#   Defaults to undef
-#
 class magnum::db (
   $database_connection              = 'mysql+pymysql://magnum:magnum@localhost:3306/magnum',
   $database_connection_recycle_time = $::os_service_default,
@@ -59,15 +53,9 @@ class magnum::db (
   $database_pool_timeout            = $::os_service_default,
   $mysql_enable_ndb                 = $::os_service_default,
   $database_db_max_retries          = $::os_service_default,
-  # DEPRECATED PARAMETERS
-  $database_min_pool_size           = undef,
 ) {
 
   include magnum::deps
-
-  if $database_min_pool_size {
-    warning('The database_min_pool_size parameter is deprecated, and will be removed in a future release.')
-  }
 
   oslo::db { 'magnum_config':
     connection              => $database_connection,
