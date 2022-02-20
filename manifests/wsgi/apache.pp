@@ -123,7 +123,7 @@ class magnum::wsgi::apache (
   ::openstacklib::wsgi::apache { 'magnum_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
-    group                       => 'magnum',
+    group                       => $::magnum::params::group,
     path                        => $path,
     priority                    => $priority,
     servername                  => $servername,
@@ -136,7 +136,7 @@ class magnum::wsgi::apache (
     ssl_crl_path                => $ssl_crl_path,
     ssl_key                     => $ssl_key,
     threads                     => $threads,
-    user                        => 'magnum',
+    user                        => $::magnum::params::user,
     workers                     => $workers,
     wsgi_daemon_process         => 'magnum',
     wsgi_process_display_name   => $wsgi_process_display_name,
