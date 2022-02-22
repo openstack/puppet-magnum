@@ -5,7 +5,9 @@
 class magnum::params {
   include openstacklib::defaults
 
+  $user  = 'magnum'
   $group = 'magnum'
+
   case $::osfamily {
     'RedHat': {
       # package names

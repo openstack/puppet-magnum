@@ -28,11 +28,12 @@ class magnum::db::sync(
 ) {
 
   include magnum::deps
+  include magnum::params
 
   exec { 'magnum-db-sync':
     command     => "magnum-db-manage ${extra_params} upgrade head",
     path        => $exec_path,
-    user        => $user,
+    user        => $::magnum::params::user,
     refreshonly => true,
     try_sleep   => 5,
     tries       => 10,
