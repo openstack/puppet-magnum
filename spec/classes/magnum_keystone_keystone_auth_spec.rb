@@ -28,10 +28,10 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_name').with_value('services')
         is_expected.to contain_magnum_config('keystone_auth/user_domain_name').with_value('Default')
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value('Default')
+        is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value('password')
       end
     end
-
 
     context 'when overriding parameters' do
       before do
@@ -53,7 +53,22 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_name').with_value(params[:project_name])
         is_expected.to contain_magnum_config('keystone_auth/user_domain_name').with_value(params[:user_domain_name])
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value(params[:project_domain_name])
+        is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value(params[:auth_type])
+      end
+    end
+
+    context 'when system_scope is set' do
+      before do
+        params.merge!(
+          :password     => 'mypassword',
+          :system_scope => 'all'
+        )
+      end
+      it 'configures system-scoped credential' do
+        is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/project_name').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('all')
       end
     end
   end
