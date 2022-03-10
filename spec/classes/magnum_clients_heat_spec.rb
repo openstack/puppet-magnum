@@ -6,13 +6,7 @@ describe 'magnum::clients::heat' do
 
     context 'with default parameters' do
       let :params do
-        { :region_name     => 'RegionOne',
-          :endpoint_type   => 'publicURL',
-          :ca_file         => '<SERVICE DEFAULT>',
-          :cert_file       => '<SERVICE DEFAULT>',
-          :key_file        => '<SERVICE DEFAULT>',
-          :insecure        => false,
-        }
+        {}
       end
 
       it { is_expected.to contain_magnum_config('heat_client/region_name').with_value('RegionOne') }

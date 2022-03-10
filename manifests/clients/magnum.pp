@@ -17,7 +17,7 @@
 class magnum::clients::magnum(
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
-){
+) inherits magnum::clients {
 
   include magnum::deps
   include magnum::params

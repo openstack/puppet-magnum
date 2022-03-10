@@ -6,9 +6,7 @@ describe 'magnum::clients::magnum' do
 
     context 'with default parameters' do
       let :params do
-        { :region_name     => 'RegionOne',
-          :endpoint_type   => 'publicURL',
-        }
+        {}
       end
 
       it { is_expected.to contain_magnum_config('magnum_client/region_name').with_value('RegionOne') }

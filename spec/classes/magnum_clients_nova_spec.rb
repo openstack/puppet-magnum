@@ -6,14 +6,7 @@ describe 'magnum::clients::nova' do
 
     context 'with default parameters' do
       let :params do
-        { :region_name     => 'RegionOne',
-          :endpoint_type   => 'publicURL',
-          :ca_file         => '<SERVICE DEFAULT>',
-          :cert_file       => '<SERVICE DEFAULT>',
-          :key_file        => '<SERVICE DEFAULT>',
-          :insecure        => false,
-
-        }
+        {}
       end
 
       it { is_expected.to contain_magnum_config('nova_client/region_name').with_value('RegionOne') }

@@ -43,7 +43,7 @@ class magnum::clients::glance(
   $cert_file     = $magnum::clients::cert_file,
   $key_file      = $magnum::clients::key_file,
   $insecure      = $magnum::clients::insecure
-){
+) inherits magnum::clients {
 
   include magnum::deps
   include magnum::params

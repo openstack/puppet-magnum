@@ -6,14 +6,7 @@ describe 'magnum::clients::glance' do
 
     context 'with default parameters' do
       let :params do
-        { :region_name     => 'RegionOne',
-          :endpoint_type   => 'publicURL',
-          :ca_file         => '<SERVICE DEFAULT>',
-          :cert_file       => '<SERVICE DEFAULT>',
-          :key_file        => '<SERVICE DEFAULT>',
-          :insecure        => false,
-
-        }
+        {}
       end
 
       it { is_expected.to contain_magnum_config('glance_client/region_name').with_value('RegionOne') }
@@ -32,7 +25,6 @@ describe 'magnum::clients::glance' do
           :cert_file       => '/etc/magnum/certs/cert.pem',
           :key_file        => '/etc/magnum/certs/pri.key',
           :insecure        => true,
-
         }
       end
 
