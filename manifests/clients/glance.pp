@@ -16,7 +16,7 @@
 #
 # [*api_version*]
 #   (optional) Version of Glance API to use in glanceclient.
-#   Defaults to 2
+#   Defaults to $::os_service_default
 #
 # [*ca_file*]
 #   (optional) CA cert file to use in SSL connections.
@@ -38,7 +38,7 @@
 class magnum::clients::glance(
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
-  $api_version   = '2',
+  $api_version   = $::os_service_default,
   $ca_file       = $magnum::clients::ca_file,
   $cert_file     = $magnum::clients::cert_file,
   $key_file      = $magnum::clients::key_file,
