@@ -275,10 +275,4 @@ class magnum::keystone::authtoken(
     service_type                   => $service_type,
     interface                      => $interface,
   }
-  magnum_config {
-    'keystone_auth/cafile'                : value => $cafile;
-    'keystone_auth/keyfile'               : value => $keyfile;
-    'keystone_auth/certfile'              : value => $certfile;
-    'keystone_auth/insecure'              : value => $insecure;
-  }
 }

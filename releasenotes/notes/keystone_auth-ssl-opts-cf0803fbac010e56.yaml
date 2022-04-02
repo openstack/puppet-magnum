@@ -1,0 +1,10 @@
+---
+features:
+  - |
+    The ``magnum::keystone::keystone_auth`` class now supports the following
+    parameters.
+
+    - ``cafile``
+    - ``certfile``
+    - ``keyfile``
+    - ``insecure``

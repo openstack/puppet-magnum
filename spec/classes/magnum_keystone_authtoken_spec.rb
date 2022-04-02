@@ -52,13 +52,6 @@ describe 'magnum::keystone::authtoken' do
         :service_type                   => '<SERVICE DEFAULT>',
         :interface                      => '<SERVICE DEFAULT>',
       )}
-
-      it {
-        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('<SERVICE DEFAULT>')
-      }
     end
 
     context 'when overriding parameters' do
@@ -141,13 +134,6 @@ describe 'magnum::keystone::authtoken' do
         :service_token_roles_required   => params[:service_token_roles_required],
         :interface                      => params[:interface],
       )}
-
-      it {
-        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value(params[:insecure])
-        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value(params[:cafile])
-        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value(params[:certfile])
-        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value(params[:keyfile])
-      }
     end
   end
 
