@@ -36,6 +36,24 @@
 #   (Optional) Authentication type to load
 #   Defaults to 'password'
 #
+# [*cafile*]
+#   (Optional) A PEM encoded Certificate Authority to use when verifying HTTPs
+#   connections.
+#   Defaults to $::os_service_default.
+#
+# [*certfile*]
+#   (Optional) Required if identity server requires client certificate
+#   Defaults to $::os_service_default.
+#
+# [*keyfile*]
+#   (Optional) Required if identity server requires client certificate
+#   Defaults to $::os_service_default.
+#
+# [*insecure*]
+#   (Optional) If true, explicitly allow TLS without checking server cert
+#   against any certificate authorities.
+#   Defaults to $::os_service_default
+#
 class magnum::keystone::keystone_auth(
   $username            = 'magnum',
   $password            = $::os_service_default,
@@ -45,6 +63,10 @@ class magnum::keystone::keystone_auth(
   $project_domain_name = 'Default',
   $system_scope        = $::os_service_default,
   $auth_type           = 'password',
+  $cafile              = $::os_service_default,
+  $keyfile             = $::os_service_default,
+  $certfile            = $::os_service_default,
+  $insecure            = $::os_service_default,
 ) {
 
   include magnum::deps
@@ -70,5 +92,12 @@ class magnum::keystone::keystone_auth(
       'keystone_auth/system_scope'        : value => $system_scope;
       'keystone_auth/auth_type'           : value => $auth_type;
     }
+  }
+
+  magnum_config {
+    'keystone_auth/cafile'   : value => $cafile;
+    'keystone_auth/keyfile'  : value => $keyfile;
+    'keystone_auth/certfile' : value => $certfile;
+    'keystone_auth/insecure' : value => $insecure;
   }
 }

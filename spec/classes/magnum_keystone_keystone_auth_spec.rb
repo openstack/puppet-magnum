@@ -11,6 +11,10 @@ describe 'magnum::keystone::keystone_auth' do
     context 'with default parameters' do
       it 'configure keystone_auth' do
         is_expected.not_to contain_magnum_config('keystone_auth/username')
+        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value('<SERVICE DEFAULT>')
       end
     end
 
@@ -30,6 +34,10 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value('Default')
         is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value('password')
+        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('<SERVICE DEFAULT>')
+        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value('<SERVICE DEFAULT>')
       end
     end
 
@@ -43,6 +51,10 @@ describe 'magnum::keystone::keystone_auth' do
           :user_domain_name    => 'domainX',
           :project_domain_name => 'domainX',
           :auth_type           => 'v3password',
+          :cafile              => '/path/to/ca.cert',
+          :certfile            => '/path/to/certfile',
+          :keyfile             => '/path/to/key',
+          :insecure            => false,
         })
       end
 
@@ -55,6 +67,10 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value(params[:project_domain_name])
         is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value(params[:auth_type])
+        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('/path/to/ca.cert')
+        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('/path/to/certfile')
+        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('/path/to/key')
+        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value(false)
       end
     end
 
