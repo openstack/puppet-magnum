@@ -3,28 +3,12 @@ require 'spec_helper'
 describe 'magnum::keystone::keystone_auth' do
 
   let :params do
-    { }
+    { :password => 'magnum_password' }
   end
 
-  shared_examples_for 'magnum keystone_auth' do
+  shared_examples_for 'magnum::keystone_auth' do
 
     context 'with default parameters' do
-      it 'configure keystone_auth' do
-        is_expected.not_to contain_magnum_config('keystone_auth/username')
-        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('<SERVICE DEFAULT>')
-        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value('<SERVICE DEFAULT>')
-      end
-    end
-
-    context 'with password' do
-      before do
-        params.merge!({
-          :password => 'magnum_password',
-        })
-      end
-
       it 'configure keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/username').with_value('magnum')
         is_expected.to contain_magnum_config('keystone_auth/password').with_value('magnum_password')
@@ -67,17 +51,16 @@ describe 'magnum::keystone::keystone_auth' do
         is_expected.to contain_magnum_config('keystone_auth/project_domain_name').with_value(params[:project_domain_name])
         is_expected.to contain_magnum_config('keystone_auth/system_scope').with_value('<SERVICE DEFAULT>')
         is_expected.to contain_magnum_config('keystone_auth/auth_type').with_value(params[:auth_type])
-        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value('/path/to/ca.cert')
-        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value('/path/to/certfile')
-        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value('/path/to/key')
-        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value(false)
+        is_expected.to contain_magnum_config('keystone_auth/cafile').with_value(params[:cafile])
+        is_expected.to contain_magnum_config('keystone_auth/certfile').with_value(params[:certfile])
+        is_expected.to contain_magnum_config('keystone_auth/keyfile').with_value(params[:keyfile])
+        is_expected.to contain_magnum_config('keystone_auth/insecure').with_value(params[:insecure])
       end
     end
 
     context 'when system_scope is set' do
       before do
         params.merge!(
-          :password     => 'mypassword',
           :system_scope => 'all'
         )
       end
@@ -96,7 +79,7 @@ describe 'magnum::keystone::keystone_auth' do
       let (:facts) do
         facts.merge!(OSDefaults.get_facts())
       end
-      it_configures 'magnum keystone_auth'
+      it_configures 'magnum::keystone_auth'
     end
   end
 
