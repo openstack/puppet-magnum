@@ -1,0 +1,5 @@
+---
+upgrade:
+  - |
+    The ``magnum::keystone::keystone_auth`` class now requires the ``password``
+    parameter. Ensure the required auth parameters are set.

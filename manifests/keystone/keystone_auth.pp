@@ -4,13 +4,12 @@
 #
 # === Parameters
 #
+# [*password*]
+#   (Required) Password to create for the service user
+#
 # [*username*]
 #   (Optional) The name of the service user
 #   Defaults to 'magnum'
-#
-# [*password*]
-#   (Required) Password to create for the service user
-#   Defaults to $::os_service_default
 #
 # [*auth_url*]
 #   (Optional) The URL to use for authentication.
@@ -55,8 +54,8 @@
 #   Defaults to $::os_service_default
 #
 class magnum::keystone::keystone_auth(
+  $password,
   $username            = 'magnum',
-  $password            = $::os_service_default,
   $auth_url            = 'http://localhost:5000',
   $project_name        = 'services',
   $user_domain_name    = 'Default',
@@ -79,25 +78,18 @@ class magnum::keystone::keystone_auth(
     $project_domain_name_real = $::os_service_default
   }
 
-  # Only configure keystone_auth if user specifics a password; this keeps
-  # backwards compatibility
-  if !is_service_default($password) {
-    magnum_config {
-      'keystone_auth/auth_url'            : value => $auth_url;
-      'keystone_auth/username'            : value => $username;
-      'keystone_auth/password'            : value => $password, secret => true;
-      'keystone_auth/project_name'        : value => $project_name_real;
-      'keystone_auth/user_domain_name'    : value => $user_domain_name;
-      'keystone_auth/project_domain_name' : value => $project_domain_name_real;
-      'keystone_auth/system_scope'        : value => $system_scope;
-      'keystone_auth/auth_type'           : value => $auth_type;
-    }
-  }
-
   magnum_config {
-    'keystone_auth/cafile'   : value => $cafile;
-    'keystone_auth/keyfile'  : value => $keyfile;
-    'keystone_auth/certfile' : value => $certfile;
-    'keystone_auth/insecure' : value => $insecure;
+    'keystone_auth/auth_url'            : value => $auth_url;
+    'keystone_auth/username'            : value => $username;
+    'keystone_auth/password'            : value => $password, secret => true;
+    'keystone_auth/project_name'        : value => $project_name_real;
+    'keystone_auth/user_domain_name'    : value => $user_domain_name;
+    'keystone_auth/project_domain_name' : value => $project_domain_name_real;
+    'keystone_auth/system_scope'        : value => $system_scope;
+    'keystone_auth/auth_type'           : value => $auth_type;
+    'keystone_auth/cafile'              : value => $cafile;
+    'keystone_auth/keyfile'             : value => $keyfile;
+    'keystone_auth/certfile'            : value => $certfile;
+    'keystone_auth/insecure'            : value => $insecure;
   }
 }
