@@ -16,7 +16,7 @@ describe 'magnum::cluster_template' do
         }
       end
 
-      it 'contains overrided values' do
+      it 'contains overridden values' do
         is_expected.to contain_magnum_config('cluster_template/kubernetes_allowed_network_drivers').with_value('all')
         is_expected.to contain_magnum_config('cluster_template/kubernetes_default_network_driver').with_value('flannel')
       end

@@ -27,7 +27,7 @@ describe 'magnum::quota' do
         params.merge!({ :max_clusters_per_project => 10 })
       end
 
-      it 'contains overrided values' do
+      it 'contains overridden values' do
         is_expected.to contain_magnum_config('quotas/max_clusters_per_project').with_value(p[:max_clusters_per_project])
       end
     end

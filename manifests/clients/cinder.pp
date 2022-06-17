@@ -16,7 +16,7 @@
 #
 # [*api_version*]
 #   (optional) Version of Cinder API to use in cinderclient.
-#   Defaoults to $::os_service_default
+#   Defaults to $::os_service_default
 #
 # [*ca_file*]
 #   (optional) CA cert file to use in SSL connections.

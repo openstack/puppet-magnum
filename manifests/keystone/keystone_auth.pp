@@ -29,7 +29,7 @@
 #
 # [*system_scope*]
 #  (Optional) Scope for system operations.
-#  Defauls to $::os_service_default
+#  Defaults to $::os_service_default
 #
 # [*auth_type*]
 #   (Optional) Authentication type to load

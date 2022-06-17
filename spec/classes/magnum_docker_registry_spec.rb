@@ -17,7 +17,7 @@ describe 'magnum::docker_registry' do
         }
       end
 
-      it 'contains overrided values' do
+      it 'contains overridden values' do
         is_expected.to contain_magnum_config('docker_registry/swift_region').with_value('regionOne')
         is_expected.to contain_magnum_config('docker_registry/swift_registry_container').with_value('docker_registry')
       end

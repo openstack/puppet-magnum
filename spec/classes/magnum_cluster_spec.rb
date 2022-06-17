@@ -21,7 +21,7 @@ describe 'magnum::cluster' do
         }
       end
 
-      it 'contains overrided values' do
+      it 'contains overridden values' do
         is_expected.to contain_magnum_config('cluster/etcd_discovery_service_endpoint_format').with_value('https://discovery.etcd.io/new?size=%(size)d')
         is_expected.to contain_magnum_config('cluster/nodes_affinity_policy').with_value('soft-anti-affinity')
         is_expected.to contain_magnum_config('cluster/temp_cache_dir').with_value('/var/lib/magnum/certificate-cache')
