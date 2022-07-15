@@ -33,7 +33,7 @@ describe 'Puppet::Type.type(:magnum_api_uwsgi_config)' do
     expect(@magnum_api_uwsgi_config[:value]).to eq('bar')
   end
 
-  it 'should not accept a value with whitespace' do
+  it 'should accept a value with whitespace' do
     @magnum_api_uwsgi_config[:value] = 'b ar'
     expect(@magnum_api_uwsgi_config[:value]).to eq('b ar')
   end
