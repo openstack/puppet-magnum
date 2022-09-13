@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    A new ``magnum::x509`` class has been added to manage the [x509] section of
+    magnum config.
