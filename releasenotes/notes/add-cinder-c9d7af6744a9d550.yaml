@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    A new ``magnum::cinder`` class has been added to manage the [cinder]
+    section of magnum config
