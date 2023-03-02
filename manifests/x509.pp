@@ -6,30 +6,30 @@
 #
 # [*allow_ca*]
 #   (optional) Certificate can get the CA flag in x509 extensions.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*allowed_extensions*]
 #   (optional) List of allowed x509 extensions.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*allowed_key_usage*]
 #   (optional) List of allowed x509 key usage.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*term_of_validity*]
 #   (optional) Number of days for which a certificate is valid.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*rsa_key_size*]
 #   (optional) Size of generated private key.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 class magnum::x509 (
-  $allow_ca           = $::os_service_default,
-  $allowed_extensions = $::os_service_default,
-  $allowed_key_usage  = $::os_service_default,
-  $term_of_validity   = $::os_service_default,
-  $rsa_key_size       = $::os_service_default,
+  $allow_ca           = $facts['os_service_default'],
+  $allowed_extensions = $facts['os_service_default'],
+  $allowed_key_usage  = $facts['os_service_default'],
+  $term_of_validity   = $facts['os_service_default'],
+  $rsa_key_size       = $facts['os_service_default'],
 ) {
 
   include magnum::deps

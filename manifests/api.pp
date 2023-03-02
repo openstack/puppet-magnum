@@ -53,21 +53,21 @@
 # [*ssl_cert_file*]
 #   (Optional) Location of the SSL certificate file to use for SSL mode.
 #   Required when $enabled_ssl is set to 'true'.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*ssl_key_file*]
 #   (Optional) Location of the SSL key file to use for enabling SSL mode.
 #   Required when $enabled_ssl is set to 'true'.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*workers*]
 #   (Optional) Number of API workers.
-#   Defaults to $::os_workers
+#   Defaults to $facts['os_workers']
 #
 # [*enable_proxy_headers_parsing*]
 #   (optional) This determines if the HTTPProxyToWSGI
 #   middleware should parse the proxy headers or not.(boolean value)
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 class magnum::api(
   $package_ensure               = 'present',
@@ -80,10 +80,10 @@ class magnum::api(
   $sync_db                      = true,
   $auth_strategy                = 'keystone',
   $enabled_ssl                  = false,
-  $ssl_cert_file                = $::os_service_default,
-  $ssl_key_file                 = $::os_service_default,
-  $workers                      = $::os_workers,
-  $enable_proxy_headers_parsing = $::os_service_default,
+  $ssl_cert_file                = $facts['os_service_default'],
+  $ssl_key_file                 = $facts['os_service_default'],
+  $workers                      = $facts['os_workers'],
+  $enable_proxy_headers_parsing = $facts['os_service_default'],
 ) inherits magnum::params {
 
   include magnum::deps

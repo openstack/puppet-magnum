@@ -63,7 +63,7 @@ describe 'magnum::conductor' do
       end
 
       let :platform_params do
-        if facts[:osfamily] == 'Debian'
+        if facts[:os]['family'] == 'Debian'
           { :conductor_package => 'magnum-conductor',
             :conductor_service => 'magnum-conductor' }
         else

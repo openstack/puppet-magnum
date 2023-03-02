@@ -9,7 +9,7 @@
 #   Defaults to 'barbican'
 #
 class magnum::certificates (
-  $cert_manager_type = $::os_service_default,
+  $cert_manager_type = $facts['os_service_default'],
 ) {
 
   include magnum::deps

@@ -29,7 +29,7 @@
 #
 # [*system_scope*]
 #  (Optional) Scope for system operations.
-#  Defaults to $::os_service_default
+#  Defaults to $facts['os_service_default']
 #
 # [*auth_type*]
 #   (Optional) Authentication type to load
@@ -38,20 +38,20 @@
 # [*cafile*]
 #   (Optional) A PEM encoded Certificate Authority to use when verifying HTTPs
 #   connections.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*certfile*]
 #   (Optional) Required if identity server requires client certificate
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*keyfile*]
 #   (Optional) Required if identity server requires client certificate
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*insecure*]
 #   (Optional) If true, explicitly allow TLS without checking server cert
 #   against any certificate authorities.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 class magnum::keystone::keystone_auth(
   $password,
@@ -60,12 +60,12 @@ class magnum::keystone::keystone_auth(
   $project_name        = 'services',
   $user_domain_name    = 'Default',
   $project_domain_name = 'Default',
-  $system_scope        = $::os_service_default,
+  $system_scope        = $facts['os_service_default'],
   $auth_type           = 'password',
-  $cafile              = $::os_service_default,
-  $keyfile             = $::os_service_default,
-  $certfile            = $::os_service_default,
-  $insecure            = $::os_service_default,
+  $cafile              = $facts['os_service_default'],
+  $keyfile             = $facts['os_service_default'],
+  $certfile            = $facts['os_service_default'],
+  $insecure            = $facts['os_service_default'],
 ) {
 
   include magnum::deps
@@ -74,8 +74,8 @@ class magnum::keystone::keystone_auth(
     $project_name_real = $project_name
     $project_domain_name_real = $project_domain_name
   } else {
-    $project_name_real = $::os_service_default
-    $project_domain_name_real = $::os_service_default
+    $project_name_real = $facts['os_service_default']
+    $project_domain_name_real = $facts['os_service_default']
   }
 
   magnum_config {

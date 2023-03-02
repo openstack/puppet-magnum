@@ -16,15 +16,15 @@
 #
 # [*ca_file*]
 #   (optional) CA cert file to use in SSL connections.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*cert_file*]
 #   (optional) PEM-formatted certificate chain file.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*key_file*]
 #   (optional) PEM-formatted file that contains the private key.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*insecure*]
 #   (optional) If set, then the server's certificate will not be verified.
@@ -33,9 +33,9 @@
 class magnum::clients (
   $region_name   = 'RegionOne',
   $endpoint_type = 'publicURL',
-  $ca_file       = $::os_service_default,
-  $cert_file     = $::os_service_default,
-  $key_file      = $::os_service_default,
+  $ca_file       = $facts['os_service_default'],
+  $cert_file     = $facts['os_service_default'],
+  $key_file      = $facts['os_service_default'],
   $insecure      = false
 ) {
   include magnum::deps

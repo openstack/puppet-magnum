@@ -6,7 +6,7 @@
 #
 # [*cluster_user_trust*]
 #   enable creation of a user trust for clusters.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*domain_name*]
 #   magnum domain name.
@@ -14,7 +14,7 @@
 #
 # [*domain_id*]
 #   id of the domain to create trustee for clusters.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*domain_admin*]
 #   Keystone domain admin user which will be created.
@@ -22,7 +22,7 @@
 #
 # [*domain_admin_id*]
 #   Id of the admin with roles sufficient to manage users in the trustee_domain.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*domain_admin_domain_name*]
 #   Name of the domain admin user's domain.
@@ -30,7 +30,7 @@
 #
 # [*domain_admin_domain_id*]
 #   Id of the domain admin user's domain.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*domain_admin_email*]
 #   Keystone domain admin user email address.
@@ -42,7 +42,7 @@
 #
 # [*roles*]
 #   The roles which are delegated to the trustee by the trustor.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*keystone_interface*]
 #   Auth interface used by instances/trustee.
@@ -51,7 +51,7 @@
 # [*keystone_region_name*]
 #   Region in Identity service catalog to use for
 #   communication with the OpenStack service.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 # [*manage_domain*]
 #   Whether manage or not the domain creation.
@@ -68,18 +68,18 @@
 #   Defaults to 'true'.
 #
 class magnum::keystone::domain (
-  $cluster_user_trust       = $::os_service_default,
+  $cluster_user_trust       = $facts['os_service_default'],
   $domain_name              = 'magnum',
-  $domain_id                = $::os_service_default,
+  $domain_id                = $facts['os_service_default'],
   $domain_admin             = 'magnum_admin',
-  $domain_admin_id          = $::os_service_default,
+  $domain_admin_id          = $facts['os_service_default'],
   $domain_admin_email       = 'magnum_admin@localhost',
   $domain_password          = 'changeme',
-  $domain_admin_domain_name = $::os_service_default,
-  $domain_admin_domain_id   = $::os_service_default,
-  $roles                    = $::os_service_default,
+  $domain_admin_domain_name = $facts['os_service_default'],
+  $domain_admin_domain_id   = $facts['os_service_default'],
+  $roles                    = $facts['os_service_default'],
   $keystone_interface       = 'public',
-  $keystone_region_name     = $::os_service_default,
+  $keystone_region_name     = $facts['os_service_default'],
   $manage_domain            = true,
   $manage_user              = true,
   $manage_role              = true,

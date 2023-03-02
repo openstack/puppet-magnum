@@ -6,16 +6,16 @@
 #
 # [*swift_region*]
 #   (optional) Region name of Swift.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 # [*swift_registry_container*]
 #   (optional) Name of the container in Swift which docker registry stores
 #   images in.
-#   Defaults to $::os_service_default
+#   Defaults to $facts['os_service_default']
 #
 class magnum::docker_registry (
-  $swift_region             = $::os_service_default,
-  $swift_registry_container = $::os_service_default,
+  $swift_region             = $facts['os_service_default'],
+  $swift_registry_container = $facts['os_service_default'],
 ) {
 
   magnum_config {

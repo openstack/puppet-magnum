@@ -6,10 +6,10 @@
 #
 # [*max_clusters_per_project*]
 #   (optional) Number of clusters allowed per project.
-#   Defaults to $::os_service_default.
+#   Defaults to $facts['os_service_default'].
 #
 class magnum::quota (
-  $max_clusters_per_project = $::os_service_default
+  $max_clusters_per_project = $facts['os_service_default']
 ) {
 
   magnum_config {

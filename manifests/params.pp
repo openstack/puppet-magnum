@@ -8,7 +8,7 @@ class magnum::params {
   $user  = 'magnum'
   $group = 'magnum'
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       # package names
       $common_package     = 'openstack-magnum-common'
@@ -34,8 +34,8 @@ class magnum::params {
       $wsgi_script_source = '/usr/bin/magnum-api-wsgi'
     }
     default: {
-      fail("Unsupported osfamily: ${::osfamily} operatingsystem")
+      fail("Unsupported osfamily: ${facts['os']['family']}")
     }
 
-  } # Case $::osfamily
+  } # Case $facts['os']['family']
 }

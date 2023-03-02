@@ -19,7 +19,7 @@
 # [*conductor_life_check_timeout*]
 #   (optional) RPC timeout for the conductor liveness check that is
 #    used for bay locking.
-#    Defaults to $::os_service_default
+#    Defaults to $facts['os_service_default']
 #
 # [*auth_strategy*]
 #   (optional) Type of authentication to be used.
@@ -27,15 +27,15 @@
 #
 # [*workers*]
 #   (optional) Number of conductor workers.
-#   Defaults to $::os_workers
+#   Defaults to $facts['os_workers']
 #
 class magnum::conductor(
   $enabled                      = true,
   $manage_service               = true,
   $package_ensure               = 'present',
-  $conductor_life_check_timeout = $::os_service_default,
+  $conductor_life_check_timeout = $facts['os_service_default'],
   $auth_strategy                = 'keystone',
-  $workers                      = $::os_workers,
+  $workers                      = $facts['os_workers'],
 ) {
 
   include magnum::db

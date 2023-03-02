@@ -235,7 +235,7 @@ describe 'magnum' do
       end
 
       let :platform_params do
-        if facts[:osfamily] == 'Debian'
+        if facts[:os]['family'] == 'Debian'
           { :magnum_common_package => 'magnum-common' }
         else
           { :magnum_common_package => 'openstack-magnum-common' }
