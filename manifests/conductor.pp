@@ -42,6 +42,9 @@ class magnum::conductor(
   include magnum::deps
   include magnum::params
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+
   # Install package
   package { 'magnum-conductor':
     ensure => $package_ensure,

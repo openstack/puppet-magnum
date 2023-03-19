@@ -90,6 +90,11 @@ class magnum::api(
   include magnum::params
   include magnum::policy
 
+  validate_legacy(Boolean, 'validate_bool', $manage_service)
+  validate_legacy(Boolean, 'validate_bool', $enabled)
+  validate_legacy(Boolean, 'validate_bool', $sync_db)
+  validate_legacy(Boolean, 'validate_bool', $enabled_ssl)
+
   if $enabled_ssl {
     if is_service_default($ssl_cert_file) {
       fail('The ssl_cert_file parameter is required when enabled_ssl is true')
