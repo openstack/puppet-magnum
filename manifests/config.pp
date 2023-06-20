@@ -24,14 +24,11 @@
 #   or Puppet catalog compilation will fail with duplicate resources.
 #
 class magnum::config (
-  $magnum_config        = {},
-  $magnum_api_paste_ini = {},
+  Hash $magnum_config        = {},
+  Hash $magnum_api_paste_ini = {},
 ) {
 
   include magnum::deps
-
-  validate_legacy(Hash, 'validate_hash', $magnum_config)
-  validate_legacy(Hash, 'validate_hash', $magnum_api_paste_ini)
 
   create_resources('magnum_config', $magnum_config)
   create_resources('magnum_api_paste_ini', $magnum_api_paste_ini)

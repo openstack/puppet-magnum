@@ -30,8 +30,8 @@
 #   Defaults to $facts['os_workers']
 #
 class magnum::conductor(
-  $enabled                      = true,
-  $manage_service               = true,
+  Boolean $enabled              = true,
+  Boolean $manage_service       = true,
   $package_ensure               = 'present',
   $conductor_life_check_timeout = $facts['os_service_default'],
   $auth_strategy                = 'keystone',
@@ -41,9 +41,6 @@ class magnum::conductor(
   include magnum::db
   include magnum::deps
   include magnum::params
-
-  validate_legacy(Boolean, 'validate_bool', $manage_service)
-  validate_legacy(Boolean, 'validate_bool', $enabled)
 
   # Install package
   package { 'magnum-conductor':

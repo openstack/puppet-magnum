@@ -71,15 +71,15 @@
 #
 class magnum::api(
   $package_ensure               = 'present',
-  $enabled                      = true,
-  $manage_service               = true,
+  Boolean $enabled              = true,
+  Boolean $manage_service       = true,
   $service_name                 = $::magnum::params::api_service,
   $port                         = '9511',
   $host                         = '127.0.0.1',
   $max_limit                    = '1000',
-  $sync_db                      = true,
+  Boolean $sync_db              = true,
   $auth_strategy                = 'keystone',
-  $enabled_ssl                  = false,
+  Boolean $enabled_ssl          = false,
   $ssl_cert_file                = $facts['os_service_default'],
   $ssl_key_file                 = $facts['os_service_default'],
   $workers                      = $facts['os_workers'],
@@ -89,11 +89,6 @@ class magnum::api(
   include magnum::deps
   include magnum::params
   include magnum::policy
-
-  validate_legacy(Boolean, 'validate_bool', $manage_service)
-  validate_legacy(Boolean, 'validate_bool', $enabled)
-  validate_legacy(Boolean, 'validate_bool', $sync_db)
-  validate_legacy(Boolean, 'validate_bool', $enabled_ssl)
 
   if $enabled_ssl {
     if is_service_default($ssl_cert_file) {

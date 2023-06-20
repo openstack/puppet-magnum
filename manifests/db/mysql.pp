@@ -34,7 +34,7 @@
 #   Defaults to 'utf8_general_ci'
 #
 class magnum::db::mysql(
-  $password,
+  String[1] $password,
   $dbname        = 'magnum',
   $user          = 'magnum',
   $host          = '127.0.0.1',
@@ -44,8 +44,6 @@ class magnum::db::mysql(
 ) {
 
   include magnum::deps
-
-  validate_legacy(String, 'validate_string', $password)
 
   ::openstacklib::db::mysql { 'magnum':
     user          => $user,
