@@ -30,7 +30,7 @@ class magnum::deps {
 
   # policy config should occur in the config block also.
   Anchor['magnum::config::begin']
-  -> Openstacklib::Policy<||>
+  -> Openstacklib::Policy<| tag == 'magnum' |>
   ~> Anchor['magnum::config::end']
 
   # On any uwsgi config change, we must restart Magnum API.

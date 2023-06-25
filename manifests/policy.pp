@@ -67,6 +67,7 @@ class magnum::policy (
     file_group   => $::magnum::params::group,
     file_format  => 'yaml',
     purge_config => $purge_config,
+    tag          => 'magnum',
   }
 
   create_resources('openstacklib::policy', { $policy_path => $policy_parameters })
