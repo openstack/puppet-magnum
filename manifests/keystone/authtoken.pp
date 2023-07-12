@@ -4,13 +4,12 @@
 #
 # === Parameters
 #
+# [*password*]
+#   (Required) Password to create for the service user
+#
 # [*username*]
 #   (Optional) The name of the service user
 #   Defaults to 'magnum'
-#
-# [*password*]
-#   (Required) Password to create for the service user
-#   Defaults to $facts['os_service_default']
 #
 # [*auth_url*]
 #   (Optional) The URL to use for authentication.
@@ -191,8 +190,8 @@
 #  Defaults to $facts['os_service_default'].
 #
 class magnum::keystone::authtoken(
+  String[1] $password,
   $username                       = 'magnum',
-  $password                       = $facts['os_service_default'],
   $auth_url                       = 'http://localhost:5000',
   $project_name                   = 'services',
   $user_domain_name               = 'Default',
@@ -231,10 +230,6 @@ class magnum::keystone::authtoken(
 ) {
 
   include magnum::deps
-
-  if is_service_default($password) {
-    fail('Please set password for magnum service user')
-  }
 
   keystone::resource::authtoken { 'magnum_config':
     username                       => $username,
