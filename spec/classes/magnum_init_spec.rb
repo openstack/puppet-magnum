@@ -32,19 +32,24 @@ describe 'magnum' do
 
       it 'configures rabbit' do
         is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
-          :rabbit_ha_queues            => '<SERVICE DEFAULT>',
-          :heartbeat_timeout_threshold => '<SERVICE DEFAULT>',
-          :heartbeat_rate              => '<SERVICE DEFAULT>',
-          :heartbeat_in_pthread        => '<SERVICE DEFAULT>',
-          :rabbit_use_ssl              => '<SERVICE DEFAULT>',
-          :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
-          :kombu_failover_strategy     => '<SERVICE DEFAULT>',
-          :kombu_ssl_version           => '<SERVICE DEFAULT>',
-          :kombu_ssl_keyfile           => '<SERVICE DEFAULT>',
-          :kombu_ssl_certfile          => '<SERVICE DEFAULT>',
-          :kombu_ssl_ca_certs          => '<SERVICE DEFAULT>',
-          :amqp_durable_queues         => '<SERVICE DEFAULT>',
-          :kombu_compression           => '<SERVICE DEFAULT>')
+          :rabbit_ha_queues                => '<SERVICE DEFAULT>',
+          :heartbeat_timeout_threshold     => '<SERVICE DEFAULT>',
+          :heartbeat_rate                  => '<SERVICE DEFAULT>',
+          :heartbeat_in_pthread            => '<SERVICE DEFAULT>',
+          :rabbit_use_ssl                  => '<SERVICE DEFAULT>',
+          :kombu_reconnect_delay           => '<SERVICE DEFAULT>',
+          :kombu_failover_strategy         => '<SERVICE DEFAULT>',
+          :kombu_ssl_version               => '<SERVICE DEFAULT>',
+          :kombu_ssl_keyfile               => '<SERVICE DEFAULT>',
+          :kombu_ssl_certfile              => '<SERVICE DEFAULT>',
+          :kombu_ssl_ca_certs              => '<SERVICE DEFAULT>',
+          :amqp_durable_queues             => '<SERVICE DEFAULT>',
+          :kombu_compression               => '<SERVICE DEFAULT>',
+          :rabbit_quorum_queue             => '<SERVICE DEFAULT>',
+          :rabbit_quorum_delivery_limit    => '<SERVICE DEFAULT>',
+          :rabbit_quorum_max_memory_length => '<SERVICE DEFAULT>',
+          :rabbit_quorum_max_memory_bytes  => '<SERVICE DEFAULT>',
+        )
       end
 
       it 'configures notifications' do
@@ -71,6 +76,10 @@ describe 'magnum' do
           :rabbit_heartbeat_rate              => 10,
           :rabbit_heartbeat_in_pthread        => true,
           :amqp_durable_queues                => true,
+          :rabbit_quorum_queue                => true,
+          :rabbit_quorum_delivery_limit       => 3,
+          :rabbit_quorum_max_memory_length    => 5,
+          :rabbit_quorum_max_memory_bytes     => 1073741824,
         }
       end
 
@@ -89,19 +98,24 @@ describe 'magnum' do
           :control_exchange     => 'magnum',
         )
         is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
-          :rabbit_ha_queues            => true,
-          :heartbeat_timeout_threshold => 60,
-          :heartbeat_rate              => 10,
-          :heartbeat_in_pthread        => true,
-          :rabbit_use_ssl              => '<SERVICE DEFAULT>',
-          :kombu_reconnect_delay       => '<SERVICE DEFAULT>',
-          :kombu_failover_strategy     => 'shuffle',
-          :kombu_ssl_version           => '<SERVICE DEFAULT>',
-          :kombu_ssl_keyfile           => '<SERVICE DEFAULT>',
-          :kombu_ssl_certfile          => '<SERVICE DEFAULT>',
-          :kombu_ssl_ca_certs          => '<SERVICE DEFAULT>',
-          :amqp_durable_queues         => true,
-          :kombu_compression           => '<SERVICE DEFAULT>')
+          :rabbit_ha_queues                => true,
+          :heartbeat_timeout_threshold     => 60,
+          :heartbeat_rate                  => 10,
+          :heartbeat_in_pthread            => true,
+          :rabbit_use_ssl                  => '<SERVICE DEFAULT>',
+          :kombu_reconnect_delay           => '<SERVICE DEFAULT>',
+          :kombu_failover_strategy         => 'shuffle',
+          :kombu_ssl_version               => '<SERVICE DEFAULT>',
+          :kombu_ssl_keyfile               => '<SERVICE DEFAULT>',
+          :kombu_ssl_certfile              => '<SERVICE DEFAULT>',
+          :kombu_ssl_ca_certs              => '<SERVICE DEFAULT>',
+          :amqp_durable_queues             => true,
+          :kombu_compression               => '<SERVICE DEFAULT>',
+          :rabbit_quorum_queue             => true,
+          :rabbit_quorum_delivery_limit    => 3,
+          :rabbit_quorum_max_memory_length => 5,
+          :rabbit_quorum_max_memory_bytes  => 1073741824,
+        )
       end
 
       it 'configures notifications' do
