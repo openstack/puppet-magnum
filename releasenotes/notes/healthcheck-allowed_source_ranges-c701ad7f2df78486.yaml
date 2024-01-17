@@ -1,0 +1,5 @@
+---
+features:
+  - |
+    The new ``magnum::healthcheck::allowed_source_ranges`` parameter has been
+    added.
