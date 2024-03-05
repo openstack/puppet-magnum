@@ -1,0 +1,5 @@
+---
+deprecations:
+  - |
+    The ``magnum::db::sync::exec_path`` parameter has been deprecated and has
+    no effect.
