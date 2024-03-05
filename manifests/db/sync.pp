@@ -10,7 +10,7 @@
 # [*extra_params*]
 #   (Optional) String of extra command line parameters to append
 #   to the magnum-dbsync command.
-#   Defaults to undef
+#   Defaults to ''
 #
 # [*exec_path*]
 #   (Optional) The path  to use for finding the magnum-db-manage binary.
@@ -22,7 +22,7 @@
 #
 class magnum::db::sync(
   $user            = 'magnum',
-  $extra_params    = '--config-file /etc/magnum/magnum.conf',
+  $extra_params    = '',
   $exec_path       = '/usr/bin',
   $db_sync_timeout = 300,
 ) {
