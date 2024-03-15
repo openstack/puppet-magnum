@@ -80,9 +80,9 @@ class magnum::keystone::domain (
   $roles                    = $facts['os_service_default'],
   $keystone_interface       = 'public',
   $keystone_region_name     = $facts['os_service_default'],
-  $manage_domain            = true,
-  $manage_user              = true,
-  $manage_role              = true,
+  Boolean $manage_domain    = true,
+  Boolean $manage_user      = true,
+  Boolean $manage_role      = true,
 ) {
 
   include magnum::deps
@@ -92,8 +92,7 @@ class magnum::keystone::domain (
     ensure_resource('keystone_domain', $domain_name, {
       'ensure'  => 'present',
       'enabled' => true,
-    }
-    )
+    })
   }
 
   if $manage_user {
@@ -102,15 +101,13 @@ class magnum::keystone::domain (
       'enabled'  => true,
       'email'    => $domain_admin_email,
       'password' => $domain_password,
-    }
-    )
+    })
   }
 
   if $manage_role {
     ensure_resource('keystone_user_role', "${domain_admin}::${domain_name}@::${domain_name}", {
       'roles' => ['admin'],
-    }
-    )
+    })
   }
 
   magnum_config {
