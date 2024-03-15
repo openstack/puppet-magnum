@@ -38,6 +38,7 @@
 #
 # [*domain_password*]
 #   Keystone domain admin user password.
+#   Required when manage_user is true.
 #   Defaults to 'changeme'.
 #
 # [*roles*]
@@ -74,7 +75,7 @@ class magnum::keystone::domain (
   $domain_admin             = 'magnum_admin',
   $domain_admin_id          = $facts['os_service_default'],
   $domain_admin_email       = 'magnum_admin@localhost',
-  $domain_password          = 'changeme',
+  $domain_password          = undef,
   $domain_admin_domain_name = $facts['os_service_default'],
   $domain_admin_domain_id   = $facts['os_service_default'],
   $roles                    = $facts['os_service_default'],
@@ -96,6 +97,10 @@ class magnum::keystone::domain (
   }
 
   if $manage_user {
+    if $domain_password == undef {
+      fail('domain_password is required when managing the domain user')
+    }
+
     ensure_resource('keystone_user', "${domain_admin}::${domain_name}", {
       'ensure'   => 'present',
       'enabled'  => true,
@@ -110,6 +115,8 @@ class magnum::keystone::domain (
     })
   }
 
+  $domain_password_real = pick($domain_password, $facts['os_service_default'])
+
   magnum_config {
     'trust/cluster_user_trust':                value => $cluster_user_trust;
     'trust/trustee_domain_name':               value => $domain_name;
@@ -118,7 +125,7 @@ class magnum::keystone::domain (
     'trust/trustee_domain_admin_id':           value => $domain_admin_id;
     'trust/trustee_domain_admin_domain_name':  value => $domain_admin_domain_name;
     'trust/trustee_domain_admin_domain_id':    value => $domain_admin_domain_id;
-    'trust/trustee_domain_admin_password':     value => $domain_password, secret => true;
+    'trust/trustee_domain_admin_password':     value => $domain_password_real, secret => true;
     'trust/roles':                             value => $roles;
     'trust/trustee_keystone_interface':        value => $keystone_interface;
     'trust/trustee_keystone_region_name':      value => $keystone_region_name;
