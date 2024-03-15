@@ -10,12 +10,12 @@ describe 'magnum::clients::nova' do
       end
 
       it { is_expected.to contain_magnum_config('nova_client/region_name').with_value('RegionOne') }
-      it { is_expected.to contain_magnum_config('nova_client/endpoint_type').with_value('publicURL') }
+      it { is_expected.to contain_magnum_config('nova_client/endpoint_type').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('nova_client/api_version').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('nova_client/ca_file').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('nova_client/cert_file').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('nova_client/key_file').with_value('<SERVICE DEFAULT>') }
-      it { is_expected.to contain_magnum_config('nova_client/insecure').with_value(false) }
+      it { is_expected.to contain_magnum_config('nova_client/insecure').with_value('<SERVICE DEFAULT>') }
     end
 
     context 'with specific parameters' do

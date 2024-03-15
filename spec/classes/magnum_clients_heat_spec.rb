@@ -10,12 +10,12 @@ describe 'magnum::clients::heat' do
       end
 
       it { is_expected.to contain_magnum_config('heat_client/region_name').with_value('RegionOne') }
-      it { is_expected.to contain_magnum_config('heat_client/endpoint_type').with_value('publicURL') }
+      it { is_expected.to contain_magnum_config('heat_client/endpoint_type').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('heat_client/api_version').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('heat_client/ca_file').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('heat_client/cert_file').with_value('<SERVICE DEFAULT>') }
       it { is_expected.to contain_magnum_config('heat_client/key_file').with_value('<SERVICE DEFAULT>') }
-      it { is_expected.to contain_magnum_config('heat_client/insecure').with_value(false) }
+      it { is_expected.to contain_magnum_config('heat_client/insecure').with_value('<SERVICE DEFAULT>') }
     end
 
     context 'with specific parameters' do

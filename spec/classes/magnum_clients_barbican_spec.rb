@@ -10,7 +10,7 @@ describe 'magnum::clients::barbican' do
       end
 
       it { is_expected.to contain_magnum_config('barbican_client/region_name').with_value('RegionOne') }
-      it { is_expected.to contain_magnum_config('barbican_client/endpoint_type').with_value('publicURL') }
+      it { is_expected.to contain_magnum_config('barbican_client/endpoint_type').with_value('<SERVICE DEFAULT>') }
     end
 
     context 'with specific parameters' do

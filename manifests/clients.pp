@@ -12,7 +12,7 @@
 # [*endpoint_type*]
 #   (optional) Type of endpoint in Identity service catalog to use for
 #   communication with the OpenStack service.
-#   Defaults to publicURL
+#   Defaults to $facts['os_service_default']
 #
 # [*ca_file*]
 #   (optional) CA cert file to use in SSL connections.
@@ -28,15 +28,15 @@
 #
 # [*insecure*]
 #   (optional) If set, then the server's certificate will not be verified.
-#   Defaults to false
+#   Defaults to $facts['os_service_default']
 #
 class magnum::clients (
   $region_name   = 'RegionOne',
-  $endpoint_type = 'publicURL',
+  $endpoint_type = $facts['os_service_default'],
   $ca_file       = $facts['os_service_default'],
   $cert_file     = $facts['os_service_default'],
   $key_file      = $facts['os_service_default'],
-  $insecure      = false
+  $insecure      = $facts['os_service_default'],
 ) {
   include magnum::deps
   include magnum::params
