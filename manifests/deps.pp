@@ -24,19 +24,13 @@ class magnum::deps {
   ~> Service<| tag == 'magnum-service' |>
   ~> anchor { 'magnum::service::end': }
 
-  # all db settings should be applied and all packages should be installed
-  # before dbsync starts
-  Oslo::Db<||> -> Anchor['magnum::dbsync::begin']
-
-  # policy config should occur in the config block also.
   Anchor['magnum::config::begin']
-  -> Openstacklib::Policy<| tag == 'magnum' |>
+  -> Magnum_api_paste_ini<||>
   -> Anchor['magnum::config::end']
 
-  # On any uwsgi config change, we must restart Magnum API.
   Anchor['magnum::config::begin']
   -> Magnum_api_uwsgi_config<||>
-  ~> Anchor['magnum::config::end']
+  -> Anchor['magnum::config::end']
 
   # Installation or config changes will always restart services.
   Anchor['magnum::install::end'] ~> Anchor['magnum::service::begin']

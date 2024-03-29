@@ -138,6 +138,13 @@ class magnum::api(
         hasstatus => true,
         tag       => 'magnum-service',
       }
+
+      # On any paste config change, we must restart Magnum API.
+      Magnum_api_paste_ini<||> ~> Service['magnum-api']
+
+      # On any uwsgi config change, we must restart Magnum API.
+      Magnum_api_uwsgi_config<||> ~> Service['magnum-api']
+
     } elsif $service_name == 'httpd' {
       service { 'magnum-api':
         ensure    => 'stopped',
@@ -148,6 +155,9 @@ class magnum::api(
       }
       Service['magnum-api'] -> Service[$service_name]
       Service<| title == 'httpd' |> { tag +> 'magnum-service' }
+
+      # On any paste config change, we must restart Magnum API.
+      Magnum_api_paste_ini<||> ~> Service[$service_name]
     }
   }
 

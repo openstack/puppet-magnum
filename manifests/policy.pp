@@ -70,6 +70,11 @@ class magnum::policy (
 
   create_resources('openstacklib::policy', { $policy_path => $policy_parameters })
 
+  # policy config should occur in the config block also.
+  Anchor['magnum::config::begin']
+  -> Openstacklib::Policy[$policy_path]
+  -> Anchor['magnum::config::end']
+
   oslo::policy { 'magnum_config':
     enforce_scope        => $enforce_scope,
     enforce_new_defaults => $enforce_new_defaults,

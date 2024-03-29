@@ -69,4 +69,7 @@ class magnum::db (
     db_max_retries          => $database_db_max_retries,
   }
 
+  # all db settings should be applied and all packages should be installed
+  # before dbsync starts
+  Oslo::Db['magnum_config'] -> Anchor['magnum::dbsync::begin']
 }
