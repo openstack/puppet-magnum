@@ -16,26 +16,14 @@
 #   (Optional) Timeout for the execution of the db_sync
 #   Defaults to 300
 #
-# DEPRECATED PARAMETERS
-#
-# [*exec_path*]
-#   (Optional) The path  to use for finding the magnum-db-manage binary.
-#   Defaults to undef
-#
 class magnum::db::sync(
   $user            = 'magnum',
   $extra_params    = '',
   $db_sync_timeout = 300,
-  # DEPRECATED PARAMETERS
-  $exec_path       = undef,
 ) {
 
   include magnum::deps
   include magnum::params
-
-  if $exec_path != undef {
-    warning('The exec_path parameter is deprecated and has no effect')
-  }
 
   exec { 'magnum-db-sync':
     command     => "magnum-db-manage ${extra_params} upgrade head",

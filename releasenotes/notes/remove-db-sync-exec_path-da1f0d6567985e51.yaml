@@ -1,0 +1,4 @@
+---
+upgrade:
+  - |
+    The deprecated ``magnum::db::sync::exec_path`` parameter has been removed.
