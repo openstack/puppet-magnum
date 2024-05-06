@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    The new ``magnum::certificates::storage_path`` parameter has been added.
