@@ -186,61 +186,6 @@ describe 'magnum' do
         )
       end
     end
-    context 'with default amqp parameters' do
-      it 'configures amqp' do
-        is_expected.to contain_oslo__messaging__amqp('magnum_config').with(
-          :server_request_prefix  => '<SERVICE DEFAULT>',
-          :broadcast_prefix       => '<SERVICE DEFAULT>',
-          :group_request_prefix   => '<SERVICE DEFAULT>',
-          :container_name         => '<SERVICE DEFAULT>',
-          :idle_timeout           => '<SERVICE DEFAULT>',
-          :trace                  => '<SERVICE DEFAULT>',
-          :ssl_ca_file            => '<SERVICE DEFAULT>',
-          :ssl_cert_file          => '<SERVICE DEFAULT>',
-          :ssl_key_file           => '<SERVICE DEFAULT>',
-          :ssl_key_password       => '<SERVICE DEFAULT>',
-          :sasl_mechanisms        => '<SERVICE DEFAULT>',
-          :sasl_config_dir        => '<SERVICE DEFAULT>',
-          :sasl_config_name       => '<SERVICE DEFAULT>',
-          :username               => '<SERVICE DEFAULT>',
-          :password               => '<SERVICE DEFAULT>')
-      end
-    end
-
-    context 'with overridden amqp parameters' do
-      let :params do
-        {  :default_transport_url => 'amqp://amqp_user:password@localhost:5672',
-          :amqp_idle_timeout     => '60',
-          :amqp_trace            => true,
-          :amqp_ssl_ca_file      => '/etc/ca.cert',
-          :amqp_ssl_cert_file    => '/etc/certfile',
-          :amqp_ssl_key_file     => '/etc/key',
-          :amqp_username         => 'amqp_user',
-          :amqp_password         => 'password',
-        }
-      end
-
-      it 'configures amqp' do
-        is_expected.to contain_oslo__messaging__amqp('magnum_config').with(
-          :server_request_prefix  => '<SERVICE DEFAULT>',
-          :broadcast_prefix       => '<SERVICE DEFAULT>',
-          :group_request_prefix   => '<SERVICE DEFAULT>',
-          :container_name         => '<SERVICE DEFAULT>',
-          :idle_timeout           => 60,
-          :trace                  => 'true',
-          :ssl_ca_file            => '/etc/ca.cert',
-          :ssl_cert_file          => '/etc/certfile',
-          :ssl_key_file           => '/etc/key',
-          :ssl_key_password       => '<SERVICE DEFAULT>',
-          :sasl_mechanisms        => '<SERVICE DEFAULT>',
-          :sasl_config_dir        => '<SERVICE DEFAULT>',
-          :sasl_config_name       => '<SERVICE DEFAULT>',
-          :username               => 'amqp_user',
-          :password               => 'password')
-        is_expected.to contain_oslo__messaging__default('magnum_config').with(
-          :transport_url        => 'amqp://amqp_user:password@localhost:5672')
-      end
-    end
   end
 
   on_supported_os({
