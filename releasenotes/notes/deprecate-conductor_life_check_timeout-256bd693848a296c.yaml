@@ -1,0 +1,5 @@
+---
+deprecations:
+  - |
+    The ``magnum::conductor::conductor_life_check_timeout`` parameter has been
+    deprecated and has no effect now.

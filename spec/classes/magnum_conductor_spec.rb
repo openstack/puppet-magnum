@@ -23,17 +23,8 @@ describe 'magnum::conductor' do
     ) }
 
     it {
-      is_expected.to contain_magnum_config('conductor/conductor_life_check_timeout').with_value('<SERVICE DEFAULT>')
       is_expected.to contain_magnum_config('conductor/workers').with_value(facts[:os_workers])
     }
-
-    context 'with conductor_life_check_timeout specified' do
-      let :params do
-        { :conductor_life_check_timeout => '4' }
-      end
-
-      it { is_expected.to contain_magnum_config('conductor/conductor_life_check_timeout').with_value('4') }
-    end
 
     context 'with manage_service as false' do
       let :params do
