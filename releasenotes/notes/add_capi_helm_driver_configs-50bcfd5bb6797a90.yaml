@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    add class to configure the capi_helm driver
