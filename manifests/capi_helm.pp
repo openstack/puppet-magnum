@@ -105,8 +105,8 @@
 class magnum::capi_helm (
   Optional[Stdlib::Absolutepath] $kubeconfig_file                                  = undef,
   Optional[Hash] $kubeconfig                                                       = undef,
-  String[1] $kubeconfig_owner                                                      = 'magnum',
-  String[1] $kubeconfig_group                                                      = 'magnum',
+  String[1] $kubeconfig_owner                                                      = $::magnum::params::user,
+  String[1] $kubeconfig_group                                                      = $::magnum::params::group,
   String[1] $kubeconfig_mode                                                       = '0400',
   String[1] $namespace_prefix                                                      = $facts['os_service_default'],
   String[1] $helm_chart_repo                                                       = $facts['os_service_default'],
@@ -122,7 +122,7 @@ class magnum::capi_helm (
   String[1] $csi_cinder_volume_binding_mode                                        = $facts['os_service_default'],
   String[1] $csi_cinder_availability_zone                                          = $facts['os_service_default'],
   String[1] $app_cred_interface_type                                               = $facts['os_service_default'],
-) {
+) inherits magnum::params {
 
   include magnum::deps
 
