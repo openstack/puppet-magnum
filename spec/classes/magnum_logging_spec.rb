@@ -66,7 +66,6 @@ describe 'magnum::logging' do
         :use_stderr     => '<SERVICE DEFAULT>',
         :log_dir        => '/var/log/magnum',
         :log_file       => '<SERVICE DEFAULT>',
-        :watch_log_file => '<SERVICE DEFAULT>',
         :debug          => '<SERVICE DEFAULT>',
       )
     end
