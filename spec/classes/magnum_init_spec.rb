@@ -51,6 +51,7 @@ describe 'magnum' do
           :rabbit_quorum_delivery_limit    => '<SERVICE DEFAULT>',
           :rabbit_quorum_max_memory_length => '<SERVICE DEFAULT>',
           :rabbit_quorum_max_memory_bytes  => '<SERVICE DEFAULT>',
+          :enable_cancel_on_failover       => '<SERVICE DEFAULT>',
         )
       end
 
@@ -84,6 +85,7 @@ describe 'magnum' do
           :rabbit_quorum_delivery_limit       => 3,
           :rabbit_quorum_max_memory_length    => 5,
           :rabbit_quorum_max_memory_bytes     => 1073741824,
+          :rabbit_enable_cancel_on_failover   => false,
         }
       end
 
@@ -121,6 +123,7 @@ describe 'magnum' do
           :rabbit_quorum_delivery_limit    => 3,
           :rabbit_quorum_max_memory_length => 5,
           :rabbit_quorum_max_memory_bytes  => 1073741824,
+          :enable_cancel_on_failover       => false,
         )
       end
 
