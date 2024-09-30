@@ -59,7 +59,9 @@ describe 'magnum' do
         is_expected.to contain_oslo__messaging__notifications('magnum_config').with(
           :transport_url => '<SERVICE DEFAULT>',
           :driver        => '<SERVICE DEFAULT>',
-          :topics        => '<SERVICE DEFAULT>')
+          :topics        => '<SERVICE DEFAULT>',
+          :retry         => '<SERVICE DEFAULT>',
+        )
       end
 
     end
@@ -70,6 +72,7 @@ describe 'magnum' do
           :notification_transport_url         => 'rabbit://user:pass@host:1234/virt',
           :notification_topics                => 'openstack',
           :notification_driver                => 'messagingv1',
+          :notification_retry                 => 10,
           :default_transport_url              => 'rabbit://user:pass@host:1234/virt',
           :rpc_response_timeout               => '120',
           :control_exchange                   => 'magnum',
@@ -131,7 +134,9 @@ describe 'magnum' do
         is_expected.to contain_oslo__messaging__notifications('magnum_config').with(
           :transport_url => 'rabbit://user:pass@host:1234/virt',
           :driver        => 'messagingv1',
-          :topics        => 'openstack')
+          :topics        => 'openstack',
+          :retry         => 10,
+        )
       end
     end
 

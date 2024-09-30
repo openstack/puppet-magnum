@@ -9,35 +9,40 @@
 #  Defaults to 'present'
 #
 # [*notification_transport_url*]
-#  (Optional) A URL representing the messaging driver to use for notifications
-#  and its full configuration. Transport URLs take the form:
-#  transport://user:pass@host1:port[,hostN:portN]/virtual_host
-#  Defaults to $facts['os_service_default']
+#   (Optional) A URL representing the messaging driver to use for notifications
+#   and its full configuration. Transport URLs take the form:
+#   transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#   Defaults to $facts['os_service_default']
 #
 # [*notification_topics*]
-#  (Optional) AMQP topics to publish to when using the RPC notification driver.
-#  (list value)
-#  Default to $facts['os_service_default']
+#   (Optional) AMQP topics to publish to when using the RPC notification driver.
+#   (list value)
+#   Default to $facts['os_service_default']
 #
 # [*notification_driver*]
-#  (Optional) Notification driver to use
-#  Defaults to $facts['os_service_default']
+#   (Optional) Notification driver to use
+#   Defaults to $facts['os_service_default']
+#
+# [*notification_retry*]
+#   (Optional) The maximum number of attempts to re-sent a notification
+#   message, which failed to be delivered due to a recoverable error.
+#   Defaults to $facts['os_service_default'].
 #
 # [*default_transport_url*]
-#  (Optional) A URL representing the messaging driver to use and its full
-#  configuration. Transport URLs take the form:
-#  transport://user:pass@host1:port[,hostN:portN]/virtual_host
-#  Defaults to $facts['os_service_default']
+#   (Optional) A URL representing the messaging driver to use and its full
+#   configuration. Transport URLs take the form:
+#   transport://user:pass@host1:port[,hostN:portN]/virtual_host
+#   Defaults to $facts['os_service_default']
 #
 # [*rpc_response_timeout*]
-#  (Optional) Seconds to wait for a response from a call.
-#  Defaults to $facts['os_service_default']
+#   (Optional) Seconds to wait for a response from a call.
+#   Defaults to $facts['os_service_default']
 #
 # [*control_exchange*]
-#  (Optional) The default exchange under which topics are scoped. May be
-#  overridden by an exchange name specified in the transport_url
-#  option.
-#  Defaults to $facts['os_service_default']
+#   (Optional) The default exchange under which topics are scoped. May be
+#   overridden by an exchange name specified in the transport_url
+#   option.
+#   Defaults to $facts['os_service_default']
 #
 # [*rabbit_ha_queues*]
 #   (Optional) Use HA queues in RabbitMQ.
@@ -152,6 +157,7 @@ class magnum(
   $notification_transport_url         = $facts['os_service_default'],
   $notification_driver                = $facts['os_service_default'],
   $notification_topics                = $facts['os_service_default'],
+  $notification_retry                 = $facts['os_service_default'],
   $default_transport_url              = $facts['os_service_default'],
   $rpc_response_timeout               = $facts['os_service_default'],
   $control_exchange                   = $facts['os_service_default'],
@@ -226,6 +232,7 @@ class magnum(
     transport_url => $notification_transport_url,
     driver        => $notification_driver,
     topics        => $notification_topics,
+    retry         => $notification_retry,
   }
 
 }
