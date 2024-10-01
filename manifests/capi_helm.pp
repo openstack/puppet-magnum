@@ -107,7 +107,7 @@ class magnum::capi_helm (
   Optional[Hash] $kubeconfig                                                       = undef,
   String[1] $kubeconfig_owner                                                      = $::magnum::params::user,
   String[1] $kubeconfig_group                                                      = $::magnum::params::group,
-  String[1] $kubeconfig_mode                                                       = '0400',
+  Stdlib::Filemode $kubeconfig_mode                                                = '0400',
   String[1] $namespace_prefix                                                      = $facts['os_service_default'],
   String[1] $helm_chart_repo                                                       = $facts['os_service_default'],
   String[1] $helm_chart_name                                                       = $facts['os_service_default'],
