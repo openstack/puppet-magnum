@@ -34,7 +34,7 @@ class magnum::db::postgresql(
 
   include magnum::deps
 
-  ::openstacklib::db::postgresql { 'magnum':
+  openstacklib::db::postgresql { 'magnum':
     password   => $password,
     dbname     => $dbname,
     user       => $user,

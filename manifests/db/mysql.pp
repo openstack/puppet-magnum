@@ -45,7 +45,7 @@ class magnum::db::mysql(
 
   include magnum::deps
 
-  ::openstacklib::db::mysql { 'magnum':
+  openstacklib::db::mysql { 'magnum':
     user          => $user,
     password      => $password,
     dbname        => $dbname,

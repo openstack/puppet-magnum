@@ -152,7 +152,7 @@ class magnum::wsgi::apache (
 
   Anchor['magnum::install::end'] -> Class['apache']
 
-  ::openstacklib::wsgi::apache { 'magnum_wsgi':
+  openstacklib::wsgi::apache { 'magnum_wsgi':
     bind_host                   => $bind_host,
     bind_port                   => $port,
     group                       => $::magnum::params::group,
