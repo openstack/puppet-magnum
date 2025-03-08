@@ -31,9 +31,9 @@ class magnum::cinder (
 
   magnum_config {
     'cinder/default_docker_volume_type': value => $default_docker_volume_type;
-    'cinder/default_etcd_volume_type': value   => $default_etcd_volume_type;
-    'cinder/default_boot_volume_type': value   => $default_boot_volume_type;
-    'cinder/default_boot_volume_size': value   => $default_boot_volume_size;
+    'cinder/default_etcd_volume_type':   value => $default_etcd_volume_type;
+    'cinder/default_boot_volume_type':   value => $default_boot_volume_type;
+    'cinder/default_boot_volume_size':   value => $default_boot_volume_size;
   }
 
 }
