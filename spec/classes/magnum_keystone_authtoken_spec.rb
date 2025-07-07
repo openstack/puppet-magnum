@@ -10,7 +10,7 @@ describe 'magnum::keystone::authtoken' do
 
     context 'without required password parameter' do
       before { params.delete(:password) }
-      it { expect { is_expected.to raise_error(Puppet::Error) } }
+      it { is_expected.to raise_error(Puppet::Error) }
     end
 
     context 'with default parameters' do
