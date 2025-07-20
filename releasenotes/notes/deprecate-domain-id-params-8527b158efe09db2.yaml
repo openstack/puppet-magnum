@@ -1,0 +1,8 @@
+---
+deprecations:
+  - |
+    The following parameters of the ``magnum::keystone::domain`` class have
+    been deprecated.
+
+    - ``domain_admin_id``
+    - ``domain_admin_domain_id``
