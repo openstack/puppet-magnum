@@ -12,7 +12,7 @@ describe 'magnum::keystone::domain' do
     :domain_admin_domain_id   => '16264508d9b6476da952a3971ca9d4b4',
     :domain_admin_email       => 'magnum_admin@localhost',
     :domain_password          => 'domain_passwd',
-    :roles                    => 'admin,',
+    :roles                    => 'admin',
     :keystone_interface       => 'public',
     :keystone_region_name     => 'RegionOne'
     }
@@ -50,6 +50,16 @@ describe 'magnum::keystone::domain' do
       is_expected.to contain_keystone_user_role("#{params[:domain_admin]}::#{params[:domain_name]}@::#{params[:domain_name]}").with(
         :roles => ['admin'],
       )
+    end
+
+    context 'when an array is used for roles' do
+      before do
+        params.merge!(
+          :roles => ['admin', 'manager'],
+        )
+      end
+
+      it { is_expected.to contain_magnum_config('trust/roles').with_value('admin,manager') }
     end
 
     context 'when not managing the domain creation' do

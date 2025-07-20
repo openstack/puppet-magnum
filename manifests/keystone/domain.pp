@@ -126,7 +126,7 @@ class magnum::keystone::domain (
     'trust/trustee_domain_admin_domain_name':  value => $domain_admin_domain_name;
     'trust/trustee_domain_admin_domain_id':    value => $domain_admin_domain_id;
     'trust/trustee_domain_admin_password':     value => $domain_password_real, secret => true;
-    'trust/roles':                             value => $roles;
+    'trust/roles':                             value => join(any2array($roles), ',');
     'trust/trustee_keystone_interface':        value => $keystone_interface;
     'trust/trustee_keystone_region_name':      value => $keystone_region_name;
   }
