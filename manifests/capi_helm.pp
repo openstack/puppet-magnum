@@ -149,7 +149,7 @@ class magnum::capi_helm (
       owner   => $kubeconfig_owner,
       group   => $kubeconfig_group,
       mode    => $kubeconfig_mode,
-      content => to_yaml($kubeconfig),
+      content => stdlib::to_yaml($kubeconfig),
       require => Anchor['magnum::config::begin'],
       before  => Anchor['magnum::config::end'],
     }
