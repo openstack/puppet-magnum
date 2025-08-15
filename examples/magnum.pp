@@ -55,6 +55,6 @@
   }
 
   class { 'magnum::certificates':
-    cert_manager_type => 'local'
+    cert_manager_type => 'local',
   }
 

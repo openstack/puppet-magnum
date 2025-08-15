@@ -23,7 +23,7 @@
 #   service, and you must use another class to configure that
 #   web service. For example, use class { 'magnum::wsgi::apache'...}
 #   to make magnum-api be a web app using apache mod_wsgi.
-#   Defaults to $::magnum::params::api_service
+#   Defaults to $magnum::params::api_service
 #
 # [*port*]
 #   (Optional) The port for the Magnum API server.
@@ -73,7 +73,7 @@ class magnum::api(
   $package_ensure               = 'present',
   Boolean $enabled              = true,
   Boolean $manage_service       = true,
-  $service_name                 = $::magnum::params::api_service,
+  $service_name                 = $magnum::params::api_service,
   $port                         = '9511',
   $host                         = '127.0.0.1',
   $max_limit                    = '1000',
@@ -115,10 +115,10 @@ class magnum::api(
   }
 
   # Install package
-  if $::magnum::params::api_package {
+  if $magnum::params::api_package {
     package { 'magnum-api':
       ensure => $package_ensure,
-      name   => $::magnum::params::api_package,
+      name   => $magnum::params::api_package,
       tag    => ['openstack', 'magnum-package'],
     }
   }
@@ -130,10 +130,10 @@ class magnum::api(
       $ensure = 'stopped'
     }
 
-    if $service_name == $::magnum::params::api_service {
+    if $service_name == $magnum::params::api_service {
       service { 'magnum-api':
         ensure    => $ensure,
-        name      => $::magnum::params::api_service,
+        name      => $magnum::params::api_service,
         enable    => $enabled,
         hasstatus => true,
         tag       => 'magnum-service',
@@ -148,7 +148,7 @@ class magnum::api(
     } elsif $service_name == 'httpd' {
       service { 'magnum-api':
         ensure    => 'stopped',
-        name      => $::magnum::params::api_service,
+        name      => $magnum::params::api_service,
         enable    => false,
         hasstatus => true,
         tag       => 'magnum-service',

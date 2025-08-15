@@ -28,7 +28,7 @@ class magnum::db::sync(
   exec { 'magnum-db-sync':
     command     => "magnum-db-manage ${extra_params} upgrade head",
     path        => ['/bin', '/usr/bin'],
-    user        => $::magnum::params::user,
+    user        => $magnum::params::user,
     refreshonly => true,
     try_sleep   => 5,
     tries       => 10,

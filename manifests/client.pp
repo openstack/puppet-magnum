@@ -17,7 +17,7 @@ class magnum::client (
 
   package { 'python-magnumclient':
     ensure => $package_ensure,
-    name   => $::magnum::params::client_package,
+    name   => $magnum::params::client_package,
     tag    => 'openstack',
   }
 

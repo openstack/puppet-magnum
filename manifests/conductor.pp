@@ -39,8 +39,8 @@ class magnum::conductor(
   # Install package
   package { 'magnum-conductor':
     ensure => $package_ensure,
-    name   => $::magnum::params::conductor_package,
-    tag    => ['openstack', 'magnum-package']
+    name   => $magnum::params::conductor_package,
+    tag    => ['openstack', 'magnum-package'],
   }
 
   if $manage_service {
@@ -53,7 +53,7 @@ class magnum::conductor(
     # Manage service
     service { 'magnum-conductor':
       ensure    => $service_ensure,
-      name      => $::magnum::params::conductor_package,
+      name      => $magnum::params::conductor_package,
       enable    => $enabled,
       hasstatus => true,
       tag       => 'magnum-service',
