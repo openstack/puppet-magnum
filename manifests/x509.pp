@@ -31,7 +31,6 @@ class magnum::x509 (
   $term_of_validity   = $facts['os_service_default'],
   $rsa_key_size       = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   magnum_config {
@@ -41,6 +40,4 @@ class magnum::x509 (
     'x509/term_of_validity':   value => $term_of_validity;
     'x509/rsa_key_size':       value => $rsa_key_size;
   }
-
 }
-

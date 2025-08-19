@@ -34,8 +34,7 @@
 #   (optional) If set, then the server's certificate will not be verified.
 #   Defaults to false
 #
-
-class magnum::clients::heat(
+class magnum::clients::heat (
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
   $api_version   = $facts['os_service_default'],
@@ -44,7 +43,6 @@ class magnum::clients::heat(
   $key_file      = $magnum::clients::key_file,
   $insecure      = $magnum::clients::insecure
 ) inherits magnum::clients {
-
   include magnum::deps
   include magnum::params
 

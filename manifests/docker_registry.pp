@@ -17,6 +17,7 @@ class magnum::docker_registry (
   $swift_region             = $facts['os_service_default'],
   $swift_registry_container = $facts['os_service_default'],
 ) {
+  include magnum::deps
 
   magnum_config {
     'docker_registry/swift_region':             value => $swift_region;

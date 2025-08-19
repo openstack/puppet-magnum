@@ -26,7 +26,6 @@ class magnum::cinder (
   $default_boot_volume_type   = $facts['os_service_default'],
   $default_boot_volume_size   = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   magnum_config {
@@ -35,6 +34,4 @@ class magnum::cinder (
     'cinder/default_boot_volume_type':   value => $default_boot_volume_type;
     'cinder/default_boot_volume_size':   value => $default_boot_volume_size;
   }
-
 }
-

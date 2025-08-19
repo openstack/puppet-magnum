@@ -28,7 +28,6 @@ class magnum::cluster (
   $temp_cache_dir                         = $facts['os_service_default'],
   $pre_delete_lb_timeout                  = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   magnum_config {

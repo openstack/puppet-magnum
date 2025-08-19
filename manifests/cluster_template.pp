@@ -16,7 +16,6 @@ class magnum::cluster_template (
   $kubernetes_allowed_network_drivers = $facts['os_service_default'],
   $kubernetes_default_network_driver  = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   magnum_config {

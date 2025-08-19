@@ -97,7 +97,6 @@ class magnum::keystone::auth (
   Keystone::EndpointUrl $admin_url        = 'http://127.0.0.1:9511/v1',
   Keystone::EndpointUrl $internal_url     = 'http://127.0.0.1:9511/v1',
 ) {
-
   include magnum::deps
 
   $real_service_name = pick($service_name, $auth_name)
@@ -124,5 +123,4 @@ class magnum::keystone::auth (
     internal_url        => $internal_url,
     admin_url           => $admin_url,
   }
-
 }

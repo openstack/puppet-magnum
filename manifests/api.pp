@@ -69,7 +69,7 @@
 #   middleware should parse the proxy headers or not.(boolean value)
 #   Defaults to $facts['os_service_default']
 #
-class magnum::api(
+class magnum::api (
   $package_ensure               = 'present',
   Boolean $enabled              = true,
   Boolean $manage_service       = true,
@@ -85,7 +85,6 @@ class magnum::api(
   $workers                      = $facts['os_workers'],
   $enable_proxy_headers_parsing = $facts['os_service_default'],
 ) inherits magnum::params {
-
   include magnum::deps
   include magnum::params
   include magnum::policy
@@ -144,7 +143,6 @@ class magnum::api(
 
       # On any uwsgi config change, we must restart Magnum API.
       Magnum_api_uwsgi_config<||> ~> Service['magnum-api']
-
     } elsif $service_name == 'httpd' {
       service { 'magnum-api':
         ensure    => 'stopped',
@@ -165,8 +163,7 @@ class magnum::api(
     include magnum::keystone::authtoken
   }
 
-  oslo::middleware {'magnum_config':
+  oslo::middleware { 'magnum_config':
     enable_proxy_headers_parsing => $enable_proxy_headers_parsing,
   }
-
 }

@@ -28,7 +28,6 @@ class magnum::drivers (
   Variant[Array, Openstacklib::ServiceDefault]                $disabled_drivers      = $facts['os_service_default'],
   Variant[Array, Openstacklib::ServiceDefault]                $enabled_beta_drivers  = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   magnum_config {

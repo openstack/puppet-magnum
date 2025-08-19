@@ -88,7 +88,6 @@ class magnum::keystone::domain (
   $domain_admin_id          = undef,
   $domain_admin_domain_id   = undef,
 ) {
-
   include magnum::deps
   include magnum::params
 
@@ -142,5 +141,4 @@ class magnum::keystone::domain (
     'trust/trustee_keystone_interface':        value => $keystone_interface;
     'trust/trustee_keystone_region_name':      value => $keystone_region_name;
   }
-
 }

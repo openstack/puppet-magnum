@@ -146,7 +146,6 @@ class magnum::wsgi::apache (
   $headers                     = undef,
   $request_headers             = undef,
 ) {
-
   include magnum::deps
   include magnum::params
 
