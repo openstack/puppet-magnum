@@ -53,7 +53,7 @@
 #   against any certificate authorities.
 #   Defaults to $facts['os_service_default']
 #
-class magnum::keystone::keystone_auth(
+class magnum::keystone::keystone_auth (
   $password,
   $username            = 'magnum',
   $auth_url            = 'http://localhost:5000',
@@ -67,7 +67,6 @@ class magnum::keystone::keystone_auth(
   $certfile            = $facts['os_service_default'],
   $insecure            = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   if is_service_default($system_scope) {

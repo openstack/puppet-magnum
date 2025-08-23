@@ -11,7 +11,6 @@
 class magnum::client (
   $package_ensure = 'present'
 ) {
-
   include magnum::deps
   include magnum::params
 
@@ -20,5 +19,4 @@ class magnum::client (
     name   => $magnum::params::client_package,
     tag    => 'openstack',
   }
-
 }

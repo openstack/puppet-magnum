@@ -30,7 +30,7 @@
 #   (optional) If set, then the server's certificate will not be verified.
 #   Defaults to false
 #
-class magnum::clients::neutron(
+class magnum::clients::neutron (
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
   $ca_file       = $magnum::clients::ca_file,
@@ -38,7 +38,6 @@ class magnum::clients::neutron(
   $key_file      = $magnum::clients::key_file,
   $insecure      = $magnum::clients::insecure
 ) inherits magnum::clients {
-
   include magnum::deps
   include magnum::params
 

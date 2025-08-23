@@ -16,12 +16,11 @@
 #   (Optional) Timeout for the execution of the db_sync
 #   Defaults to 300
 #
-class magnum::db::sync(
+class magnum::db::sync (
   $user            = 'magnum',
   $extra_params    = '',
   $db_sync_timeout = 300,
 ) {
-
   include magnum::deps
   include magnum::params
 
@@ -42,5 +41,4 @@ class magnum::db::sync(
     notify      => Anchor['magnum::dbsync::end'],
     tag         => 'openstack-db',
   }
-
 }

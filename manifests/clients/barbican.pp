@@ -14,11 +14,10 @@
 #   communication with the OpenStack service.
 #   Defaults to publicURL
 
-class magnum::clients::barbican(
+class magnum::clients::barbican (
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
 ) inherits magnum::clients {
-
   include magnum::deps
   include magnum::params
 

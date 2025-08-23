@@ -44,7 +44,7 @@
 
   class { 'magnum':
     default_transport_url => 'rabbit://magnum:an_even_bigger_secret@127.0.0.1:5672',
-    rabbit_use_ssl        =>  false,
+    rabbit_use_ssl        => false,
     notification_driver   => 'messagingv2',
   }
 
@@ -57,4 +57,3 @@
   class { 'magnum::certificates':
     cert_manager_type => 'local',
   }
-

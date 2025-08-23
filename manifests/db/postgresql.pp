@@ -24,14 +24,13 @@
 #    (Optional) Privileges given to the database user.
 #    Default to 'ALL'
 #
-class magnum::db::postgresql(
+class magnum::db::postgresql (
   $password,
   $dbname     = 'magnum',
   $user       = 'magnum',
   $encoding   = undef,
   $privileges = 'ALL',
 ) {
-
   include magnum::deps
 
   openstacklib::db::postgresql { 'magnum':
@@ -45,5 +44,4 @@ class magnum::db::postgresql(
   Anchor['magnum::db::begin']
   ~> Class['magnum::db::postgresql']
   ~> Anchor['magnum::db::end']
-
 }

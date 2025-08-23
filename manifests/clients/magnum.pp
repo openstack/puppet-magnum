@@ -13,12 +13,11 @@
 #   (optional) Type of endpoint in Identity service catalog to use for
 #   communication with the OpenStack service.
 #   Defaults to publicURL
-
-class magnum::clients::magnum(
+#
+class magnum::clients::magnum (
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
 ) inherits magnum::clients {
-
   include magnum::deps
   include magnum::params
 

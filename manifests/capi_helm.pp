@@ -123,7 +123,6 @@ class magnum::capi_helm (
   String[1] $csi_cinder_availability_zone                                          = $facts['os_service_default'],
   String[1] $app_cred_interface_type                                               = $facts['os_service_default'],
 ) inherits magnum::params {
-
   include magnum::deps
 
   magnum_config {
@@ -145,7 +144,7 @@ class magnum::capi_helm (
   }
 
   if $kubeconfig_file and $kubeconfig {
-    file{ $kubeconfig_file:
+    file { $kubeconfig_file:
       owner   => $kubeconfig_owner,
       group   => $kubeconfig_group,
       mode    => $kubeconfig_mode,
@@ -155,4 +154,3 @@ class magnum::capi_helm (
     }
   }
 }
-

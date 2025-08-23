@@ -34,7 +34,7 @@
 #   (optional) If set, then the server's certificate will not be verified.
 #   Defaults to false
 #
-class magnum::clients::cinder(
+class magnum::clients::cinder (
   $region_name   = $magnum::clients::region_name,
   $endpoint_type = $magnum::clients::endpoint_type,
   $api_version   = $facts['os_service_default'],
@@ -43,7 +43,6 @@ class magnum::clients::cinder(
   $key_file      = $magnum::clients::key_file,
   $insecure      = $magnum::clients::insecure
 ) inherits magnum::clients {
-
   include magnum::deps
   include magnum::params
 

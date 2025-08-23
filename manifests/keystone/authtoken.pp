@@ -189,7 +189,7 @@
 #  "public", "internal" or "admin".
 #  Defaults to $facts['os_service_default'].
 #
-class magnum::keystone::authtoken(
+class magnum::keystone::authtoken (
   String[1] $password,
   $username                       = 'magnum',
   $auth_url                       = 'http://localhost:5000',
@@ -228,7 +228,6 @@ class magnum::keystone::authtoken(
   $service_type                   = $facts['os_service_default'],
   $interface                      = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   keystone::resource::authtoken { 'magnum_config':

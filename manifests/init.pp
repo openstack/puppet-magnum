@@ -174,7 +174,7 @@
 #   will be run through a green thread.
 #   Defaults to undef
 #
-class magnum(
+class magnum (
   $package_ensure                     = 'present',
   $notification_transport_url         = $facts['os_service_default'],
   $notification_driver                = $facts['os_service_default'],
@@ -210,7 +210,6 @@ class magnum(
   # DEPRECATED PARAMETERS
   $rabbit_heartbeat_in_pthread        = undef,
 ) {
-
   include magnum::deps
   include magnum::params
   include magnum::policy
@@ -265,5 +264,4 @@ class magnum(
     topics        => $notification_topics,
     retry         => $notification_retry,
   }
-
 }

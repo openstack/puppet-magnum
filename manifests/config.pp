@@ -27,7 +27,6 @@ class magnum::config (
   Hash $magnum_config        = {},
   Hash $magnum_api_paste_ini = {},
 ) {
-
   include magnum::deps
 
   create_resources('magnum_config', $magnum_config)

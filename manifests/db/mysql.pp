@@ -33,7 +33,7 @@
 #   Only used with mysql modules >= 2.2.
 #   Defaults to 'utf8_general_ci'
 #
-class magnum::db::mysql(
+class magnum::db::mysql (
   String[1] $password,
   $dbname        = 'magnum',
   $user          = 'magnum',
@@ -42,7 +42,6 @@ class magnum::db::mysql(
   $collate       = 'utf8_general_ci',
   $allowed_hosts = undef
 ) {
-
   include magnum::deps
 
   openstacklib::db::mysql { 'magnum':
@@ -58,5 +57,4 @@ class magnum::db::mysql(
   Anchor['magnum::db::begin']
   ~> Class['magnum::db::mysql']
   ~> Anchor['magnum::db::end']
-
 }

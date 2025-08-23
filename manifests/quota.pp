@@ -11,6 +11,7 @@
 class magnum::quota (
   $max_clusters_per_project = $facts['os_service_default']
 ) {
+  include magnum::deps
 
   magnum_config {
     'quotas/max_clusters_per_project': value => $max_clusters_per_project;

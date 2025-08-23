@@ -46,7 +46,6 @@ class magnum::healthcheck (
   $disable_by_file_paths   = $facts['os_service_default'],
   $enable_by_file_paths    = $facts['os_service_default'],
 ) {
-
   include magnum::deps
 
   oslo::healthcheck { 'magnum_config':
