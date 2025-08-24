@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    The new ``magnum::host`` parameter has been added.

@@ -8,6 +8,10 @@
 #  (Optional) Ensure state for package
 #  Defaults to 'present'
 #
+# [*host*]
+#   (optional) Name of this node.
+#   Defaults to $facts['os_service_default'].
+#
 # [*notification_transport_url*]
 #   (Optional) A URL representing the messaging driver to use for notifications
 #   and its full configuration. Transport URLs take the form:
@@ -176,6 +180,7 @@
 #
 class magnum (
   $package_ensure                     = 'present',
+  $host                               = $facts['os_service_default'],
   $notification_transport_url         = $facts['os_service_default'],
   $notification_driver                = $facts['os_service_default'],
   $notification_topics                = $facts['os_service_default'],
@@ -223,6 +228,10 @@ class magnum (
 
   resources { 'magnum_config':
     purge => $purge_config,
+  }
+
+  magnum_config {
+    'DEFAULT/host': value => $host;
   }
 
   oslo::messaging::rabbit { 'magnum_config':

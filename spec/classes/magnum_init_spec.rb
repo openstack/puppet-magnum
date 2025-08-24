@@ -30,6 +30,10 @@ describe 'magnum' do
         })
       end
 
+      it 'configures host' do
+        is_expected.to contain_magnum_config('DEFAULT/host').with_value('<SERVICE DEFAULT>')
+      end
+
       it 'configures rabbit' do
         is_expected.to contain_oslo__messaging__rabbit('magnum_config').with(
           :rabbit_ha_queues                => '<SERVICE DEFAULT>',
@@ -73,6 +77,7 @@ describe 'magnum' do
     context 'with overridden parameters' do
       let :params do
         { :package_ensure                     => 'latest',
+          :host                               => 'localhost',
           :notification_transport_url         => 'rabbit://user:pass@host:1234/virt',
           :notification_topics                => 'openstack',
           :notification_driver                => 'messagingv1',
@@ -106,6 +111,10 @@ describe 'magnum' do
           :name   => platform_params[:magnum_common_package],
           :tag    => ['openstack', 'magnum-package']
         )
+      end
+
+      it 'configures host' do
+        is_expected.to contain_magnum_config('DEFAULT/host').with_value('localhost')
       end
 
       it 'configures rabbit' do
