@@ -9,7 +9,7 @@ describe 'magnum::client' do
       is_expected.to contain_package('python-magnumclient').with(
         :ensure => 'present',
         :name   => platform_params[:client_package_name],
-        :tag    => 'openstack',
+        :tag    => ['openstack', 'openstackclient'],
       )
     end
   end
