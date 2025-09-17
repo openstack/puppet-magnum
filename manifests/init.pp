@@ -203,7 +203,6 @@ class magnum (
 ) {
   include magnum::deps
   include magnum::params
-  include magnum::policy
   include magnum::db
 
   package { 'magnum-common':
