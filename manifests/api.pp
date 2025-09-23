@@ -70,20 +70,20 @@
 #   Defaults to $facts['os_service_default']
 #
 class magnum::api (
-  $package_ensure               = 'present',
-  Boolean $enabled              = true,
-  Boolean $manage_service       = true,
-  $service_name                 = $magnum::params::api_service,
-  $port                         = '9511',
-  $host                         = '127.0.0.1',
-  $max_limit                    = '1000',
-  Boolean $sync_db              = true,
-  $auth_strategy                = 'keystone',
-  Boolean $enabled_ssl          = false,
-  $ssl_cert_file                = $facts['os_service_default'],
-  $ssl_key_file                 = $facts['os_service_default'],
-  $workers                      = $facts['os_workers'],
-  $enable_proxy_headers_parsing = $facts['os_service_default'],
+  Stdlib::Ensure::Package $package_ensure = 'present',
+  Boolean $enabled                        = true,
+  Boolean $manage_service                 = true,
+  $service_name                           = $magnum::params::api_service,
+  $port                                   = '9511',
+  $host                                   = '127.0.0.1',
+  $max_limit                              = '1000',
+  Boolean $sync_db                        = true,
+  $auth_strategy                          = 'keystone',
+  Boolean $enabled_ssl                    = false,
+  $ssl_cert_file                          = $facts['os_service_default'],
+  $ssl_key_file                           = $facts['os_service_default'],
+  $workers                                = $facts['os_workers'],
+  $enable_proxy_headers_parsing           = $facts['os_service_default'],
 ) inherits magnum::params {
   include magnum::deps
   include magnum::params

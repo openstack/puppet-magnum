@@ -25,11 +25,11 @@
 #   Defaults to $facts['os_workers']
 #
 class magnum::conductor (
-  Boolean $enabled              = true,
-  Boolean $manage_service       = true,
-  $package_ensure               = 'present',
-  $auth_strategy                = 'keystone',
-  $workers                      = $facts['os_workers'],
+  Boolean $enabled                        = true,
+  Boolean $manage_service                 = true,
+  Stdlib::Ensure::Package $package_ensure = 'present',
+  $auth_strategy                          = 'keystone',
+  $workers                                = $facts['os_workers'],
 ) {
   include magnum::db
   include magnum::deps
