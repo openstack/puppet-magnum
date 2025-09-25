@@ -9,7 +9,7 @@
 #   Defaults to 'present'
 #
 class magnum::client (
-  $package_ensure = 'present'
+  Stdlib::Ensure::Package $package_ensure = 'present',
 ) {
   include magnum::deps
   include magnum::params
