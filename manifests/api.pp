@@ -73,7 +73,7 @@ class magnum::api (
   Stdlib::Ensure::Package $package_ensure = 'present',
   Boolean $enabled                        = true,
   Boolean $manage_service                 = true,
-  $service_name                           = $magnum::params::api_service,
+  String[1] $service_name                 = $magnum::params::api_service,
   $port                                   = '9511',
   $host                                   = '127.0.0.1',
   $max_limit                              = '1000',
@@ -123,39 +123,42 @@ class magnum::api (
   }
 
   if $manage_service {
-    if $enabled {
-      $ensure = 'running'
-    } else {
-      $ensure = 'stopped'
-    }
+    case $service_name {
+      'httpd': {
+        Service<| title == 'httpd' |> { tag +> 'magnum-service' }
 
-    if $service_name == $magnum::params::api_service {
-      service { 'magnum-api':
-        ensure    => $ensure,
-        name      => $magnum::params::api_service,
-        enable    => $enabled,
-        hasstatus => true,
-        tag       => 'magnum-service',
+        service { 'magnum-api':
+          ensure    => 'stopped',
+          name      => $magnum::params::api_service,
+          enable    => false,
+          hasstatus => true,
+          tag       => 'magnum-service',
+        }
+        Service['magnum-api'] -> Service['httpd']
+
+        # On any paste config change, we must restart Magnum API.
+        Magnum_api_paste_ini<||> ~> Service['httpd']
       }
+      default: {
+        $service_ensure = $enabled ? {
+          true    => 'running',
+          default => 'stopped',
+        }
 
-      # On any paste config change, we must restart Magnum API.
-      Magnum_api_paste_ini<||> ~> Service['magnum-api']
+        service { 'magnum-api':
+          ensure    => $service_ensure,
+          name      => $magnum::params::api_service,
+          enable    => $enabled,
+          hasstatus => true,
+          tag       => 'magnum-service',
+        }
 
-      # On any uwsgi config change, we must restart Magnum API.
-      Magnum_api_uwsgi_config<||> ~> Service['magnum-api']
-    } elsif $service_name == 'httpd' {
-      service { 'magnum-api':
-        ensure    => 'stopped',
-        name      => $magnum::params::api_service,
-        enable    => false,
-        hasstatus => true,
-        tag       => 'magnum-service',
+        # On any paste config change, we must restart Magnum API.
+        Magnum_api_paste_ini<||> ~> Service['magnum-api']
+
+        # On any uwsgi config change, we must restart Magnum API.
+        Magnum_api_uwsgi_config<||> ~> Service['magnum-api']
       }
-      Service['magnum-api'] -> Service[$service_name]
-      Service<| title == 'httpd' |> { tag +> 'magnum-service' }
-
-      # On any paste config change, we must restart Magnum API.
-      Magnum_api_paste_ini<||> ~> Service[$service_name]
     }
   }
 
