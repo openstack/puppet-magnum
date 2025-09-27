@@ -33,7 +33,6 @@ describe 'magnum::policy' do
           :file_group   => 'magnum',
           :file_format  => 'yaml',
           :purge_config => false,
-          :tag          => 'magnum',
         )
         is_expected.to contain_oslo__policy('magnum_config').with(
           :enforce_scope        => false,
@@ -64,7 +63,6 @@ describe 'magnum::policy' do
           :file_group   => 'magnum',
           :file_format  => 'yaml',
           :purge_config => true,
-          :tag          => 'magnum',
         )
         is_expected.to contain_oslo__policy('magnum_config').with(
           :enforce_scope        => false,

@@ -46,13 +46,13 @@
 #    Defaults to false.
 #
 class magnum::policy (
-  $enforce_scope        = $facts['os_service_default'],
-  $enforce_new_defaults = $facts['os_service_default'],
-  Hash $policies        = {},
-  $policy_path          = '/etc/magnum/policy.yaml',
-  $policy_default_rule  = $facts['os_service_default'],
-  $policy_dirs          = $facts['os_service_default'],
-  Boolean $purge_config = false,
+  $enforce_scope                    = $facts['os_service_default'],
+  $enforce_new_defaults             = $facts['os_service_default'],
+  Openstacklib::Policies $policies  = {},
+  Stdlib::Absolutepath $policy_path = '/etc/magnum/policy.yaml',
+  $policy_default_rule              = $facts['os_service_default'],
+  $policy_dirs                      = $facts['os_service_default'],
+  Boolean $purge_config             = false,
 ) {
   include magnum::deps
   include magnum::params
@@ -64,7 +64,6 @@ class magnum::policy (
     file_group   => $magnum::params::group,
     file_format  => 'yaml',
     purge_config => $purge_config,
-    tag          => 'magnum',
   }
 
   create_resources('openstacklib::policy', { $policy_path => $policy_parameters })
