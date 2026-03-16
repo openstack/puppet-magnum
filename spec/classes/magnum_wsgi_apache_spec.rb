@@ -154,12 +154,12 @@ describe 'magnum::wsgi::apache' do
         when 'Debian'
           {
             :wsgi_script_path   => '/usr/lib/cgi-bin/magnum',
-            :wsgi_script_source => '/usr/bin/magnum-api-wsgi'
+            :wsgi_script_source => '/usr/lib/python3/dist-packages/magnum/wsgi/api.py',
           }
         when 'RedHat'
           {
             :wsgi_script_path   => '/var/www/cgi-bin/magnum',
-            :wsgi_script_source => '/usr/bin/magnum-api-wsgi'
+            :wsgi_script_source => '/usr/lib/python3.9/site-packages/magnum/wsgi/api.py',
           }
 
         end

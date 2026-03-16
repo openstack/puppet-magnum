@@ -5,6 +5,8 @@
 class magnum::params {
   include openstacklib::defaults
 
+  $pybasedir = $openstacklib::defaults::pybasedir
+
   $user  = 'magnum'
   $group = 'magnum'
 
@@ -19,7 +21,7 @@ class magnum::params {
       $conductor_service  = 'openstack-magnum-conductor'
       $client_package     = 'python3-magnumclient'
       $wsgi_script_path   = '/var/www/cgi-bin/magnum'
-      $wsgi_script_source = '/usr/bin/magnum-api-wsgi'
+      $wsgi_script_source = "${pybasedir}/magnum/wsgi/api.py"
     }
     'Debian': {
       # package names
@@ -31,7 +33,7 @@ class magnum::params {
       $conductor_service  = 'magnum-conductor'
       $client_package     = 'python3-magnumclient'
       $wsgi_script_path   = '/usr/lib/cgi-bin/magnum'
-      $wsgi_script_source = '/usr/bin/magnum-api-wsgi'
+      $wsgi_script_source = "${pybasedir}/magnum/wsgi/api.py"
     }
     default: {
       fail("Unsupported osfamily: ${facts['os']['family']}")
