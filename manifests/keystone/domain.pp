@@ -60,16 +60,6 @@
 #   Whether manage or not the user role creation.
 #   Defaults to 'true'.
 #
-# DEPRECATED PARAMETERS
-#
-# [*domain_admin_id*]
-#   Id of the admin with roles sufficient to manage users in the trustee_domain.
-#   Defaults to $facts['os_service_default'].
-#
-# [*domain_admin_domain_id*]
-#   Id of the domain admin user's domain.
-#   Defaults to $facts['os_service_default'].
-#
 class magnum::keystone::domain (
   $cluster_user_trust       = $facts['os_service_default'],
   $domain_name              = 'magnum',
@@ -84,19 +74,9 @@ class magnum::keystone::domain (
   Boolean $manage_domain    = true,
   Boolean $manage_user      = true,
   Boolean $manage_role      = true,
-  # DEPRECATED PARAMETERS
-  $domain_admin_id          = undef,
-  $domain_admin_domain_id   = undef,
 ) {
   include magnum::deps
   include magnum::params
-
-  if $domain_admin_id != undef {
-    warning('The domain_admin_id parameter is deprecated')
-  }
-  if $domain_admin_domain_id != undef {
-    warning('The domain_admin_domain_id parameter is deprecated')
-  }
 
   if $manage_domain {
     ensure_resource('keystone_domain', $domain_name, {
@@ -124,8 +104,6 @@ class magnum::keystone::domain (
     })
   }
 
-  $domain_admin_id_real = pick($domain_admin_id, $facts['os_service_default'])
-  $domain_admin_domain_id_real = pick($domain_admin_domain_id, $facts['os_service_default'])
   $domain_password_real = pick($domain_password, $facts['os_service_default'])
 
   magnum_config {
@@ -133,9 +111,7 @@ class magnum::keystone::domain (
     'trust/trustee_domain_name':               value => $domain_name;
     'trust/trustee_domain_id':                 value => $domain_id;
     'trust/trustee_domain_admin_name':         value => $domain_admin;
-    'trust/trustee_domain_admin_id':           value => $domain_admin_id_real;
     'trust/trustee_domain_admin_domain_name':  value => $domain_admin_domain_name;
-    'trust/trustee_domain_admin_domain_id':    value => $domain_admin_domain_id_real;
     'trust/trustee_domain_admin_password':     value => $domain_password_real, secret => true;
     'trust/roles':                             value => join(any2array($roles), ',');
     'trust/trustee_keystone_interface':        value => $keystone_interface;
