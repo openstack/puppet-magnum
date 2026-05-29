@@ -39,7 +39,7 @@
 #
 # [*keystone_interface*]
 #   Auth interface used by instances/trustee.
-#   Defaults to 'public'.
+#   Defaults to $facts['os_service_default'].
 #
 # [*keystone_region_name*]
 #   Region in Identity service catalog to use for
@@ -69,7 +69,7 @@ class magnum::keystone::domain (
   $domain_password          = undef,
   $domain_admin_domain_name = $facts['os_service_default'],
   $roles                    = $facts['os_service_default'],
-  $keystone_interface       = 'public',
+  $keystone_interface       = $facts['os_service_default'],
   $keystone_region_name     = $facts['os_service_default'],
   Boolean $manage_domain    = true,
   Boolean $manage_user      = true,
