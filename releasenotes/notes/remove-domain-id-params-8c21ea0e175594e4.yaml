@@ -1,0 +1,8 @@
+---
+upgrade:
+  - |
+    The following parameters of the ``magnum::keystone::domain`` class have
+    been removed.
+
+    - ``domain_admin_id``
+    - ``domain_admin_domain_id``
