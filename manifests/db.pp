@@ -33,15 +33,17 @@
 #   (Optional) If set, use this value for pool_timeout with SQLAlchemy.
 #   Defaults to $facts['os_service_default']
 #
-# [*mysql_enable_ndb*]
-#   (Optional) If True, transparently enables support for handling MySQL
-#   Cluster (NDB).
-#   Defaults to $facts['os_service_default']
-#
 # [*database_db_max_retries*]
 #   (Optional) Maximum retries in case of connection error or deadlock error
 #   before error is raised. Set to -1 to specify an infinite retry count.
 #   Defaults to $facts['os_service_default']
+#
+# DEPRECATED PARAMETERS
+#
+# [*mysql_enable_ndb*]
+#   (Optional) If True, transparently enables support for handling MySQL
+#   Cluster (NDB).
+#   Defaults to undef
 #
 class magnum::db (
   $database_connection              = 'mysql+pymysql://magnum:magnum@localhost:3306/magnum',
@@ -51,8 +53,9 @@ class magnum::db (
   $database_retry_interval          = $facts['os_service_default'],
   $database_max_overflow            = $facts['os_service_default'],
   $database_pool_timeout            = $facts['os_service_default'],
-  $mysql_enable_ndb                 = $facts['os_service_default'],
   $database_db_max_retries          = $facts['os_service_default'],
+  # DEPRECATED PARAMETERS
+  $mysql_enable_ndb                 = undef,
 ) {
   include magnum::deps
 
